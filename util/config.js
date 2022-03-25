@@ -1,0 +1,9 @@
+export default {
+  arcade: "/media/fat/_Arcade",
+  computer: "/media/fat/_Computer",
+  console: "/media/fat/_Console",
+  games: "/media/fat/games",
+  host: "MiSTer",
+  port: 8080,
+  scripts: "/media/fat/Scripts",
+};

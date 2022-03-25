@@ -1,0 +1,32 @@
+import React from "react";
+
+///////////////////////////////////////////////////////////////////////////////
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+///////////////////////////////////////////////////////////////////////////////
+import NativeStackNavigator from "./NativeStackNavigator";
+
+///////////////////////////////////////////////////////////////////////////////
+const Drawer = createDrawerNavigator();
+
+///////////////////////////////////////////////////////////////////////////////
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+      }}
+    >
+      <Drawer.Screen
+        component={NativeStackNavigator}
+        name="NativeStackNavigator"
+        options={{
+          title: "Library",
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
+
+///////////////////////////////////////////////////////////////////////////////
+export default DrawerNavigator;
