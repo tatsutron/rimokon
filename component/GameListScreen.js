@@ -32,8 +32,6 @@ const GameListScreen = ({ navigation, route }) => {
   const { path, platform } = route.params;
   const [gameList, setGameList] = React.useState([]);
 
-  console.log("GameListScreen");
-
   React.useEffect(() => {
     return navigation.addListener("focus", async () => {
       const { host, port } = config;

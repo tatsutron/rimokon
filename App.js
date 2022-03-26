@@ -4,7 +4,7 @@ import "react-native-gesture-handler"; // Must go first
 import React from "react";
 
 ///////////////////////////////////////////////////////////////////////////////
-import { NativeBaseProvider, StatusBar, View } from "native-base";
+import { NativeBaseProvider, View } from "native-base";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 
