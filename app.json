@@ -2,7 +2,7 @@
   "expo": {
     "name": "rimokon",
     "slug": "rimokon",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "package": "com.tatsutron.rimokon"
     },
     "web": {
       "favicon": "./assets/favicon.png"
