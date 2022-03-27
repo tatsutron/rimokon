@@ -4,8 +4,8 @@ import "react-native-gesture-handler"; // Must go first
 import React from "react";
 
 ///////////////////////////////////////////////////////////////////////////////
-import { NativeBaseProvider, View } from "native-base";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NativeBaseProvider, StatusBar, View } from "native-base";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,11 +21,12 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NativeBaseProvider>
-        <View style={{ flex: 1, backgroundColor: "#000" }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#000" }}>
+          <StatusBar style="light" />
           <NavigationContainer theme={DarkTheme}>
             <NativeStackNavigator />
           </NavigationContainer>
-        </View>
+        </SafeAreaView>
       </NativeBaseProvider>
     </SafeAreaProvider>
   );
