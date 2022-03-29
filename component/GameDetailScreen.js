@@ -12,6 +12,7 @@ import {
 } from "native-base";
 
 ///////////////////////////////////////////////////////////////////////////////
+import colors from "../util/colors";
 import config from "../util/config";
 import util from "../util/util";
 
@@ -56,7 +57,7 @@ const GameDetailScreen = ({ navigation, route }) => {
             <Column space={1}>
               <Text color="white">Publisher</Text>
               <Divider />
-              <Text color="#28a4ea" fontSize={"md"}>
+              <Text color={colors.blue} fontSize={"md"}>
                 {metadata.publisher}
               </Text>
             </Column>
@@ -65,7 +66,7 @@ const GameDetailScreen = ({ navigation, route }) => {
             <Column space={1}>
               <Text color="white">Developer</Text>
               <Divider />
-              <Text color="#28a4ea" fontSize={"md"}>
+              <Text color={colors.blue} fontSize={"md"}>
                 {metadata.developer}
               </Text>
             </Column>
@@ -74,7 +75,7 @@ const GameDetailScreen = ({ navigation, route }) => {
             <Column space={1}>
               <Text color="white">Release Date</Text>
               <Divider />
-              <Text color="#28a4ea" fontSize={"md"}>
+              <Text color={colors.blue} fontSize={"md"}>
                 {metadata.releaseDate}
               </Text>
             </Column>
@@ -83,7 +84,7 @@ const GameDetailScreen = ({ navigation, route }) => {
             <Column space={1}>
               <Text color="white">Region</Text>
               <Divider />
-              <Text color="#28a4ea" fontSize={"md"}>
+              <Text color={colors.blue} fontSize={"md"}>
                 {metadata.region}
               </Text>
             </Column>
@@ -92,7 +93,7 @@ const GameDetailScreen = ({ navigation, route }) => {
             <Column space={1}>
               <Text color="white">Genre</Text>
               <Divider />
-              <Text color="#28a4ea" fontSize={"md"}>
+              <Text color={colors.blue} fontSize={"md"}>
                 {metadata.genre}
               </Text>
             </Column>
@@ -101,7 +102,7 @@ const GameDetailScreen = ({ navigation, route }) => {
             <Column space={1}>
               <Text color="white">Description</Text>
               <Divider />
-              <Text color="#28a4ea" fontSize={"md"}>
+              <Text color={colors.blue} fontSize={"md"}>
                 {metadata.description}
               </Text>
             </Column>

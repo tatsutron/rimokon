@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 ///////////////////////////////////////////////////////////////////////////////
 import BottomTabNavigator from "./BottomTabNavigator";
+import colors from "../util/colors";
 import GameDetailScreen from "../component/GameDetailScreen";
 import GameListScreen from "../component/GameListScreen";
 import util from "../util/util";
@@ -48,7 +49,7 @@ const NativeStackNavigator = () => {
                   backgroundColor: "black",
                   borderColor: "white",
                 }}
-                borderColor="#28a4ea"
+                borderColor={colors.blue}
                 marginRight={Platform.OS === "web" ? 3 : 0}
                 onPress={() => {
                   util.loadGame({ platform, path });

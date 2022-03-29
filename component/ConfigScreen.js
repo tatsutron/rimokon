@@ -5,6 +5,7 @@ import { Column, FormControl, Input } from "native-base";
 
 ///////////////////////////////////////////////////////////////////////////////
 import config from "../util/config";
+import colors from "../util/colors";
 
 ///////////////////////////////////////////////////////////////////////////////
 const ConfigScreen = () => {
@@ -15,13 +16,13 @@ const ConfigScreen = () => {
           Hostname or IP Address
         </FormControl.Label>
         <Input
-          _focus={{ borderColor: "#28a4ea" }}
+          _focus={{ borderColor: colors.bue }}
           borderColor="white"
-          color="#28a4ea"
+          color={colors.blue}
           onChangeText={(text) => (config.host = text)}
           placeholder={config.host}
-          placeholderTextColor="#28a4ea"
-          selectionColor="#28a4ea"
+          placeholderTextColor={colors.blue}
+          selectionColor={colors.blue}
         />
       </FormControl>
     </Column>
