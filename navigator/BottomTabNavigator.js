@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 ///////////////////////////////////////////////////////////////////////////////
 import arcades from "../model/arcades";
+import colors from "../util/colors";
 import computers from "../model/computers";
 import config from "../util/config";
 import ConfigScreen from "../component/ConfigScreen";
@@ -24,10 +25,11 @@ const BottomTabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerTintColor: "white",
-        tabBarActiveTintColor: "#28a4ea",
+        tabBarActiveTintColor: colors.blue,
         tabBarStyle: {
           backgroundColor: "black",
         },
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
@@ -117,6 +119,7 @@ const BottomTabNavigator = () => {
             <Ionicons color={color} name="settings-outline" size={size} />
           ),
           title: "Config",
+          tabBarShowLabel: false,
         }}
       />
     </Tab.Navigator>
