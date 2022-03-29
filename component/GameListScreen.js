@@ -1,39 +1,49 @@
+import { MaterialIcons } from "@expo/vector-icons";
+import { Column, Spinner } from "native-base";
 import React from "react";
+import { Dimensions } from "react-native";
+import {
+  RecyclerListView,
+  DataProvider,
+  LayoutProvider,
+} from "recyclerlistview";
 
 ///////////////////////////////////////////////////////////////////////////////
-import { FlatList } from "native-base";
-
-///////////////////////////////////////////////////////////////////////////////
+import colors from "../util/colors";
 import config from "../util/config";
 import dimensions from "../util/dimensions";
 import GameListItem from "./GameListItem";
 
 ///////////////////////////////////////////////////////////////////////////////
-const getItemLayout = (_, index) => ({
-  length: dimensions.rowHeight,
-  offset: dimensions.rowHeight * index,
-  index,
-});
-
-///////////////////////////////////////////////////////////////////////////////
-const renderItem = ({ item }) => {
+const rowRenderer = (_type, data, _index) => {
+  const { navigation, path, platform } = data;
   return (
-    <GameListItem
-      key={item.key}
-      navigation={item.navigation}
-      path={item.path}
-      platform={item.platform}
-    />
+    <GameListItem navigation={navigation} path={path} platform={platform} />
   );
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 const GameListScreen = ({ navigation, route }) => {
   const { path, platform } = route.params;
-  const [gameList, setGameList] = React.useState([]);
+  const [dataProvider, setDataProvider] = React.useState(
+    new DataProvider((r1, r2) => {
+      return r1 !== r2;
+    })
+  );
+  const [layoutProvider] = React.useState(
+    new LayoutProvider(
+      (index) => 1,
+      (type, dim) => {
+        dim.width = Dimensions.get("window").width;
+        dim.height = dimensions.rowHeight;
+      }
+    )
+  );
+  const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
     return navigation.addListener("focus", async () => {
+      setError(false);
       const { host, port } = config;
       const extensions = platform.format
         .map((format) => {
@@ -46,33 +56,42 @@ const GameListScreen = ({ navigation, route }) => {
       try {
         const response = await fetch(url);
         const entries = await response.json();
-        setGameList(
-          entries.sort((a, b) => {
+        const gameList = entries
+          .sort((a, b) => {
             return a.toLowerCase().localeCompare(b.toLowerCase());
           })
-        );
+          .map((path) => {
+            return { navigation, path, platform };
+          });
+        setDataProvider((prevState) => prevState.cloneWithRows(gameList));
       } catch (error) {
-        alert(error);
+        setError(true);
       }
     });
   }, [navigation]);
 
-  return (
-    <FlatList
-      data={gameList.map((path) => {
-        return {
-          key: path,
-          navigation,
-          path,
-          platform,
-        };
-      })}
-      getItemLayout={getItemLayout}
-      initialNumToRender={12}
-      maxToRenderPerBatch={8}
-      renderItem={renderItem}
-    />
-  );
+  if (error) {
+    return (
+      <Column alignItems="center" justifyContent="center" style={{ flex: 1 }}>
+        <MaterialIcons color={colors.blue} name="error-outline" size={40} />
+      </Column>
+    );
+  } else if (dataProvider.getSize() > 0) {
+    return (
+      <RecyclerListView
+        dataProvider={dataProvider}
+        layoutProvider={layoutProvider}
+        rowRenderer={rowRenderer}
+        style={{ flex: 1 }}
+      />
+    );
+  } else {
+    return (
+      <Column alignItems="center" justifyContent="center" style={{ flex: 1 }}>
+        <Spinner size="lg" color={colors.blue} />
+      </Column>
+    );
+  }
 };
 
 //////////////////////////////////////////////////////////////////////////////

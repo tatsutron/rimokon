@@ -1,9 +1,9 @@
+import { MaterialIcons } from "@expo/vector-icons";
+import { Column, ScrollView, Spinner } from "native-base";
 import React from "react";
 
 ///////////////////////////////////////////////////////////////////////////////
-import { ScrollView } from "native-base";
-
-///////////////////////////////////////////////////////////////////////////////
+import colors from "../util/colors";
 import config from "../util/config";
 import PlatformListItem from "./PlatformListItem";
 import util from "../util/util";
@@ -15,6 +15,7 @@ const PlatformListScreen = ({ navigation, route }) => {
 
   React.useEffect(() => {
     return navigation.addListener("focus", async () => {
+      setPlatformList([]);
       const { host, port } = config;
       const url = `http://${host}:${port}/scan/rbf/${path}`;
       try {
@@ -33,24 +34,38 @@ const PlatformListScreen = ({ navigation, route }) => {
         });
         setPlatformList(arr);
       } catch (error) {
-        alert(error);
+        setPlatformList(null);
       }
     });
   }, [navigation]);
 
-  return (
-    <ScrollView bg="black">
-      {platformList.map((platform, index) => {
-        return (
-          <PlatformListItem
-            key={index}
-            navigation={navigation}
-            platform={platform}
-          />
-        );
-      })}
-    </ScrollView>
-  );
+  if (platformList === null) {
+    return (
+      <Column alignItems="center" justifyContent="center" style={{ flex: 1 }}>
+        <MaterialIcons color={colors.blue} name="error-outline" size={40} />
+      </Column>
+    );
+  } else if (platformList.length > 0) {
+    return (
+      <ScrollView bg="black">
+        {platformList.map((platform, index) => {
+          return (
+            <PlatformListItem
+              key={index}
+              navigation={navigation}
+              platform={platform}
+            />
+          );
+        })}
+      </ScrollView>
+    );
+  } else {
+    return (
+      <Column alignItems="center" justifyContent="center" style={{ flex: 1 }}>
+        <Spinner size="lg" color={colors.blue} />
+      </Column>
+    );
+  }
 };
 
 //////////////////////////////////////////////////////////////////////////////
