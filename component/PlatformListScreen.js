@@ -15,7 +15,6 @@ const PlatformListScreen = ({ navigation, route }) => {
 
   React.useEffect(() => {
     return navigation.addListener("focus", async () => {
-      setPlatformList([]);
       const { host, port } = config;
       const url = `http://${host}:${port}/scan/rbf/${path}`;
       try {
