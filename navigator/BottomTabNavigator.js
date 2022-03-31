@@ -91,7 +91,7 @@ const BottomTabNavigator = () => {
           title: "Arcades",
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         component={PlatformListScreen}
         initialParams={{
           model: computers,
@@ -105,7 +105,7 @@ const BottomTabNavigator = () => {
           ),
           title: "Computers",
         }}
-      />
+      /> */}
       <Tab.Screen
         component={ConfigScreen}
         initialParams={{
