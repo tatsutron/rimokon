@@ -1,9 +1,13 @@
+const volume = "/media/fat/";
+
+///////////////////////////////////////////////////////////////////////////////
 export default {
-  arcade: "/media/fat/_Arcade",
-  computer: "/media/fat/_Computer",
-  console: "/media/fat/_Console",
-  games: "/media/fat/games",
-  host: "MiSTer",
+  arcade: `${volume}_Arcade`,
+  computer: `${volume}_Computer`,
+  console: `${volume}_Console`,
+  games: `${volume}games`,
+  host: `MiSTer`,
   port: 8080,
-  scripts: "/media/fat/Scripts",
+  scripts: `${volume}Scripts`,
+  volume,
 };
