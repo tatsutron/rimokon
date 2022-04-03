@@ -1,14 +1,19 @@
 const consoles = [
   {
-    core: "Atari2600",
-    folder: "Atari2600",
+    core: "Atari7800",
+    folder: "Atari7800",
     format: [
       {
-        extension: "rom",
-        mbcCommand: "ATARI2600",
+        extension: "a26",
       },
     ],
     image: require("../assets/atari_2600.png"),
+    mgl: {
+      delay: "2",
+      index: "0",
+      rbf: "_Console/Atari7800",
+      type: "f",
+    },
     name: "Atari 2600",
   },
   {
