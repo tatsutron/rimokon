@@ -147,6 +147,23 @@ const consoles = [
     name: "Odyssey 2",
   },
   {
+    core: "PSX",
+    folder: "PSX",
+    format: [
+      {
+        extension: "chd",
+      },
+    ],
+    image: require("../assets/playstation.png"),
+    mgl: {
+      delay: "1",
+      index: "1",
+      rbf: "_Console/PSX",
+      type: "s",
+    },
+    name: "PlayStation",
+  },
+  {
     core: "MegaCD",
     folder: "MegaCD",
     format: [
