@@ -176,6 +176,12 @@ const consoles = [
       },
     ],
     image: require("../assets/sega_genesis.png"),
+    mgl: {
+      delay: "2",
+      index: "0",
+      rbf: "_Console/Genesis",
+      type: "f",
+    },
     name: "Sega Genesis",
   },
   {

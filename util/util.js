@@ -95,15 +95,33 @@ const isFolder = ({ path }) => path.endsWith("/");
 
 ///////////////////////////////////////////////////////////////////////////////
 const loadGame = ({ platform, path }) => {
-  const { host, port } = config;
-  const command = platform.format.find((format) => {
-    return format.extension === getExtension({ path });
-  }).mbcCommand;
-  const url = `http://${host}:${port}/load/${command}/${path}`;
-  try {
-    fetch(url);
-  } catch (error) {
-    alert(error);
+  const { host, port, volume } = config;
+  if (platform.mgl) {
+    const games = `${volume}games/${platform.folder}/`;
+    const url = `http://${host}:${port}/play`;
+    const init = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        path: path.replace(games, ""),
+        ...platform.mgl,
+      }),
+    };
+    try {
+      fetch(url, init);
+    } catch (error) {
+      alert(error);
+    }
+  } else {
+    const command = platform.format.find((format) => {
+      return format.extension === getExtension({ path });
+    }).mbcCommand;
+    const url = `http://${host}:${port}/load/${command}/${path}`;
+    try {
+      fetch(url);
+    } catch (error) {
+      alert(error);
+    }
   }
 };
 
