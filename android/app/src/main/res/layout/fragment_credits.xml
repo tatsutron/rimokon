@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/vertical_divider_small"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_large"
+        android:showDividers="middle">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="72dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/mistercon_logo" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/blue" />
+
+        <android.lib.widget.verticalmarqueetextview.VerticalMarqueeTextView
+            android:id="@+id/credits_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:marqueeSpeed="25"
+            app:textColor="@color/white"
+            app:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/blue" />
+
+        <TextView
+            android:id="@+id/postscript"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="@dimen/margin_large"
+            android:paddingVertical="@dimen/margin_small"
+            android:textColor="@color/pink"
+            android:textSize="@dimen/text_size_smallest" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="48dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/version_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|end"
+        android:padding="@dimen/margin_small"
+        android:textColor="@color/primary_500" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true" />
+
+</FrameLayout>

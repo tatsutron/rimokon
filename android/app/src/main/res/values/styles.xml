@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+
+    <style name="ActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/gray_900</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="android:colorControlActivated">@color/primary_200</item>
+        <item name="android:editTextColor">@color/primary_200</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left</item>
+        <item name="android:textColorHint">@color/primary_200</item>
+        <item name="android:textColorSecondary">@color/primary_200</item>
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="colorAccent">@color/primary_500</item>
+        <item name="colorBackgroundFloating">@color/gray_800</item>
+        <item name="colorPrimary">@color/app_background</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="md_color_button_text">@color/primary_500</item>
+        <item name="md_color_content">@color/white</item>
+        <item name="md_color_hint">@color/gray_700</item>
+        <item name="md_color_title">@color/white</item>
+        <item name="searchViewStyle">@style/SearchView</item>
+        <item name="textInputStyle">@style/TextInputLayout</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@null</item>
+        <item name="closeIcon">@drawable/ic_close</item>
+        <item name="searchHintIcon">@null</item>
+        <item name="queryHint">Search all games</item>
+        <item name="iconifiedByDefault">true</item>
+    </style>
+
+    <style name="TextInputEditText" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="TextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="materialThemeOverlay">@style/TextInputLayoutOverlay</item>
+        <item name="boxBackgroundColor">@color/gray_800</item>
+        <item name="boxStrokeColor">@color/primary_500</item>
+    </style>
+
+    <style name="TextInputLayoutOverlay">
+        <item name="editTextStyle">@style/TextInputEditText</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">@color/black</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:background">@color/gray_900</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

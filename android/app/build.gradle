@@ -1,0 +1,56 @@
+apply plugin: "com.android.application"
+apply plugin: "com.squareup.sqldelight"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    compileSdkVersion 31
+    defaultConfig {
+        applicationId "com.tatsutron.rimokon"
+        minSdkVersion 21
+        targetSdkVersion 31
+        versionCode 1
+        versionName "0.0.1"
+    }
+}
+
+buildscript {
+    dependencies {
+        classpath "com.squareup.sqldelight:gradle-plugin:1.4.4"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+dependencies {
+    implementation "android.lib.verticalmarqueetextview:VerticalMarqueeTextView:1.0.2"
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    implementation "androidx.camera:camera-view:1.0.0-alpha29"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "com.afollestad.material-dialogs:input:3.3.0"
+    implementation "com.github.bumptech.glide:glide:4.13.2"
+    implementation "com.github.MikeOrtiz:TouchImageView:3.1.0"
+    implementation "com.google.android.material:material:1.4.0"
+    implementation "com.google.code.gson:gson:2.10.1"
+    implementation "com.google.mlkit:barcode-scanning:17.0.0"
+    implementation "com.jcraft:jsch:0.1.55"
+    implementation "com.leinardi.android:speed-dial:3.2.0"
+    implementation "com.squareup.sqldelight:android-driver:1.4.4"
+    implementation "io.github.l4digital:fastscroll:2.0.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_version"
+}

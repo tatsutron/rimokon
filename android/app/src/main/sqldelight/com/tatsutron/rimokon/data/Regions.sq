@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS Regions (
+    regionID INTEGER PRIMARY KEY AUTOINCREMENT,
+    regionName TEXT
+);

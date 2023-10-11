@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS Systems (
+    systemID INTEGER PRIMARY KEY AUTOINCREMENT,
+    systemName TEXT,
+    systemShortName TEXT,
+    systemHeaderSizeBytes INTEGER,
+    systemHashless INTEGER,
+    systemHeader INTEGER,
+    systemSerial TEXT,
+    systemOEID TEXT
+);
