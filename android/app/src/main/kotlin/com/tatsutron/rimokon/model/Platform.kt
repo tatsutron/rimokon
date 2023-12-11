@@ -178,6 +178,15 @@ enum class Platform(
         mrextId = "neogeo",
     ),
 
+    NINTENDO_64(
+        category = Category.CONSOLE,
+        displayName = "Nintendo 64",
+        gamesFolder = "N64",
+        media = Media.ROM_CARTRIDGE,
+        metadata = true,
+        mrextId = "nintendo64",
+    ),
+
     NINTENDO_ENTERTAINMENT_SYSTEM(
         category = Category.CONSOLE,
         displayName = "Nintendo Entertainment System",
@@ -231,6 +240,15 @@ enum class Platform(
         media = Media.ROM_CARTRIDGE,
         metadata = true,
         mrextId = "genesis",
+    ),
+
+    SEGA_SATURN(
+        category = Category.CONSOLE,
+        displayName = "Sega Saturn",
+        gamesFolder = "Saturn",
+        media = Media.ROM_CARTRIDGE,
+        metadata = false,
+        mrextId = "saturn",
     ),
 
     SG_1000(
