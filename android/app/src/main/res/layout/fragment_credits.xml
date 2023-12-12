@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="72dp"
             android:adjustViewBounds="true"
+            android:paddingVertical="@dimen/margin_small"
             android:scaleType="fitCenter"
             android:src="@drawable/mistercon_logo" />
 
@@ -52,7 +53,7 @@
             android:gravity="center_horizontal"
             android:paddingHorizontal="@dimen/margin_large"
             android:paddingVertical="@dimen/margin_small"
-            android:textColor="@color/analogous_200"
+            android:textColor="@color/triadic_200"
             android:textSize="@dimen/text_size_smallest" />
 
         <View
