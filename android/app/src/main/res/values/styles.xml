@@ -11,17 +11,17 @@
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="android:colorControlActivated">@color/primary_200</item>
-        <item name="android:editTextColor">@color/primary_200</item>
+        <item name="android:colorControlActivated">@color/triadic_200</item>
+        <item name="android:editTextColor">@color/triadic_200</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left</item>
-        <item name="android:textColorHint">@color/primary_200</item>
-        <item name="android:textColorSecondary">@color/primary_200</item>
+        <item name="android:textColorHint">@color/triadic_200</item>
+        <item name="android:textColorSecondary">@color/triadic_200</item>
         <item name="android:windowBackground">@color/app_background</item>
-        <item name="colorAccent">@color/primary_500</item>
+        <item name="colorAccent">@color/triadic_500</item>
         <item name="colorBackgroundFloating">@color/gray_800</item>
         <item name="colorPrimary">@color/app_background</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="md_color_button_text">@color/primary_500</item>
+        <item name="md_color_button_text">@color/triadic_500</item>
         <item name="md_color_content">@color/white</item>
         <item name="md_color_hint">@color/gray_700</item>
         <item name="md_color_title">@color/white</item>
@@ -50,7 +50,7 @@
     <style name="TextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="materialThemeOverlay">@style/TextInputLayoutOverlay</item>
         <item name="boxBackgroundColor">@color/gray_800</item>
-        <item name="boxStrokeColor">@color/primary_500</item>
+        <item name="boxStrokeColor">@color/triadic_500</item>
     </style>
 
     <style name="TextInputLayoutOverlay">

@@ -27,7 +27,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/blue" />
+            android:background="@color/triadic_200" />
 
         <android.lib.widget.verticalmarqueetextview.VerticalMarqueeTextView
             android:id="@+id/credits_scroll"
@@ -42,7 +42,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/blue" />
+            android:background="@color/triadic_200" />
 
         <TextView
             android:id="@+id/postscript"
@@ -52,7 +52,7 @@
             android:gravity="center_horizontal"
             android:paddingHorizontal="@dimen/margin_large"
             android:paddingVertical="@dimen/margin_small"
-            android:textColor="@color/pink"
+            android:textColor="@color/analogous_200"
             android:textSize="@dimen/text_size_smallest" />
 
         <View
@@ -67,7 +67,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom|end"
         android:padding="@dimen/margin_small"
-        android:textColor="@color/primary_500" />
+        android:textColor="@color/triadic_500" />
 
     <View
         android:layout_width="match_parent"
