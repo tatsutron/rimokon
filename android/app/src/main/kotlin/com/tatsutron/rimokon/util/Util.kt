@@ -17,11 +17,11 @@ object Util {
                 Ssh.sftp(session).apply {
                     try {
                         mkdir(Constants.TATSUTRON_ROOT)
-                        mkdir(Constants.MISTERCON_ROOT)
+                        mkdir(Constants.RIMOKON_ROOT)
                         mkdir(Constants.MREXT_ROOT)
                         mkdir(Constants.MREXT_OUTPUT_PATH)
                         listOf(
-                            Pair("mister_util.py", Constants.MISTERCON_ROOT),
+                            Pair("mister_util.py", Constants.RIMOKON_ROOT),
                             Pair("contool", Constants.MREXT_ROOT),
                         ).forEach {
                             val (name, folder) = it

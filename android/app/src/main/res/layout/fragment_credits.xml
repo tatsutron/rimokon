@@ -23,7 +23,7 @@
             android:adjustViewBounds="true"
             android:paddingVertical="@dimen/margin_small"
             android:scaleType="fitCenter"
-            android:src="@drawable/mistercon_logo" />
+            android:src="@drawable/rimokon_logo" />
 
         <View
             android:layout_width="match_parent"
