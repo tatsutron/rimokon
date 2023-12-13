@@ -45,20 +45,9 @@
             android:layout_height="2dp"
             android:background="@color/triadic_200" />
 
-        <TextView
-            android:id="@+id/postscript"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:paddingHorizontal="@dimen/margin_large"
-            android:paddingVertical="@dimen/margin_small"
-            android:textColor="@color/triadic_200"
-            android:textSize="@dimen/text_size_smallest" />
-
         <View
             android:layout_width="wrap_content"
-            android:layout_height="48dp" />
+            android:layout_height="80dp" />
 
     </LinearLayout>
 

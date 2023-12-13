@@ -37,6 +37,14 @@ class CreditsFragment : BaseFragment() {
                         "",
                         "",
                         "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
                         // Dedicated to
                         "\uD835\uDC37\uD835\uDC52\uD835\uDC51\uD835\uDC56\uD835\uDC50\uD835\uDC4E\uD835\uDC61\uD835\uDC52\uD835\uDC51 \uD835\uDC61\uD835\uDC5C",
                         // Alexey Melnikov
@@ -117,6 +125,7 @@ class CreditsFragment : BaseFragment() {
                         "\uD835\uDC4A\uD835\uDC56\uD835\uDC61ℎ \uD835\uDC59\uD835\uDC5C\uD835\uDC63\uD835\uDC52,",
                         // Sio & Casey
                         "\uD835\uDC46\uD835\uDC56\uD835\uDC5C & \uD835\uDC36\uD835\uDC4E\uD835\uDC60\uD835\uDC52\uD835\uDC66",
+                        "",
                         "\uD83D\uDC9A\uD83D\uDC96",
                         "",
                         "",
@@ -129,9 +138,6 @@ class CreditsFragment : BaseFragment() {
                     )
                 )
             }.joinToString("\n")
-        }
-        view.findViewById<TextView>(R.id.postscript).apply {
-            text = context.getText(R.string.thank_you)
         }
         view.findViewById<TextView>(R.id.version_name).apply {
             val versionName = context.packageManager
