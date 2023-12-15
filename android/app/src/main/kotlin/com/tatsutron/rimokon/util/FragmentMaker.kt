@@ -11,6 +11,8 @@ object FragmentMaker {
     const val KEY_PLATFORM_CATEGORY = "KEY_PLATFORM_CATEGORY"
     const val KEY_URL = "KEY_URL"
 
+    fun arcade() = ArcadeFragment()
+
     fun credits() = CreditsFragment()
 
     fun favoriteList() = FavoriteListFragment()
