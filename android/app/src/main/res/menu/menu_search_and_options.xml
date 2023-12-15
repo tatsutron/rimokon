@@ -9,29 +9,46 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/set_ip_address"
-        android:title="@string/connect"
-        app:showAsAction="never" />
+    <group android:id="@+id/A">
 
-    <item
-        android:id="@+id/sync_library"
-        android:title="@string/sync_library"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/set_ip_address"
+            android:title="@string/connect"
+            app:showAsAction="never" />
 
-    <item
-        android:id="@+id/favorites"
-        android:title="@string/favorites"
-        app:showAsAction="never" />
+        <item
+            android:id="@+id/sync_library"
+            android:title="@string/sync_library"
+            app:showAsAction="never" />
 
-    <item
-        android:id="@+id/scan_qr_code"
-        android:title="@string/scan_qr_code"
-        app:showAsAction="never" />
+    </group>
 
-    <item
-        android:id="@+id/credits"
-        android:title="@string/credits"
-        app:showAsAction="never" />
+    <group android:id="@+id/B">
+
+        <item
+            android:id="@+id/favorites"
+            android:title="@string/favorites"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/scan_qr_code"
+            android:title="@string/scan_qr_code"
+            app:showAsAction="never" />
+
+    </group>
+
+    <group android:id="@+id/C">
+
+        <item
+            android:id="@+id/preferences"
+            android:title="@string/preferences"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/credits"
+            android:title="@string/credits"
+            app:showAsAction="never" />
+
+    </group>
 
 </menu>

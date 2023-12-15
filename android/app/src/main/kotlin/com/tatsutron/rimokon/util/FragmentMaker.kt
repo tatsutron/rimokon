@@ -39,5 +39,7 @@ object FragmentMaker {
         }
     }
 
+    fun preferences() = PreferencesFragment()
+
     fun scan() = ScanFragment()
 }

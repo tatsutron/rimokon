@@ -8,6 +8,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
@@ -32,6 +33,10 @@ class PlatformListFragment : BaseFragment() {
     private lateinit var gameListAdapter: GameListAdapter
     private var searchTerm = ""
 
+    override fun onConfigChanged() {
+        setRecycler()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -41,6 +46,7 @@ class PlatformListFragment : BaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_search_and_options, menu)
+        MenuCompat.setGroupDividerEnabled(menu, true)
         (menu.findItem(R.id.search).actionView as? SearchView)?.apply {
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -125,6 +131,14 @@ class PlatformListFragment : BaseFragment() {
                 true
             }
 
+            R.id.preferences -> {
+                Navigator.showScreen(
+                    activity as AppCompatActivity,
+                    FragmentMaker.preferences(),
+                )
+                true
+            }
+
             R.id.credits -> {
                 Navigator.showScreen(
                     activity as AppCompatActivity,
@@ -158,11 +172,15 @@ class PlatformListFragment : BaseFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setRecycler() {
+        if (!this::recycler.isInitialized) {
+            return
+        }
         if (searchTerm.isEmpty()) {
             recycler.adapter = platformListAdapter
             val items = Platform.values()
                 .filter {
-                    it.category == platformCategory
+                    it.category == platformCategory &&
+                            !Persistence.isHidden(it)
                 }
                 .map {
                     PlatformItem(it)
@@ -175,6 +193,9 @@ class PlatformListFragment : BaseFragment() {
         } else {
             recycler.adapter = gameListAdapter
             val items = Persistence.getGamesBySearch(searchTerm)
+                .filter {
+                    !Persistence.isHidden(it.platform)
+                }
                 .map {
                     GameItem(
                         icon = it.platform.media.icon,

@@ -19,56 +19,27 @@ object Persistence {
     private val gson = Gson()
     private var database: Database? = null
 
-    @SuppressLint("SdCardPath")
-    fun init(context: Context) {
-        configFile = File(context.filesDir, "config.json")
-        if (configFile.exists()) {
-            config = gson.fromJson(configFile.readText(), Config::class.java)
-        } else {
-            config = Config()
-            configFile.writeText(gson.toJson(config))
-        }
-
-        val dir = "/data/data/${context.packageName}/databases"
-        val name = "app.db"
-        val path = File(dir, name).path
-        if (!File(path).exists()) {
-            File(dir).mkdir()
-            File(path).createNewFile()
-            context.assets.open("openvgdb.sqlite")
-                .copyTo(FileOutputStream(path))
-        }
-        database = Database(
-            AndroidSqliteDriver(Database.Schema, context, name)
-        )
+    fun deleteGame(path: String) {
+        database?.gamesQueries
+            ?.deleteByPath(path)
     }
 
-    var host: String
-        set(ipAddress) {
-            config.host = ipAddress
-            configFile.writeText(gson.toJson(config))
-        }
-        get() = config.host
-
-    fun saveGame(path: String, platform: Platform, sha1: String?) =
+    fun favoriteGame(game: Game, favorite: Boolean) {
         database?.gamesQueries
-            ?.save(File(path).nameWithoutExtension, path, platform.name, sha1)
+            ?.favoriteByPath(if (favorite) 1L else 0L, game.path)
+    }
+
+    private fun game(dao: Games) =
+        Game(
+            platform = Platform.valueOf(dao.platform),
+            favorite = dao.favorite != 0L,
+            path = dao.path,
+            sha1 = dao.sha1,
+        )
 
     fun getGamesByPlatform(platform: Platform) =
         database?.gamesQueries
             ?.selectByPlatform(platform.name)
-            ?.executeAsList()
-            ?.map {
-                game(it)
-            }
-            ?.sortedBy {
-                File(it.path).name.toLowerCase(Locale.getDefault())
-            }
-            ?: listOf()
-
-    fun getGamesBySearch(searchTerm: String) =
-        database?.gamesQueries
-            ?.selectBySearch(searchTerm)
             ?.executeAsList()
             ?.map {
                 game(it)
@@ -94,11 +65,6 @@ object Persistence {
                 game(it)
             }
 
-    fun favoriteGame(game: Game, favorite: Boolean) {
-        database?.gamesQueries
-            ?.favoriteByPath(if (favorite) 1L else 0L, game.path)
-    }
-
     fun getGamesByFavorite() =
         database?.gamesQueries
             ?.selectByFavorite()
@@ -111,10 +77,17 @@ object Persistence {
             }
             ?: listOf()
 
-    fun deleteGame(path: String) {
+    fun getGamesBySearch(searchTerm: String) =
         database?.gamesQueries
-            ?.deleteByPath(path)
-    }
+            ?.selectBySearch(searchTerm)
+            ?.executeAsList()
+            ?.map {
+                game(it)
+            }
+            ?.sortedBy {
+                File(it.path).name.toLowerCase(Locale.getDefault())
+            }
+            ?: listOf()
 
     fun getMetadataBySha1(sha1: String) =
         database?.metadataQueries
@@ -124,13 +97,44 @@ object Persistence {
                 metadata(it)
             }
 
-    private fun game(dao: Games) =
-        Game(
-            platform = Platform.valueOf(dao.platform),
-            favorite = dao.favorite != 0L,
-            path = dao.path,
-            sha1 = dao.sha1,
+    fun hidePlatform(platform: Platform) {
+        config.hiddenPlatforms.add(platform)
+        configFile.writeText(gson.toJson(config))
+    }
+
+    var host: String
+        set(ipAddress) {
+            config.host = ipAddress
+            configFile.writeText(gson.toJson(config))
+        }
+        get() = config.host
+
+    @SuppressLint("SdCardPath")
+    fun init(context: Context) {
+        configFile = File(context.filesDir, "config.json")
+        if (configFile.exists()) {
+            config = gson.fromJson(configFile.readText(), Config::class.java)
+        } else {
+            config = Config()
+            configFile.writeText(gson.toJson(config))
+        }
+
+        val dir = "/data/data/${context.packageName}/databases"
+        val name = "app.db"
+        val path = File(dir, name).path
+        if (!File(path).exists()) {
+            File(dir).mkdir()
+            File(path).createNewFile()
+            context.assets.open("openvgdb.sqlite")
+                .copyTo(FileOutputStream(path))
+        }
+        database = Database(
+            AndroidSqliteDriver(Database.Schema, context, name)
         )
+    }
+
+    fun isHidden(platform: Platform) =
+        config.hiddenPlatforms.contains(platform)
 
     private fun metadata(dao: SelectBySha1) =
         Metadata(
@@ -144,4 +148,13 @@ object Persistence {
             releaseDate = dao.releaseDate,
             region = dao.region,
         )
+
+    fun saveGame(path: String, platform: Platform, sha1: String?) =
+        database?.gamesQueries
+            ?.save(File(path).nameWithoutExtension, path, platform.name, sha1)
+
+    fun showPlatform(platform: Platform) {
+        config.hiddenPlatforms.remove(platform)
+        configFile.writeText(gson.toJson(config))
+    }
 }
