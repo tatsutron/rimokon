@@ -57,6 +57,9 @@ class PlatformFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.close -> {
+                FragmentStateAdapter.items.forEach {
+                    it.onConfigChanged()
+                }
                 (requireActivity() as AppCompatActivity)
                     .supportFragmentManager.popBackStack()
                 true
