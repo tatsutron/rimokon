@@ -61,7 +61,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/platforms"
+                    android:text="@string/global_search"
                     android:textColor="@color/text_header"
                     android:textSize="@dimen/text_size_smallest" />
 

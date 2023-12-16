@@ -19,6 +19,7 @@
     <string name="favorites">Favorites</string>
     <string name="games">Games</string>
     <string name="genre">Genre</string>
+    <string name="global_search">Global Search</string>
     <string name="handheld">Handheld</string>
     <string name="metadata_not_supported">Metadata is not supported for this platform.</string>
     <string name="no_camera_permission">Camera permission is required to use this feature.</string>
