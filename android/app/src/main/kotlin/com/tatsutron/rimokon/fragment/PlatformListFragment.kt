@@ -46,7 +46,6 @@ class PlatformListFragment : BaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_search_and_options, menu)
-        MenuCompat.setGroupDividerEnabled(menu, true)
         (menu.findItem(R.id.search).actionView as? SearchView)?.apply {
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
