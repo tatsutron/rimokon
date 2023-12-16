@@ -15,7 +15,6 @@ import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.model.Platform
 import com.tatsutron.rimokon.util.Persistence
 
-
 class PreferencesFragment : BaseFragment() {
 
     override fun onBackPressed(): Boolean {
@@ -75,20 +74,45 @@ class PreferencesFragment : BaseFragment() {
                 .forEach {
                     val switch = SwitchCompat(requireContext()).apply {
                         layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            32,
+                            LinearLayout.LayoutParams.MATCH_PARENT, // width
+                            32, // height
                         )
                         val (left, top, right, bottom) = arrayOf(64, 0, 64, 0)
                         setPadding(left, top, right, bottom)
                         text = it.displayName
                         textSize = 20.0f
                         setTextColor(requireContext().getColor(R.color.white))
-                        isChecked = !Persistence.isHidden(it)
+                        isChecked = !Persistence.isHiddenFromPlatformList(it)
                         setOnCheckedChangeListener { _, isChecked ->
                             if (isChecked) {
-                                Persistence.showPlatform(it)
+                                Persistence.showInPlatformList(it)
                             } else {
-                                Persistence.hidePlatform(it)
+                                Persistence.hideInPlatformList(it)
+                            }
+                        }
+                    }
+                    addView(switch)
+                }
+        }
+        view.findViewById<LinearLayout>(R.id.global_search).apply {
+            Platform.values()
+                .forEach {
+                    val switch = SwitchCompat(requireContext()).apply {
+                        layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, // width
+                            32, // height
+                        )
+                        val (left, top, right, bottom) = arrayOf(64, 0, 64, 0)
+                        setPadding(left, top, right, bottom)
+                        text = it.displayName
+                        textSize = 20.0f
+                        setTextColor(requireContext().getColor(R.color.white))
+                        isChecked = !Persistence.isHiddenFromGlobalSearch(it)
+                        setOnCheckedChangeListener { _, isChecked ->
+                            if (isChecked) {
+                                Persistence.showInGlobalSearch(it)
+                            } else {
+                                Persistence.hideInGlobalSearch(it)
                             }
                         }
                     }

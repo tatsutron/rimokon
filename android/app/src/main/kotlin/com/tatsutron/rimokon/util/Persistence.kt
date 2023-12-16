@@ -97,8 +97,13 @@ object Persistence {
                 metadata(it)
             }
 
-    fun hidePlatform(platform: Platform) {
-        config.hiddenPlatforms.add(platform)
+    fun hideInGlobalSearch(platform: Platform) {
+        config.hiddenInGlobalSearch.add(platform)
+        configFile.writeText(gson.toJson(config))
+    }
+
+    fun hideInPlatformList(platform: Platform) {
+        config.hiddenInPlatformList.add(platform)
         configFile.writeText(gson.toJson(config))
     }
 
@@ -133,8 +138,11 @@ object Persistence {
         )
     }
 
-    fun isHidden(platform: Platform) =
-        config.hiddenPlatforms.contains(platform)
+    fun isHiddenFromGlobalSearch(platform: Platform) =
+        config.hiddenInGlobalSearch.contains(platform)
+
+    fun isHiddenFromPlatformList(platform: Platform) =
+        config.hiddenInPlatformList.contains(platform)
 
     private fun metadata(dao: SelectBySha1) =
         Metadata(
@@ -153,8 +161,13 @@ object Persistence {
         database?.gamesQueries
             ?.save(File(path).nameWithoutExtension, path, platform.name, sha1)
 
-    fun showPlatform(platform: Platform) {
-        config.hiddenPlatforms.remove(platform)
+    fun showInGlobalSearch(platform: Platform) {
+        config.hiddenInGlobalSearch.remove(platform)
+        configFile.writeText(gson.toJson(config))
+    }
+
+    fun showInPlatformList(platform: Platform) {
+        config.hiddenInPlatformList.remove(platform)
         configFile.writeText(gson.toJson(config))
     }
 }

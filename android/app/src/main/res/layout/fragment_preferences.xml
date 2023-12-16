@@ -21,26 +21,58 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:id="@+id/platforms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/margin_medium"
-            android:paddingVertical="@dimen/margin_medium">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/platforms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/platforms"
-                android:textColor="@color/text_header"
-                android:textSize="@dimen/text_size_smallest" />
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/margin_medium"
+                android:paddingVertical="@dimen/margin_medium">
 
-            <View
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/platforms"
+                    android:textColor="@color/text_header"
+                    android:textSize="@dimen/text_size_smallest" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/margin_smallest"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:background="@color/separator" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/global_search"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/margin_smallest"
-                android:layout_marginBottom="@dimen/margin_small"
-                android:background="@color/separator" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/margin_medium"
+                android:paddingVertical="@dimen/margin_medium">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/platforms"
+                    android:textColor="@color/text_header"
+                    android:textSize="@dimen/text_size_smallest" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/margin_smallest"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:background="@color/separator" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -8,7 +8,6 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
@@ -179,7 +178,7 @@ class PlatformListFragment : BaseFragment() {
             val items = Platform.values()
                 .filter {
                     it.category == platformCategory &&
-                            !Persistence.isHidden(it)
+                            !Persistence.isHiddenFromPlatformList(it)
                 }
                 .map {
                     PlatformItem(it)
@@ -193,7 +192,7 @@ class PlatformListFragment : BaseFragment() {
             recycler.adapter = gameListAdapter
             val items = Persistence.getGamesBySearch(searchTerm)
                 .filter {
-                    !Persistence.isHidden(it.platform)
+                    !Persistence.isHiddenFromGlobalSearch(it.platform)
                 }
                 .map {
                     GameItem(

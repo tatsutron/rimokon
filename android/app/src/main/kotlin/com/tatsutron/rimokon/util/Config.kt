@@ -4,7 +4,7 @@ import com.tatsutron.rimokon.model.Platform
 
 class Config(
     var host: String = "",
-    val hiddenPlatforms: MutableList<Platform> = mutableListOf(
+    val hiddenInPlatformList: MutableList<Platform> = mutableListOf(
         Platform.ARCADIA_2001,
         Platform.ATARI_2600,
         Platform.ATARI_5200,
@@ -19,4 +19,5 @@ class Config(
         Platform.SUPER_GRAFX,
         Platform.VECTREX,
     ),
+    val hiddenInGlobalSearch: MutableList<Platform> = mutableListOf(),
 )
