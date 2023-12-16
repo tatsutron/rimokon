@@ -35,7 +35,6 @@ class GameFragment : BaseFragment() {
 
     private lateinit var game: Game
     private var metadata: Metadata? = null
-    private lateinit var playAction: SpeedDialActionItem
     private lateinit var favoriteAction: SpeedDialActionItem
     private lateinit var unfavoriteAction: SpeedDialActionItem
     private lateinit var syncAction: SpeedDialActionItem
@@ -97,13 +96,6 @@ class GameFragment : BaseFragment() {
 
     private fun setSpeedDialActionItems() {
         val context = requireContext()
-        playAction = SpeedDialActionItem.Builder(R.id.play, R.drawable.ic_play)
-            .setLabel(context.getString(R.string.play))
-            .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setLabelColor(context.getColorCompat(R.color.button_label))
-            .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
         favoriteAction = SpeedDialActionItem.Builder(R.id.favorite, R.drawable.ic_star_outline)
             .setLabel(context.getString(R.string.favorite))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
@@ -137,7 +129,6 @@ class GameFragment : BaseFragment() {
     private fun setSpeedDial() {
         view?.findViewById<SpeedDialView>(R.id.speed_dial)?.apply {
             clearActionItems()
-            addActionItem(playAction)
             if (game.favorite) {
                 addActionItem(unfavoriteAction)
             } else {
@@ -160,12 +151,6 @@ class GameFragment : BaseFragment() {
 
                         R.id.favorite -> {
                             onToggleFavorite()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.play -> {
-                            onPlay()
                             close()
                             return@OnActionSelectedListener true
                         }
