@@ -25,7 +25,7 @@ class FavoriteListFragment : BaseFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.menu_empty, menu)
+        inflater.inflate(R.menu.menu_close, menu)
     }
 
     override fun onCreateView(
@@ -39,6 +39,17 @@ class FavoriteListFragment : BaseFragment() {
             container,
             false,
         )
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.close -> {
+                (requireActivity() as AppCompatActivity)
+                    .supportFragmentManager.popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {
