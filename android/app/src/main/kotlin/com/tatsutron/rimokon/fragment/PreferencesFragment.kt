@@ -64,11 +64,12 @@ class PreferencesFragment : BaseFragment() {
                     val switch = SwitchCompat(requireContext()).apply {
                         layoutParams = LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            32,
                         )
-                        val (left, top, right, bottom) = arrayOf(128, 0, 128, 0)
+                        val (left, top, right, bottom) = arrayOf(64, 0, 64, 0)
                         setPadding(left, top, right, bottom)
                         text = it.displayName
+                        textSize = 20.0f
                         setTextColor(requireContext().getColor(R.color.white))
                         isChecked = !Persistence.isHidden(it)
                         setOnCheckedChangeListener { _, isChecked ->
