@@ -7,9 +7,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.model.Platform
@@ -75,15 +75,12 @@ class PreferencesFragment : BaseFragment() {
                     it != Platform.ARCADE
                 }
                 .forEach {
-                    val switch = SwitchCompat(requireContext()).apply {
+                    val switch = CheckBox(requireContext()).apply {
                         layoutParams = LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, // width
-                            32, // height
+                            LinearLayout.LayoutParams.WRAP_CONTENT, // height
                         )
-                        val (left, top, right, bottom) = arrayOf(64, 0, 64, 0)
-                        setPadding(left, top, right, bottom)
                         text = it.displayName
-                        textSize = 20.0f
                         setTextColor(requireContext().getColor(R.color.white))
                         isChecked = !Persistence.isHiddenFromPlatformList(it)
                         setOnCheckedChangeListener { _, isChecked ->
@@ -100,15 +97,12 @@ class PreferencesFragment : BaseFragment() {
         view.findViewById<LinearLayout>(R.id.global_search).apply {
             Platform.values()
                 .forEach {
-                    val switch = SwitchCompat(requireContext()).apply {
+                    val switch = CheckBox(requireContext()).apply {
                         layoutParams = LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, // width
-                            32, // height
+                            LinearLayout.LayoutParams.WRAP_CONTENT, // height
                         )
-                        val (left, top, right, bottom) = arrayOf(64, 0, 64, 0)
-                        setPadding(left, top, right, bottom)
                         text = it.displayName
-                        textSize = 20.0f
                         setTextColor(requireContext().getColor(R.color.white))
                         isChecked = !Persistence.isHiddenFromGlobalSearch(it)
                         setOnCheckedChangeListener { _, isChecked ->
