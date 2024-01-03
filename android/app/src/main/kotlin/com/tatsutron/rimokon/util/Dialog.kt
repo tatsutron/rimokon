@@ -55,4 +55,13 @@ object Dialog {
         message(text = throwable.toString())
         positiveButton(R.string.ok)
     }
+
+    fun warning(
+        context: Context,
+        message: String,
+    ) = MaterialDialog(context).show {
+        title(res = R.string.warning)
+        message(text = message)
+        positiveButton(R.string.ok)
+    }
 }

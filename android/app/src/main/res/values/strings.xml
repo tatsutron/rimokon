@@ -38,7 +38,9 @@
     <string name="set_ip_address">Set IP address</string>
     <string name="sync">Sync</string>
     <string name="sync_library">Sync library</string>
+    <string name="sync_library_warning">Depending on the size of your game collection, this may take many minutes.</string>
     <string name="system">System</string>
     <string name="toggle_menu">Toggle Menu</string>
     <string name="unfavorite">Unfavorite</string>
+    <string name="warning">Warning</string>
 </resources>

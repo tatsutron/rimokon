@@ -7,9 +7,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.jcraft.jsch.JSchException
 import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.model.Platform
 import com.tatsutron.rimokon.util.Coroutine
+import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Persistence
@@ -20,6 +22,7 @@ abstract class FullMenuBaseFragment : BaseFragment() {
     @SuppressLint("CheckResult")
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
+
             R.id.set_ip_address -> {
                 MaterialDialog(requireContext()).show {
                     title(
@@ -46,16 +49,7 @@ abstract class FullMenuBaseFragment : BaseFragment() {
             }
 
             R.id.sync_library -> {
-                Navigator.showLoadingScreen()
-                Coroutine.launch(
-                    activity = activity as Activity,
-                    run = {
-                        Util.syncPlatforms(Platform.values().toList())
-                    },
-                    finally = {
-                        Navigator.hideLoadingScreen()
-                    }
-                )
+                onSync()
                 true
             }
 
@@ -93,4 +87,38 @@ abstract class FullMenuBaseFragment : BaseFragment() {
 
             else -> super.onOptionsItemSelected(item)
         }
+
+    private fun onSync() {
+        val activity = activity as Activity
+        Dialog.warning(activity, activity.getString(R.string.sync_library_warning))
+        Navigator.showLoadingScreen()
+        Coroutine.launch(
+            activity = activity,
+            run = {
+                Util.syncPlatforms(Platform.values().toList())
+            },
+            failure = { throwable ->
+                when (throwable) {
+                    is JSchException ->
+                        if (Persistence.host.isEmpty()) {
+                            Dialog.enterIpAddress(
+                                context = activity,
+                                ipAddressSet = ::onSync,
+                            )
+                        } else {
+                            Dialog.connectionFailed(
+                                context = activity,
+                                ipAddressSet = ::onSync,
+                            )
+                        }
+
+                    else ->
+                        Dialog.error(activity, throwable)
+                }
+            },
+            finally = {
+                Navigator.hideLoadingScreen()
+            }
+        )
+    }
 }
