@@ -21,7 +21,7 @@ import com.tatsutron.rimokon.recycler.GameListAdapter
 import com.tatsutron.rimokon.util.*
 import java.io.File
 
-class ArcadeFragment : BaseFragment() {
+class ArcadeFragment : FullMenuBaseFragment() {
 
     private lateinit var currentFolder: String
     private lateinit var recycler: FastScrollRecyclerView
