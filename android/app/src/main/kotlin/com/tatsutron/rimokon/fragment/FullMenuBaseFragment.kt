@@ -23,33 +23,8 @@ abstract class FullMenuBaseFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
 
-            R.id.set_ip_address -> {
-                MaterialDialog(requireContext()).show {
-                    title(
-                        res = R.string.enter_mister_ip_address,
-                    )
-                    negativeButton(R.string.cancel)
-                    positiveButton(R.string.ok)
-                    input(
-                        inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS,
-                        prefill = Persistence.host,
-                        callback = { _, text ->
-                            Persistence.host = text.toString()
-                            Navigator.showLoadingScreen()
-                            Util.deployAssets(
-                                activity = requireActivity(),
-                                callback = {
-                                    Navigator.hideLoadingScreen()
-                                },
-                            )
-                        },
-                    )
-                }
-                true
-            }
-
-            R.id.sync_library -> {
-                onSync()
+            R.id.sync_game_library -> {
+                onSyncGameLibrary()
                 true
             }
 
@@ -88,37 +63,42 @@ abstract class FullMenuBaseFragment : BaseFragment() {
             else -> super.onOptionsItemSelected(item)
         }
 
-    private fun onSync() {
+    private fun onSyncGameLibrary() {
         val activity = activity as Activity
-        Dialog.warning(activity, activity.getString(R.string.sync_library_warning))
-        Navigator.showLoadingScreen()
-        Coroutine.launch(
-            activity = activity,
-            run = {
-                Util.syncPlatforms(Platform.values().toList())
-            },
-            failure = { throwable ->
-                when (throwable) {
-                    is JSchException ->
-                        if (Persistence.host.isEmpty()) {
-                            Dialog.enterIpAddress(
-                                context = activity,
-                                ipAddressSet = ::onSync,
-                            )
-                        } else {
-                            Dialog.connectionFailed(
-                                context = activity,
-                                ipAddressSet = ::onSync,
-                            )
-                        }
+        Dialog.warning(
+            context = activity,
+            message = activity.getString(R.string.sync_game_library_warning),
+            callback = {
+                Navigator.showLoadingScreen()
+                Coroutine.launch(
+                    activity = activity,
+                    run = {
+                        Util.syncPlatforms(requireActivity(), Platform.values().toList())
+                    },
+                    failure = { throwable ->
+                        when (throwable) {
+                            is JSchException ->
+                                if (Persistence.host.isEmpty()) {
+                                    Dialog.enterIpAddress(
+                                        context = activity,
+                                        callback = ::onSyncGameLibrary,
+                                    )
+                                } else {
+                                    Dialog.connectionFailed(
+                                        context = activity,
+                                        callback = ::onSyncGameLibrary,
+                                    )
+                                }
 
-                    else ->
-                        Dialog.error(activity, throwable)
-                }
+                            else ->
+                                Dialog.error(activity, throwable)
+                        }
+                    },
+                    finally = {
+                        Navigator.hideLoadingScreen()
+                    },
+                )
             },
-            finally = {
-                Navigator.hideLoadingScreen()
-            }
         )
     }
 }
