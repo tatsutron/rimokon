@@ -214,7 +214,7 @@ class PlatformFragment : BaseFragment() {
         Coroutine.launch(
             activity = activity,
             run = {
-                Util.syncPlatforms(listOf(platform))
+                Util.syncPlatforms(requireActivity(), listOf(platform))
             },
             success = {
                 setRecycler()
