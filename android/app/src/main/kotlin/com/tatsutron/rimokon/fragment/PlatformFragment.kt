@@ -226,12 +226,12 @@ class PlatformFragment : BaseFragment() {
                         if (Persistence.host.isEmpty()) {
                             Dialog.enterIpAddress(
                                 context = activity,
-                                ipAddressSet = ::onSync,
+                                callback = ::onSync,
                             )
                         } else {
                             Dialog.connectionFailed(
                                 context = activity,
-                                ipAddressSet = ::onSync,
+                                callback = ::onSync,
                             )
                         }
 
