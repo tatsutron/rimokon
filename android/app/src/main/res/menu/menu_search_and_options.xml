@@ -10,13 +10,8 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/set_ip_address"
-        android:title="@string/connect"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/sync_library"
-        android:title="@string/sync_library"
+        android:id="@+id/sync_game_library"
+        android:title="@string/sync_game_library"
         app:showAsAction="never" />
 
     <item

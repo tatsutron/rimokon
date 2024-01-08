@@ -300,7 +300,7 @@ class GameFragment : BaseFragment() {
                     is JSchException ->
                         Dialog.connectionFailed(
                             context = activity,
-                            ipAddressSet = ::onSync,
+                            callback = ::onSync,
                         )
 
                     else ->

@@ -71,7 +71,13 @@ class PlatformFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         if (Persistence.getGamesByPlatform(platform).isEmpty()) {
-            onSync()
+            Dialog.info(
+                context = requireContext(),
+                title = "No games found",
+                message = "Would you like to sync your ${platform.displayName} library?",
+                positiveButtonText = "Sync",
+                callback = ::onSync
+            )
         }
     }
 
