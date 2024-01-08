@@ -20,6 +20,7 @@ import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
 import com.tatsutron.rimokon.util.*
 import java.io.File
+import java.util.Locale
 
 class ArcadeFragment : FullMenuBaseFragment() {
 
@@ -68,7 +69,16 @@ class ArcadeFragment : FullMenuBaseFragment() {
     override fun onResume() {
         super.onResume()
         if (Persistence.getGamesByPlatform(Platform.ARCADE).isEmpty()) {
-            onSync()
+            val platform = Platform.ARCADE
+                .displayName
+                ?.toLowerCase(Locale.getDefault())
+            Dialog.info(
+                context = requireContext(),
+                title = "No games found",
+                message = "Would you like to sync your $platform library?",
+                positiveButtonText = "Sync",
+                callback = ::onSync
+            )
         }
     }
 
@@ -214,7 +224,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
         Coroutine.launch(
             activity = activity,
             run = {
-                Util.syncPlatforms(listOf(Platform.ARCADE))
+                Util.syncPlatforms(requireActivity(), listOf(Platform.ARCADE))
             },
             success = {
                 setRecycler()
@@ -226,12 +236,12 @@ class ArcadeFragment : FullMenuBaseFragment() {
                         if (Persistence.host.isEmpty()) {
                             Dialog.enterIpAddress(
                                 context = activity,
-                                ipAddressSet = ::onSync,
+                                callback = ::onSync,
                             )
                         } else {
                             Dialog.connectionFailed(
                                 context = activity,
-                                ipAddressSet = ::onSync,
+                                callback = ::onSync,
                             )
                         }
 

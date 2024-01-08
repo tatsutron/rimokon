@@ -10,7 +10,32 @@ import com.tatsutron.rimokon.R
 object Dialog {
 
     @SuppressLint("CheckResult")
-    fun enterIpAddress(context: Context, ipAddressSet: () -> Unit) {
+    fun connectionFailed(
+        context: Context,
+        callback: () -> Unit,
+    ) {
+        MaterialDialog(context).show {
+            title(
+                res = R.string.failed_to_connect,
+            )
+            message(
+                res = R.string.failed_to_connect_message,
+            )
+            negativeButton(
+                res = R.string.set_ip_address,
+                click = {
+                    ::enterIpAddress.invoke(context, callback)
+                },
+            )
+            positiveButton(R.string.ok)
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    fun enterIpAddress(
+        context: Context,
+        callback: () -> Unit,
+    ) {
         MaterialDialog(context).show {
             title(
                 res = R.string.enter_mister_ip_address,
@@ -22,28 +47,9 @@ object Dialog {
                 prefill = Persistence.host,
                 callback = { _, text ->
                     Persistence.host = text.toString()
-                    ipAddressSet.invoke()
+                    callback()
                 },
             )
-        }
-    }
-
-    @SuppressLint("CheckResult")
-    fun connectionFailed(context: Context, ipAddressSet: () -> Unit) {
-        MaterialDialog(context).show {
-            title(
-                res = R.string.failed_to_connect,
-            )
-            message(
-                res = R.string.failed_to_connect_message,
-            )
-            negativeButton(
-                res = R.string.set_ip_address,
-                click = {
-                    ::enterIpAddress.invoke(context, ipAddressSet)
-                },
-            )
-            positiveButton(R.string.ok)
         }
     }
 
@@ -56,12 +62,37 @@ object Dialog {
         positiveButton(R.string.ok)
     }
 
+    fun info(
+        context: Context,
+        title: String,
+        message: String,
+        positiveButtonText: String,
+        callback: () -> Unit,
+    ) = MaterialDialog(context).show {
+        title(text = title)
+        message(text = message)
+        negativeButton(R.string.cancel)
+        positiveButton(
+            text = positiveButtonText,
+            click = {
+                callback.invoke()
+            },
+        )
+    }
+
     fun warning(
         context: Context,
         message: String,
+        callback: () -> Unit,
     ) = MaterialDialog(context).show {
         title(res = R.string.warning)
         message(text = message)
-        positiveButton(R.string.ok)
+        negativeButton(R.string.cancel)
+        positiveButton(
+            res = R.string.ok,
+            click = {
+                callback.invoke()
+            },
+        )
     }
 }
