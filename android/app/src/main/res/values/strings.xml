@@ -9,7 +9,6 @@
     <string name="console">Console</string>
     <string name="copy_qr_data">Copy QR Data</string>
     <string name="credits">Credits</string>
-    <string name="description">Description</string>
     <string name="developer">Developer</string>
     <string name="enter_mister_ip_address">Enter MiSTer IP address</string>
     <string name="error">Error</string>
@@ -21,17 +20,15 @@
     <string name="genre">Genre</string>
     <string name="global_search">Global Search</string>
     <string name="handheld">Handheld</string>
-    <string name="metadata_not_supported">Metadata is not supported for this platform.</string>
     <string name="no_camera_permission">Camera permission is required to use this feature.</string>
-    <string name="no_data_was_found_for_game">No data found for %s.</string>
     <string name="ok">OK</string>
     <string name="platforms">Platforms</string>
     <string name="play">Play</string>
     <string name="preferences">Preferences</string>
     <string name="publisher">Publisher</string>
     <string name="random">Random</string>
-    <string name="region">Region</string>
     <string name="release_date">Release Date</string>
+    <string name="region">Region</string>
     <string name="rimokon">rimokon</string>
     <string name="scan_qr_code">Scan QR code</string>
     <string name="search">Search</string>

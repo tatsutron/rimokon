@@ -1,7 +1,10 @@
 package com.tatsutron.rimokon.fragment
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,12 +12,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.jcraft.jsch.JSchException
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
@@ -39,10 +43,20 @@ class GameFragment : BaseFragment() {
     private lateinit var unfavoriteAction: SpeedDialActionItem
     private lateinit var syncAction: SpeedDialActionItem
     private lateinit var copyQrAction: SpeedDialActionItem
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        // Handle browse for artwork result
+        val startActivityForResult = ActivityResultContracts.StartActivityForResult()
+        resultLauncher = registerForActivityResult(startActivityForResult) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val imageUri = result.data?.data.toString()
+                Persistence.updateArtwork(game, imageUri)
+                setArtwork(imageUri)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -66,6 +80,7 @@ class GameFragment : BaseFragment() {
                 onPlay()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -85,13 +100,7 @@ class GameFragment : BaseFragment() {
         }
         setSpeedDialActionItems()
         setSpeedDial()
-        if (!game.platform.metadata) {
-            setText(requireContext().getString(R.string.metadata_not_supported))
-        } else if (game.sha1 == null) {
-            onSync()
-        } else {
-            setMetadata()
-        }
+        setMetadata()
     }
 
     private fun setSpeedDialActionItems() {
@@ -174,87 +183,99 @@ class GameFragment : BaseFragment() {
     }
 
     private fun setMetadata() {
-        metadata?.publisher?.let {
-            if (it.isNotBlank()) {
-                view?.findViewById<MetadataCard>(R.id.publisher)?.set(it)
+        view?.findViewById<ImageCard>(R.id.artwork)?.apply {
+            game.artwork?.let {
+                setArtwork(it)
             }
-        }
-        metadata?.developer?.let {
-            if (it.isNotBlank()) {
-                view?.findViewById<MetadataCard>(R.id.developer)?.set(it)
-            }
-        }
-        metadata?.releaseDate?.let {
-            if (it.isNotBlank()) {
-                view?.findViewById<MetadataCard>(R.id.release_date)
-                    ?.set(it)
-            }
-        }
-        metadata?.region?.let {
-            if (it.isNotBlank()) {
-                view?.findViewById<MetadataCard>(R.id.region)?.set(it)
-            }
-        }
-        metadata?.genre?.let {
-            if (it.isNotBlank()) {
-                view?.findViewById<MetadataCard>(R.id.genre)?.set(it)
-            }
-        }
-        metadata?.description?.let {
-            if (it.isNotBlank()) {
-                view?.findViewById<MetadataCard>(R.id.description)?.set(it)
-            }
-        }
-        metadata?.frontCover?.let { url ->
-            if (url.isNotBlank()) {
-                view?.findViewById<ImageCard>(R.id.front_cover)
-                    ?.set(requireActivity(), url)
-            }
-        }
-        metadata?.backCover?.let { url ->
-            if (url.isNotBlank()) {
-                view?.findViewById<ImageCard>(R.id.back_cover)
-                    ?.set(requireActivity(), url)
-            }
-        }
-        metadata?.cartridge?.let { url ->
-            if (url.isNotBlank()) {
-                view?.findViewById<ImageCard>(R.id.cartridge)
-                    ?.set(requireActivity(), url)
-            }
-        }
-        if (
-            listOf(
-                metadata?.publisher?.isNotBlank(),
-                metadata?.developer?.isNotBlank(),
-                metadata?.releaseDate?.isNotBlank(),
-                metadata?.region?.isNotBlank(),
-                metadata?.genre?.isNotBlank(),
-                metadata?.description?.isNotBlank(),
-                metadata?.frontCover?.isNotBlank(),
-                metadata?.backCover?.isNotBlank(),
-                metadata?.cartridge?.isNotBlank(),
-            ).none {
-                it == true
-            }
-        ) {
-            setText(
-                requireContext().getString(
-                    R.string.no_data_was_found_for_game,
-                    game.name,
+            editButton.setOnClickListener {
+                val intent = Intent(
+                    Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 )
-            )
+                resultLauncher.launch(intent)
+            }
+        }
+        view?.findViewById<MetadataCard>(R.id.developer)?.apply {
+            game.developer?.let {
+                bodyText.text = it
+            }
+            editButton.setOnClickListener {
+                Dialog.metadata(
+                    requireContext(),
+                    "Enter developer",
+                    bodyText.text.toString()
+                ) { result ->
+                    Persistence.updateDeveloper(game, result)
+                    bodyText.text = result
+                }
+            }
+        }
+        view?.findViewById<MetadataCard>(R.id.publisher)?.apply {
+            game.publisher?.let {
+                bodyText.text = it
+            }
+            editButton.setOnClickListener {
+                Dialog.metadata(
+                    requireContext(),
+                    "Enter publisher",
+                    bodyText.text.toString()
+                ) { result ->
+                    Persistence.updatePublisher(game, result)
+                    bodyText.text = result
+                }
+            }
+        }
+        view?.findViewById<MetadataCard>(R.id.region)?.apply {
+            game.region?.let {
+                bodyText.text = it
+            }
+            editButton.setOnClickListener {
+                Dialog.metadata(
+                    requireContext(),
+                    "Enter region",
+                    bodyText.text.toString()
+                ) { result ->
+                    Persistence.updateRegion(game, result)
+                    bodyText.text = result
+                }
+            }
+        }
+        view?.findViewById<MetadataCard>(R.id.release_date)?.apply {
+            game.releaseDate?.let {
+                bodyText.text = it
+            }
+            editButton.setOnClickListener {
+                Dialog.metadata(
+                    requireContext(),
+                    "Enter year",
+                    bodyText.text.toString()
+                ) { result ->
+                    Persistence.updateReleaseDate(game, result)
+                    bodyText.text = result
+                }
+            }
+        }
+        view?.findViewById<MetadataCard>(R.id.genre)?.apply {
+            game.genre?.let {
+                bodyText.text = it
+            }
+            editButton.setOnClickListener {
+                Dialog.metadata(
+                    requireContext(),
+                    "Enter genre",
+                    bodyText.text.toString()
+                ) { result ->
+                    Persistence.updateGenre(game, result)
+                    bodyText.text = result
+                }
+            }
         }
     }
 
-    private fun setText(text: String) {
-        view?.findViewById<ScrollView>(R.id.scroll)
-            ?.visibility = View.GONE
-        view?.findViewById<TextView>(R.id.no_data_text)?.apply {
-            this.text = text
-            visibility = View.VISIBLE
-        }
-    }
+    private fun setArtwork(imageUri: String) =
+        Glide.with(activity?.applicationContext!!)
+            .load(Uri.parse(imageUri))
+            .into(view?.findViewById<ImageCard>(R.id.artwork)?.image!!)
 
     private fun onPlay() {
         Navigator.showLoadingScreen()
@@ -268,7 +289,7 @@ class GameFragment : BaseFragment() {
     }
 
     private fun onToggleFavorite() {
-        Persistence.favoriteGame(game, !game.favorite)
+        Persistence.updateFavorite(game, !game.favorite)
         game = Persistence.getGameByPath(game.path)!!
         setSpeedDial()
     }
@@ -283,11 +304,7 @@ class GameFragment : BaseFragment() {
                     path = game.path,
                     headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
                 )
-                Persistence.saveGame(
-                    path = game.path,
-                    platform = game.platform,
-                    sha1 = sha1,
-                )
+                Persistence.updateSha1(game, sha1)
             },
             success = {
                 game = Persistence.getGameByPath(game.path)!!

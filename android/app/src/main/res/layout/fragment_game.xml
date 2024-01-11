@@ -34,18 +34,17 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:divider="@drawable/vertical_divider_medium"
+                    android:divider="@drawable/vertical_divider_xxl"
                     android:focusable="true"
                     android:orientation="vertical"
                     android:paddingHorizontal="@dimen/margin_medium"
                     android:paddingVertical="@dimen/margin_small"
                     android:showDividers="middle">
 
-                    <com.tatsutron.rimokon.component.MetadataCard
-                        android:id="@+id/publisher"
+                    <com.tatsutron.rimokon.component.ImageCard
+                        android:id="@+id/artwork"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hint="@string/publisher" />
+                        android:layout_height="wrap_content" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
                         android:id="@+id/developer"
@@ -54,10 +53,10 @@
                         app:hint="@string/developer" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
-                        android:id="@+id/release_date"
+                        android:id="@+id/publisher"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:hint="@string/release_date" />
+                        app:hint="@string/publisher" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
                         android:id="@+id/region"
@@ -66,46 +65,24 @@
                         app:hint="@string/region" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
+                        android:id="@+id/release_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hint="@string/release_date" />
+
+                    <com.tatsutron.rimokon.component.MetadataCard
                         android:id="@+id/genre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:hint="@string/genre" />
 
-                    <com.tatsutron.rimokon.component.MetadataCard
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hint="@string/description" />
-
-                    <com.tatsutron.rimokon.component.ImageCard
-                        android:id="@+id/front_cover"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <com.tatsutron.rimokon.component.ImageCard
-                        android:id="@+id/back_cover"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <com.tatsutron.rimokon.component.ImageCard
-                        android:id="@+id/cartridge"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="64dp" />
 
                 </LinearLayout>
 
             </ScrollView>
-
-            <TextView
-                android:id="@+id/no_data_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/margin_large"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large"
-                android:visibility="gone" />
 
         </FrameLayout>
 

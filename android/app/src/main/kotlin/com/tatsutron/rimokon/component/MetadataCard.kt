@@ -3,9 +3,8 @@ package com.tatsutron.rimokon.component
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
+import android.widget.ImageView
 import android.widget.TextView
 import com.tatsutron.rimokon.R
 
@@ -15,8 +14,8 @@ class MetadataCard(
     defStyleAttr: Int,
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val layout: LinearLayout
-    private val bodyText: TextView
+    val bodyText: TextView
+    val editButton: ImageView
 
     constructor(context: Context, attrs: AttributeSet)
             : this(context, attrs, defStyleAttr = 0)
@@ -27,7 +26,6 @@ class MetadataCard(
     init {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.component_metadata_card, this, true)
-        layout = findViewById(R.id.layout)
         val attributes = context.obtainStyledAttributes(
             attrs,
             R.styleable.MetadataCard,
@@ -44,10 +42,6 @@ class MetadataCard(
         }
         attributes.recycle()
         bodyText = findViewById(R.id.body_text)
-    }
-
-    fun set(text: String) {
-        bodyText.text = text
-        layout.visibility = View.VISIBLE
+        editButton = findViewById(R.id.edit_button)
     }
 }

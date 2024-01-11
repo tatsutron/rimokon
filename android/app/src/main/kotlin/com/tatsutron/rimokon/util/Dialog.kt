@@ -80,6 +80,27 @@ object Dialog {
         )
     }
 
+    @SuppressLint("CheckResult")
+    fun metadata(
+        context: Context,
+        title: String,
+        currentValue: String,
+        callback: (String) -> Unit,
+    ) {
+        MaterialDialog(context).show {
+            title(text = title)
+            negativeButton(R.string.cancel)
+            positiveButton(R.string.ok)
+            input(
+                inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS,
+                prefill = currentValue,
+                callback = { _, text ->
+                    callback(text.toString())
+                },
+            )
+        }
+    }
+
     fun warning(
         context: Context,
         message: String,

@@ -24,16 +24,17 @@ object Persistence {
             ?.deleteByPath(path)
     }
 
-    fun favoriteGame(game: Game, favorite: Boolean) {
-        database?.gamesQueries
-            ?.favoriteByPath(if (favorite) 1L else 0L, game.path)
-    }
-
     private fun game(dao: Games) =
         Game(
-            platform = Platform.valueOf(dao.platform),
+            artwork = dao.artwork,
+            developer = dao.developer,
             favorite = dao.favorite != 0L,
+            genre = dao.genre,
             path = dao.path,
+            platform = Platform.valueOf(dao.platform),
+            publisher = dao.publisher,
+            region = dao.region,
+            releaseDate = dao.releaseDate,
             sha1 = dao.sha1,
         )
 
@@ -170,4 +171,36 @@ object Persistence {
         config.hiddenInPlatformList.remove(platform)
         configFile.writeText(gson.toJson(config))
     }
+
+    fun updateArtwork(game: Game, artwork: String) =
+        database?.gamesQueries
+            ?.updateArtwork(artwork, game.path)
+
+    fun updateDeveloper(game: Game, developer: String) =
+        database?.gamesQueries
+            ?.updateDeveloper(developer, game.path)
+
+    fun updateFavorite(game: Game, favorite: Boolean) =
+        database?.gamesQueries
+            ?.updateFavorite(if (favorite) 1L else 0L, game.path)
+
+    fun updateGenre(game: Game, genre: String) =
+        database?.gamesQueries
+            ?.updateGenre(genre, game.path)
+
+    fun updatePublisher(game: Game, publisher: String) =
+        database?.gamesQueries
+            ?.updatePublisher(publisher, game.path)
+
+    fun updateRegion(game: Game, region: String) =
+        database?.gamesQueries
+            ?.updateRegion(region, game.path)
+
+    fun updateSha1(game: Game, sha1: String) =
+        database?.gamesQueries
+            ?.updateSha1(sha1, game.path)
+
+    fun updateReleaseDate(game: Game, releaseDate: String) =
+        database?.gamesQueries
+            ?.updateReleaseDate(releaseDate, game.path)
 }

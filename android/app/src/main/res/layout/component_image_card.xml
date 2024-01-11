@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_background"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_medium"
-    android:visibility="gone">
+    android:background="@drawable/frame_square"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image"
@@ -15,4 +14,21 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter" />
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:src="@drawable/ic_image"
+        app:tint="@color/analogous_200"
+        android:padding="@dimen/margin_medium"/>
+
+    <ImageView
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_edit"
+        app:tint="@color/triadic_200"
+        android:padding="@dimen/margin_medium"/>
+
+</FrameLayout>
