@@ -26,7 +26,6 @@ import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.component.ImageCard
 import com.tatsutron.rimokon.component.MetadataCard
 import com.tatsutron.rimokon.model.Game
-import com.tatsutron.rimokon.model.Metadata
 import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
@@ -38,10 +37,9 @@ import com.tatsutron.rimokon.util.getColorCompat
 class GameFragment : BaseFragment() {
 
     private lateinit var game: Game
-    private var metadata: Metadata? = null
     private lateinit var favoriteAction: SpeedDialActionItem
     private lateinit var unfavoriteAction: SpeedDialActionItem
-    private lateinit var syncAction: SpeedDialActionItem
+    private lateinit var generateQrAction: SpeedDialActionItem
     private lateinit var copyQrAction: SpeedDialActionItem
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -90,9 +88,6 @@ class GameFragment : BaseFragment() {
         game = Persistence.getGameByPath(
             arguments?.getString(FragmentMaker.KEY_PATH)!!
         )!!
-        if (game.sha1 != null) {
-            metadata = Persistence.getMetadataBySha1(game.sha1!!)
-        }
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
@@ -119,8 +114,8 @@ class GameFragment : BaseFragment() {
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label))
             .create()
-        syncAction = SpeedDialActionItem.Builder(R.id.sync, R.drawable.ic_sync)
-            .setLabel(context.getString(R.string.sync))
+        generateQrAction = SpeedDialActionItem.Builder(R.id.generate_qr, R.drawable.ic_qr_code)
+            .setLabel(context.getString(R.string.generate_qr_data))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
@@ -143,8 +138,8 @@ class GameFragment : BaseFragment() {
             } else {
                 addActionItem(favoriteAction)
             }
-            if (game.platform.metadata) {
-                addActionItem(syncAction)
+            if (game.sha1 == null) {
+                addActionItem(generateQrAction)
             }
             if (game.sha1 != null) {
                 addActionItem(copyQrAction)
@@ -164,8 +159,8 @@ class GameFragment : BaseFragment() {
                             return@OnActionSelectedListener true
                         }
 
-                        R.id.sync -> {
-                            onSync()
+                        R.id.generate_qr -> {
+                            onGenerateQr()
                             close()
                             return@OnActionSelectedListener true
                         }
@@ -294,7 +289,7 @@ class GameFragment : BaseFragment() {
         setSpeedDial()
     }
 
-    private fun onSync() {
+    private fun onGenerateQr() {
         Navigator.showLoadingScreen()
         val activity = requireActivity()
         Coroutine.launch(
@@ -308,7 +303,6 @@ class GameFragment : BaseFragment() {
             },
             success = {
                 game = Persistence.getGameByPath(game.path)!!
-                metadata = Persistence.getMetadataBySha1(game.sha1!!)
                 setSpeedDial()
                 setMetadata()
             },
@@ -317,7 +311,7 @@ class GameFragment : BaseFragment() {
                     is JSchException ->
                         Dialog.connectionFailed(
                             context = activity,
-                            callback = ::onSync,
+                            callback = ::onGenerateQr,
                         )
 
                     else ->

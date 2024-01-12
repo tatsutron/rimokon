@@ -17,6 +17,7 @@
     <string name="favorite">Favorite</string>
     <string name="favorites">Favorites</string>
     <string name="games">Games</string>
+    <string name="generate_qr_data">Generate QR data</string>
     <string name="genre">Genre</string>
     <string name="global_search">Global Search</string>
     <string name="handheld">Handheld</string>
