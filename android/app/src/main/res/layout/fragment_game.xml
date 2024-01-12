@@ -44,7 +44,8 @@
                     <com.tatsutron.rimokon.component.ImageCard
                         android:id="@+id/artwork"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/margin_large" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
                         android:id="@+id/developer"
