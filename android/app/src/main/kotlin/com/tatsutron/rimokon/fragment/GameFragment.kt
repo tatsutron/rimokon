@@ -184,7 +184,7 @@ class GameFragment : BaseFragment() {
             }
             editButton.setOnClickListener {
                 val intent = Intent(
-                    Intent.ACTION_PICK,
+                    Intent.ACTION_GET_CONTENT,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 )
                 resultLauncher.launch(intent)
