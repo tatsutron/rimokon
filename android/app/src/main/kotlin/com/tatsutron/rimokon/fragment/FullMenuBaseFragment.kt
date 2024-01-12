@@ -2,11 +2,8 @@ package com.tatsutron.rimokon.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.text.InputType
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.input
 import com.jcraft.jsch.JSchException
 import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.model.Platform

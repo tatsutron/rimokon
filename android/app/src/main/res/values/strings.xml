@@ -22,6 +22,8 @@
     <string name="global_search">Global Search</string>
     <string name="handheld">Handheld</string>
     <string name="no_camera_permission">Camera permission is required to use this feature.</string>
+    <string name="no_games_found">No games found</string>
+    <string name="no_thanks">No thanks</string>
     <string name="ok">OK</string>
     <string name="platforms">Platforms</string>
     <string name="play">Play</string>
@@ -41,4 +43,5 @@
     <string name="toggle_menu">Toggle Menu</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="warning">Warning</string>
+    <string name="would_you_like_to_sync_your_library">Would you like to sync your %s library?</string>
 </resources>

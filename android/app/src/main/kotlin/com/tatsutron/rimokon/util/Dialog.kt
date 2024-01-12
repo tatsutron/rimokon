@@ -62,16 +62,19 @@ object Dialog {
         positiveButton(R.string.ok)
     }
 
-    fun info(
+    fun confirmation(
         context: Context,
         title: String,
         message: String,
+        negativeButtonText: String,
         positiveButtonText: String,
         callback: () -> Unit,
     ) = MaterialDialog(context).show {
         title(text = title)
         message(text = message)
-        negativeButton(R.string.cancel)
+        negativeButton(
+            text = negativeButtonText,
+        )
         positiveButton(
             text = positiveButtonText,
             click = {

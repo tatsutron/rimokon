@@ -72,11 +72,16 @@ class ArcadeFragment : FullMenuBaseFragment() {
             val platform = Platform.ARCADE
                 .displayName
                 ?.toLowerCase(Locale.getDefault())
-            Dialog.info(
-                context = requireContext(),
-                title = "No games found",
-                message = "Would you like to sync your $platform library?",
-                positiveButtonText = "Sync",
+            val context = requireContext()
+            Dialog.confirmation(
+                context = context,
+                title = context.getString(R.string.no_games_found),
+                message = context.getString(
+                    R.string.would_you_like_to_sync_your_library,
+                    platform,
+                ),
+                negativeButtonText = context.getString(R.string.no_thanks),
+                positiveButtonText = context.getString(R.string.sync),
                 callback = ::onSync
             )
         }
