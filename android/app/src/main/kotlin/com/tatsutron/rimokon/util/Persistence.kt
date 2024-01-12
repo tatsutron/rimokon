@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.tatsutron.rimokon.Database
 import com.tatsutron.rimokon.data.Games
-import com.tatsutron.rimokon.data.SelectBySha1
 import com.tatsutron.rimokon.model.*
 import java.io.File
 import java.io.FileOutputStream
@@ -90,14 +89,6 @@ object Persistence {
             }
             ?: listOf()
 
-    fun getMetadataBySha1(sha1: String) =
-        database?.metadataQueries
-            ?.selectBySha1(sha1.toUpperCase(Locale.getDefault()))
-            ?.executeAsOneOrNull()
-            ?.let {
-                metadata(it)
-            }
-
     fun hideInGlobalSearch(platform: Platform) {
         config.hiddenInGlobalSearch.add(platform)
         configFile.writeText(gson.toJson(config))
@@ -144,19 +135,6 @@ object Persistence {
 
     fun isHiddenFromPlatformList(platform: Platform) =
         config.hiddenInPlatformList.contains(platform)
-
-    private fun metadata(dao: SelectBySha1) =
-        Metadata(
-            backCover = dao.backCover,
-            cartridge = dao.cartridge,
-            description = dao.description,
-            developer = dao.developer,
-            frontCover = dao.frontCover,
-            genre = dao.genre,
-            publisher = dao.publisher,
-            releaseDate = dao.releaseDate,
-            region = dao.region,
-        )
 
     fun saveGame(path: String, platform: Platform, sha1: String?) =
         database?.gamesQueries
