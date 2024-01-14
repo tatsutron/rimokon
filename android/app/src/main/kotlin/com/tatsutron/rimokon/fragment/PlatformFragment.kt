@@ -232,6 +232,7 @@ class PlatformFragment : BaseFragment() {
     }
 
     private fun onGalleryView() {
+        // TODO
     }
 
     private fun onRandom() {

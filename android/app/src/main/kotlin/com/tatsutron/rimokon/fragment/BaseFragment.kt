@@ -7,4 +7,6 @@ abstract class BaseFragment : Fragment() {
     open fun onBackPressed() = false
 
     open fun onConfigChanged() {}
+
+    open fun onGameItemClicked() {}
 }

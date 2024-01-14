@@ -13,8 +13,9 @@ class FragmentStateAdapter(
         val items = listOf(
             FragmentMaker.platformList(Platform.Category.CONSOLE),
             FragmentMaker.arcade(),
+            // TODO
             FragmentMaker.platformList(Platform.Category.HANDHELD),
-            FragmentMaker.platformList(Platform.Category.COMPUTER),
+            //FragmentMaker.platformList(Platform.Category.COMPUTER),
         )
     }
 

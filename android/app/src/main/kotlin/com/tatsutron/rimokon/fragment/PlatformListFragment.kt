@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.l4digital.fastscroll.FastScrollRecyclerView
 import com.tatsutron.rimokon.R
@@ -21,12 +23,14 @@ import com.tatsutron.rimokon.util.Persistence
 class PlatformListFragment : FullMenuBaseFragment() {
 
     private lateinit var platformCategory: Platform.Category
+    private lateinit var toolbar: Toolbar
     private lateinit var recycler: FastScrollRecyclerView
     private lateinit var platformListAdapter: PlatformListAdapter
     private lateinit var gameListAdapter: GameListAdapter
     private var searchTerm = ""
 
     override fun onConfigChanged() {
+        super.onConfigChanged()
         setRecycler()
     }
 
@@ -65,12 +69,21 @@ class PlatformListFragment : FullMenuBaseFragment() {
         )
     }
 
+    override fun onGameItemClicked() {
+        super.onGameItemClicked()
+        context?.let {
+            getSystemService(it, InputMethodManager::class.java)
+                ?.hideSoftInputFromWindow(toolbar.windowToken, 0)
+            toolbar.clearFocus()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         platformCategory = Platform.Category.valueOf(
             arguments?.getString(FragmentMaker.KEY_PLATFORM_CATEGORY)!!,
         )
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        toolbar = view.findViewById(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
             toolbar.title = platformCategory.displayName

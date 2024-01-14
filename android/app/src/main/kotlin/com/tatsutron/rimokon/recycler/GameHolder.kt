@@ -9,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tatsutron.rimokon.R
+import com.tatsutron.rimokon.fragment.FragmentStateAdapter
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Util
@@ -39,6 +40,9 @@ class GameHolder(
             )
         }
         itemView.setOnClickListener {
+            FragmentStateAdapter.items.forEach {
+                it.onGameItemClicked()
+            }
             Navigator.showScreen(
                 activity as AppCompatActivity,
                 FragmentMaker.game(item.game.path),
