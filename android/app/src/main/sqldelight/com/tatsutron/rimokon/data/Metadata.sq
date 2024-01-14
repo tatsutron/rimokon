@@ -1,8 +1,5 @@
 selectBySha1:
 SELECT
-    r2.releaseCoverBack AS backCover,
-    r2.releaseCoverCart AS cartridge,
-    r2.releaseDescription AS description,
     r2.releaseDeveloper AS developer,
     r2.releaseCoverFront AS frontCover,
     r2.releaseGenre AS genre,

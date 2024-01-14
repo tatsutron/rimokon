@@ -3,6 +3,7 @@
     <id name="copy_qr" />
     <id name="favorite" />
     <id name="generate_qr" />
+    <id name="import_metadata" />
     <id name="play" />
     <id name="random" />
     <id name="sync" />

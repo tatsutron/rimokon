@@ -26,6 +26,7 @@ import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.component.ImageCard
 import com.tatsutron.rimokon.component.MetadataCard
 import com.tatsutron.rimokon.model.Game
+import com.tatsutron.rimokon.model.Metadata
 import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
@@ -37,11 +38,12 @@ import com.tatsutron.rimokon.util.getColorCompat
 class GameFragment : BaseFragment() {
 
     private lateinit var game: Game
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private lateinit var favoriteAction: SpeedDialActionItem
     private lateinit var unfavoriteAction: SpeedDialActionItem
     private lateinit var generateQrAction: SpeedDialActionItem
     private lateinit var copyQrAction: SpeedDialActionItem
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var importAction: SpeedDialActionItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,10 @@ class GameFragment : BaseFragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data?.data.toString()
                 Persistence.updateArtwork(game, imageUri)
-                setArtwork(imageUri)
+                setArtwork(
+                    imageCard = view?.findViewById<ImageCard>(R.id.artwork)!!,
+                    imageUri = imageUri,
+                )
             }
         }
     }
@@ -128,6 +133,14 @@ class GameFragment : BaseFragment() {
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label))
             .create()
+        importAction =
+            SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
+                .setLabel(context.getString(R.string.import_metadata))
+                .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
+                .setLabelColor(context.getColorCompat(R.color.button_label))
+                .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
+                .setFabImageTintColor(context.getColorCompat(R.color.button_label))
+                .create()
     }
 
     private fun setSpeedDial() {
@@ -143,6 +156,7 @@ class GameFragment : BaseFragment() {
             }
             if (game.sha1 != null) {
                 addActionItem(copyQrAction)
+                addActionItem(importAction)
             }
             setOnActionSelectedListener(
                 SpeedDialView.OnActionSelectedListener { actionItem ->
@@ -165,6 +179,13 @@ class GameFragment : BaseFragment() {
                             return@OnActionSelectedListener true
                         }
 
+                        R.id.import_metadata -> {
+                            Persistence.getMetadataBySha1(game.sha1!!)?.let {
+                                onImportMetadata(it)
+                            }
+                            return@OnActionSelectedListener true
+                        }
+
                         R.id.unfavorite -> {
                             onToggleFavorite()
                             close()
@@ -180,7 +201,7 @@ class GameFragment : BaseFragment() {
     private fun setMetadata() {
         view?.findViewById<ImageCard>(R.id.artwork)?.apply {
             game.artwork?.let {
-                setArtwork(it)
+                setArtwork(this, it)
             }
             editButton.setOnClickListener {
                 val intent = Intent(
@@ -267,10 +288,10 @@ class GameFragment : BaseFragment() {
         }
     }
 
-    private fun setArtwork(imageUri: String) =
+    private fun setArtwork(imageCard: ImageCard, imageUri: String) =
         Glide.with(activity?.applicationContext!!)
             .load(Uri.parse(imageUri))
-            .into(view?.findViewById<ImageCard>(R.id.artwork)?.image!!)
+            .into(imageCard.image)
 
     private fun onPlay() {
         Navigator.showLoadingScreen()
@@ -336,5 +357,55 @@ class GameFragment : BaseFragment() {
             "Copied QR Data to Clipboard",
             Toast.LENGTH_SHORT,
         ).show()
+    }
+
+    private fun onImportMetadata(metadata: Metadata) {
+        metadata.artwork?.let {
+            if (game.artwork.isNullOrBlank()) {
+                Persistence.updateArtwork(game, it)
+                val imageCard = view?.findViewById<ImageCard>(R.id.artwork)!!
+                setArtwork(imageCard, it)
+            }
+        }
+        metadata.developer?.let {
+            if (game.developer.isNullOrBlank()) {
+                Persistence.updateDeveloper(game, it)
+                view?.findViewById<MetadataCard>(R.id.developer)?.apply {
+                    bodyText.text = it
+                }
+            }
+        }
+        metadata.publisher?.let {
+            if (game.publisher.isNullOrBlank()) {
+                Persistence.updatePublisher(game, it)
+                view?.findViewById<MetadataCard>(R.id.publisher)?.apply {
+                    bodyText.text = it
+                }
+            }
+        }
+        metadata.region?.let {
+            if (game.region.isNullOrBlank()) {
+                Persistence.updateRegion(game, it)
+                view?.findViewById<MetadataCard>(R.id.region)?.apply {
+                    bodyText.text = it
+                }
+            }
+        }
+        metadata.releaseDate?.let {
+            if (game.releaseDate.isNullOrBlank()) {
+                Persistence.updateReleaseDate(game, it)
+                view?.findViewById<MetadataCard>(R.id.release_date)?.apply {
+                    bodyText.text = it
+                }
+            }
+        }
+        metadata.genre?.let {
+            if (game.genre.isNullOrBlank()) {
+                Persistence.updateGenre(game, it)
+                view?.findViewById<MetadataCard>(R.id.genre)?.apply {
+                    bodyText.text = it
+                }
+            }
+        }
     }
 }
