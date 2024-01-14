@@ -39,11 +39,18 @@ class GameFragment : BaseFragment() {
 
     private lateinit var game: Game
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var speedDial: SpeedDialView
     private lateinit var favoriteAction: SpeedDialActionItem
     private lateinit var unfavoriteAction: SpeedDialActionItem
     private lateinit var generateQrAction: SpeedDialActionItem
     private lateinit var copyQrAction: SpeedDialActionItem
     private lateinit var importAction: SpeedDialActionItem
+    private lateinit var artworkCard: ImageCard
+    private lateinit var developerCard: MetadataCard
+    private lateinit var publisherCard: MetadataCard
+    private lateinit var regionCard: MetadataCard
+    private lateinit var releaseDateCard: MetadataCard
+    private lateinit var genreCard: MetadataCard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +61,7 @@ class GameFragment : BaseFragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data?.data.toString()
                 Persistence.updateArtwork(game, imageUri)
-                setArtwork(
-                    imageCard = view?.findViewById<ImageCard>(R.id.artwork)!!,
-                    imageUri = imageUri,
-                )
+                setArtwork(imageUri)
             }
         }
     }
@@ -98,6 +102,13 @@ class GameFragment : BaseFragment() {
             setSupportActionBar(toolbar)
             supportActionBar?.title = game.name
         }
+        speedDial = view.findViewById(R.id.speed_dial)
+        artworkCard = view.findViewById(R.id.artwork)
+        developerCard = view.findViewById(R.id.developer)
+        publisherCard = view.findViewById(R.id.publisher)
+        regionCard = view.findViewById(R.id.region)
+        releaseDateCard = view.findViewById(R.id.release_date)
+        genreCard = view.findViewById(R.id.genre)
         setSpeedDialActionItems()
         setSpeedDial()
         setMetadata()
@@ -133,18 +144,17 @@ class GameFragment : BaseFragment() {
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label))
             .create()
-        importAction =
-            SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
-                .setLabel(context.getString(R.string.import_metadata))
-                .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
-                .setLabelColor(context.getColorCompat(R.color.button_label))
-                .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-                .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-                .create()
+        importAction = SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
+            .setLabel(context.getString(R.string.import_metadata))
+            .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
+            .setLabelColor(context.getColorCompat(R.color.button_label))
+            .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
+            .create()
     }
 
     private fun setSpeedDial() {
-        view?.findViewById<SpeedDialView>(R.id.speed_dial)?.apply {
+        speedDial.apply {
             clearActionItems()
             if (game.favorite) {
                 addActionItem(unfavoriteAction)
@@ -210,9 +220,9 @@ class GameFragment : BaseFragment() {
     }
 
     private fun setMetadata() {
-        view?.findViewById<ImageCard>(R.id.artwork)?.apply {
+        artworkCard.apply {
             game.artwork?.let {
-                setArtwork(this, it)
+                setArtwork(it)
             }
             editButton.setOnClickListener {
                 val intent = Intent(
@@ -222,7 +232,7 @@ class GameFragment : BaseFragment() {
                 resultLauncher.launch(intent)
             }
         }
-        view?.findViewById<MetadataCard>(R.id.developer)?.apply {
+        developerCard.apply {
             game.developer?.let {
                 bodyText.text = it
             }
@@ -237,7 +247,7 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
-        view?.findViewById<MetadataCard>(R.id.publisher)?.apply {
+        publisherCard.apply {
             game.publisher?.let {
                 bodyText.text = it
             }
@@ -252,7 +262,7 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
-        view?.findViewById<MetadataCard>(R.id.region)?.apply {
+        regionCard.apply {
             game.region?.let {
                 bodyText.text = it
             }
@@ -267,14 +277,14 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
-        view?.findViewById<MetadataCard>(R.id.release_date)?.apply {
+        releaseDateCard.apply {
             game.releaseDate?.let {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
                 Dialog.metadata(
                     requireContext(),
-                    "Enter year",
+                    "Enter release date",
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updateReleaseDate(game, result)
@@ -282,7 +292,7 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
-        view?.findViewById<MetadataCard>(R.id.genre)?.apply {
+        genreCard.apply {
             game.genre?.let {
                 bodyText.text = it
             }
@@ -299,10 +309,10 @@ class GameFragment : BaseFragment() {
         }
     }
 
-    private fun setArtwork(imageCard: ImageCard, imageUri: String) =
+    private fun setArtwork(imageUri: String) =
         Glide.with(activity?.applicationContext!!)
             .load(Uri.parse(imageUri))
-            .into(imageCard.image)
+            .into(artworkCard.image)
 
     private fun onPlay() {
         Navigator.showLoadingScreen()
@@ -374,48 +384,37 @@ class GameFragment : BaseFragment() {
         metadata.artwork?.let {
             if (game.artwork.isNullOrBlank()) {
                 Persistence.updateArtwork(game, it)
-                val imageCard = view?.findViewById<ImageCard>(R.id.artwork)!!
-                setArtwork(imageCard, it)
+                setArtwork(it)
             }
         }
         metadata.developer?.let {
             if (game.developer.isNullOrBlank()) {
                 Persistence.updateDeveloper(game, it)
-                view?.findViewById<MetadataCard>(R.id.developer)?.apply {
-                    bodyText.text = it
-                }
+                developerCard.bodyText.text = it
             }
         }
         metadata.publisher?.let {
             if (game.publisher.isNullOrBlank()) {
                 Persistence.updatePublisher(game, it)
-                view?.findViewById<MetadataCard>(R.id.publisher)?.apply {
-                    bodyText.text = it
-                }
+                publisherCard.bodyText.text = it
             }
         }
         metadata.region?.let {
             if (game.region.isNullOrBlank()) {
                 Persistence.updateRegion(game, it)
-                view?.findViewById<MetadataCard>(R.id.region)?.apply {
-                    bodyText.text = it
-                }
+                regionCard.bodyText.text = it
             }
         }
         metadata.releaseDate?.let {
             if (game.releaseDate.isNullOrBlank()) {
                 Persistence.updateReleaseDate(game, it)
-                view?.findViewById<MetadataCard>(R.id.release_date)?.apply {
-                    bodyText.text = it
-                }
+                releaseDateCard.bodyText.text = it
             }
         }
         metadata.genre?.let {
             if (game.genre.isNullOrBlank()) {
                 Persistence.updateGenre(game, it)
-                view?.findViewById<MetadataCard>(R.id.genre)?.apply {
-                    bodyText.text = it
-                }
+                genreCard.bodyText.text = it
             }
         }
     }
