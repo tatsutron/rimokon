@@ -237,9 +237,10 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
+                val context = requireContext()
                 Dialog.metadata(
-                    requireContext(),
-                    "Enter developer",
+                    context,
+                    context.getString(R.string.enter_developer),
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updateDeveloper(game, result)
@@ -252,9 +253,10 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
+                val context = requireContext()
                 Dialog.metadata(
-                    requireContext(),
-                    "Enter publisher",
+                    context,
+                    context.getString(R.string.enter_publisher),
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updatePublisher(game, result)
@@ -267,9 +269,10 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
+                val context = requireContext()
                 Dialog.metadata(
-                    requireContext(),
-                    "Enter region",
+                    context,
+                    context.getString(R.string.enter_region),
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updateRegion(game, result)
@@ -282,9 +285,10 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
+                val context = requireContext()
                 Dialog.metadata(
-                    requireContext(),
-                    "Enter release date",
+                    context,
+                    context.getString(R.string.enter_release_date),
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updateReleaseDate(game, result)
@@ -297,9 +301,10 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
+                val context = requireContext()
                 Dialog.metadata(
-                    requireContext(),
-                    "Enter genre",
+                    context,
+                    context.getString(R.string.enter_genre),
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updateGenre(game, result)
