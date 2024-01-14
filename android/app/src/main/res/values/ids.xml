@@ -2,6 +2,7 @@
 <resources>
     <id name="copy_qr" />
     <id name="favorite" />
+    <id name="gallery_view" />
     <id name="generate_qr" />
     <id name="import_metadata" />
     <id name="play" />

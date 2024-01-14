@@ -28,6 +28,7 @@ class PlatformFragment : BaseFragment() {
     private lateinit var adapter: GameListAdapter
     private lateinit var syncAction: SpeedDialActionItem
     private lateinit var randomAction: SpeedDialActionItem
+    private lateinit var galleryViewAction: SpeedDialActionItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -183,6 +184,13 @@ class PlatformFragment : BaseFragment() {
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label))
             .create()
+        galleryViewAction = SpeedDialActionItem.Builder(R.id.gallery_view, R.drawable.ic_image)
+            .setLabel(context.getString(R.string.gallery_view))
+            .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
+            .setLabelColor(context.getColorCompat(R.color.button_label))
+            .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
+            .create()
     }
 
     private fun setSpeedDial() {
@@ -192,9 +200,19 @@ class PlatformFragment : BaseFragment() {
             if (adapter.itemList.count() > 1) {
                 addActionItem(randomAction)
             }
+            val games = Persistence.getGamesByArtowrk()
+            if (games.isNotEmpty()) {
+                addActionItem(galleryViewAction)
+            }
             setOnActionSelectedListener(
                 SpeedDialView.OnActionSelectedListener { actionItem ->
                     when (actionItem.id) {
+                        R.id.gallery_view -> {
+                            onGalleryView()
+                            close()
+                            return@OnActionSelectedListener true
+                        }
+
                         R.id.random -> {
                             onRandom()
                             close()
@@ -211,6 +229,16 @@ class PlatformFragment : BaseFragment() {
                 }
             )
         }
+    }
+
+    private fun onGalleryView() {
+    }
+
+    private fun onRandom() {
+        Navigator.showScreen(
+            activity as AppCompatActivity,
+            FragmentMaker.game(Persistence.getGamesByPlatform(platform).random().path)
+        )
     }
 
     private fun onSync() {
@@ -247,13 +275,6 @@ class PlatformFragment : BaseFragment() {
             finally = {
                 Navigator.hideLoadingScreen()
             },
-        )
-    }
-
-    private fun onRandom() {
-        Navigator.showScreen(
-            activity as AppCompatActivity,
-            FragmentMaker.game(Persistence.getGamesByPlatform(platform).random().path)
         )
     }
 }

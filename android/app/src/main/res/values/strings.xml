@@ -21,6 +21,7 @@
     <string name="failed_to_connect_message">Ensure that both devices are on the same network and that the IP address of the MiSTer has been set correctly.</string>
     <string name="favorite">Favorite</string>
     <string name="favorites">Favorites</string>
+    <string name="gallery_view">Gallery View</string>
     <string name="games">Games</string>
     <string name="generate_qr_data">Generate QR data</string>
     <string name="genre">Genre</string>
