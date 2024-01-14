@@ -180,9 +180,19 @@ class GameFragment : BaseFragment() {
                         }
 
                         R.id.import_metadata -> {
-                            Persistence.getMetadataBySha1(game.sha1!!)?.let {
-                                onImportMetadata(it)
-                            }
+                            Navigator.showLoadingScreen()
+                            Coroutine.launch(
+                                activity = requireActivity(),
+                                run = {
+                                    Thread.sleep(3000)
+                                    Persistence.getMetadataBySha1(game.sha1!!)?.let {
+                                        onImportMetadata(it)
+                                    }
+                                },
+                                finally = {
+                                    Navigator.hideLoadingScreen()
+                                }
+                            )
                             close()
                             return@OnActionSelectedListener true
                         }
