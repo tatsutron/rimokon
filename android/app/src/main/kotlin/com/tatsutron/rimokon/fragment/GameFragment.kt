@@ -183,6 +183,7 @@ class GameFragment : BaseFragment() {
                             Persistence.getMetadataBySha1(game.sha1!!)?.let {
                                 onImportMetadata(it)
                             }
+                            close()
                             return@OnActionSelectedListener true
                         }
 
