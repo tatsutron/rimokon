@@ -12,16 +12,15 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.jcraft.jsch.JSchException
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
+import com.squareup.picasso.Picasso
 import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.component.ImageCard
 import com.tatsutron.rimokon.component.MetadataCard
@@ -38,7 +37,6 @@ import com.tatsutron.rimokon.util.getColorCompat
 class GameFragment : BaseFragment() {
 
     private lateinit var game: Game
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private lateinit var speedDial: SpeedDialView
     private lateinit var favoriteAction: SpeedDialActionItem
     private lateinit var unfavoriteAction: SpeedDialActionItem
@@ -55,15 +53,6 @@ class GameFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        // Handle browse for artwork result
-        val startActivityForResult = ActivityResultContracts.StartActivityForResult()
-        resultLauncher = registerForActivityResult(startActivityForResult) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val imageUri = result.data?.data.toString()
-                Persistence.updateArtwork(game, imageUri)
-                setArtwork(imageUri)
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -190,13 +179,16 @@ class GameFragment : BaseFragment() {
                         }
 
                         R.id.import_metadata -> {
+                            // TODO Handle metadata not found
                             Navigator.showLoadingScreen()
                             Coroutine.launch(
                                 activity = requireActivity(),
                                 run = {
                                     Thread.sleep(3000)
-                                    Persistence.getMetadataBySha1(game.sha1!!)?.let {
-                                        onImportMetadata(it)
+                                    requireActivity().runOnUiThread {
+                                        Persistence.getMetadataBySha1(game.sha1!!)?.let {
+                                            onImportMetadata(it)
+                                        }
                                     }
                                 },
                                 finally = {
@@ -220,16 +212,21 @@ class GameFragment : BaseFragment() {
     }
 
     private fun setMetadata() {
+        // TODO Don't these dialog results need to update `this.game` somehow?
         artworkCard.apply {
             game.artwork?.let {
                 setArtwork(it)
             }
             editButton.setOnClickListener {
-                val intent = Intent(
-                    Intent.ACTION_GET_CONTENT,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                )
-                resultLauncher.launch(intent)
+                val context = requireContext()
+                Dialog.metadata(
+                    context,
+                    context.getString(R.string.enter_url),
+                    game.artwork ?: "",
+                ) { result ->
+                    Persistence.updateArtwork(game, result)
+                    setArtwork(result)
+                }
             }
         }
         developerCard.apply {
@@ -314,10 +311,13 @@ class GameFragment : BaseFragment() {
         }
     }
 
-    private fun setArtwork(imageUri: String) =
-        Glide.with(activity?.applicationContext!!)
-            .load(Uri.parse(imageUri))
-            .into(artworkCard.image)
+    private fun setArtwork(url: String) {
+        if (URLUtil.isValidUrl(url)) {
+            Picasso.get().load(url).into(artworkCard.image)
+        } else {
+            artworkCard.image.setImageResource(0)
+        }
+    }
 
     private fun onPlay() {
         Navigator.showLoadingScreen()

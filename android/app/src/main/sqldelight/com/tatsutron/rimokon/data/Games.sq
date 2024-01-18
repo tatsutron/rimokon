@@ -19,8 +19,8 @@ save:
 REPLACE INTO Games(name, path, platform, sha1)
 VALUES (:name, :path, :platform, :sha1);
 
-selectByArtwork:
-SELECT * FROM Games WHERE artwork IS NOT NULL;
+selectByHasArtwork:
+SELECT * FROM Games WHERE platform = ? AND artwork IS NOT NULL;
 
 selectByFavorite:
 SELECT * FROM Games WHERE favorite != 0;

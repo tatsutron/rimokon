@@ -80,7 +80,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
                     R.string.would_you_like_to_sync_your_library,
                     platform,
                 ),
-                negativeButtonText = context.getString(R.string.no_thanks),
+                negativeButtonText = context.getString(R.string.not_now),
                 positiveButtonText = context.getString(R.string.sync),
                 callback = ::onSync
             )

@@ -5,6 +5,7 @@
     <id name="gallery_view" />
     <id name="generate_qr" />
     <id name="import_metadata" />
+    <id name="list_view" />
     <id name="play" />
     <id name="random" />
     <id name="sync" />

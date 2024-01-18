@@ -38,11 +38,17 @@ object Persistence {
             sha1 = dao.sha1,
         )
 
-    fun getGamesByArtowrk() =
+    fun getGamesByHasArtwork(platform: Platform) =
         database?.gamesQueries
-            ?.selectByArtwork()
+            ?.selectByHasArtwork(platform.name)
             ?.executeAsList()
-            ?: listOf<Game>()
+            ?.map {
+                game(it)
+            }
+            ?.sortedBy {
+                File(it.path).name.toLowerCase(Locale.getDefault())
+            }
+            ?: listOf()
 
 
     fun getGamesByPlatform(platform: Platform) =

@@ -56,10 +56,12 @@ object Dialog {
     fun error(
         context: Context,
         throwable: Throwable,
-    ) = MaterialDialog(context).show {
-        title(res = R.string.error)
-        message(text = throwable.toString())
-        positiveButton(R.string.ok)
+    ) {
+        MaterialDialog(context).show {
+            title(res = R.string.error)
+            message(text = throwable.toString())
+            positiveButton(R.string.ok)
+        }
     }
 
     fun confirmation(
@@ -69,18 +71,20 @@ object Dialog {
         negativeButtonText: String,
         positiveButtonText: String,
         callback: () -> Unit,
-    ) = MaterialDialog(context).show {
-        title(text = title)
-        message(text = message)
-        negativeButton(
-            text = negativeButtonText,
-        )
-        positiveButton(
-            text = positiveButtonText,
-            click = {
-                callback.invoke()
-            },
-        )
+    ) {
+        MaterialDialog(context).show {
+            title(text = title)
+            message(text = message)
+            negativeButton(
+                text = negativeButtonText,
+            )
+            positiveButton(
+                text = positiveButtonText,
+                click = {
+                    callback.invoke()
+                },
+            )
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -108,15 +112,17 @@ object Dialog {
         context: Context,
         message: String,
         callback: () -> Unit,
-    ) = MaterialDialog(context).show {
-        title(res = R.string.warning)
-        message(text = message)
-        negativeButton(R.string.cancel)
-        positiveButton(
-            res = R.string.ok,
-            click = {
-                callback.invoke()
-            },
-        )
+    ) {
+        MaterialDialog(context).show {
+            title(res = R.string.warning)
+            message(text = message)
+            negativeButton(R.string.cancel)
+            positiveButton(
+                res = R.string.ok,
+                click = {
+                    callback.invoke()
+                },
+            )
+        }
     }
 }

@@ -23,12 +23,6 @@ object FragmentMaker {
         }
     }
 
-    fun image(url: String?) = ImageFragment().apply {
-        arguments = Bundle().apply {
-            putString(KEY_URL, url)
-        }
-    }
-
     fun platform(platform: Platform) = PlatformFragment().apply {
         arguments = Bundle().apply {
             putString(KEY_PLATFORM, platform.name)

@@ -94,7 +94,7 @@ class PreferencesFragment : BaseFragment() {
                     addView(switch)
                 }
         }
-        view.findViewById<LinearLayout>(R.id.global_search).apply {
+        view.findViewById<LinearLayout>(R.id.search).apply {
             Platform.values()
                 .forEach {
                     val switch = CheckBox(requireContext()).apply {
