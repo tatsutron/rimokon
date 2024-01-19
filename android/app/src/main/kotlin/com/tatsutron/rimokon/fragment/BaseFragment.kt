@@ -8,5 +8,6 @@ abstract class BaseFragment : Fragment() {
 
     open fun onConfigChanged() {}
 
+    // TODO Call this closeToolbar or similar?
     open fun onGameItemClicked() {}
 }

@@ -20,7 +20,7 @@ class GalleryAdapter(
     ): GalleryHolder {
         val layoutInflater = LayoutInflater.from(activity)
         val itemView = layoutInflater.inflate(R.layout.list_item_gallery, parent, false)
-        return GalleryHolder(itemView)
+        return GalleryHolder(activity, itemView)
     }
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
