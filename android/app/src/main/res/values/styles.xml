@@ -38,7 +38,7 @@
         <item name="queryBackground">@null</item>
         <item name="closeIcon">@drawable/ic_close</item>
         <item name="searchHintIcon">@null</item>
-        <item name="queryHint">Search all games</item>
+        <item name="queryHint">Search full library</item>
         <item name="iconifiedByDefault">true</item>
     </style>
 
