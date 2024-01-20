@@ -24,7 +24,7 @@
     <string name="favorites">Favorites</string>
     <string name="gallery_view">Gallery view</string>
     <string name="games">Games</string>
-    <string name="generate_qr_data">Generate QR data</string>
+    <string name="generate_qr_code">Generate QR code</string>
     <string name="genre">Genre</string>
     <string name="handheld">Handheld</string>
     <string name="import_metadata">Import metadata</string>

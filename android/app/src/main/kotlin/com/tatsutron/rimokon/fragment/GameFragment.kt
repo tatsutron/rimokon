@@ -120,7 +120,7 @@ class GameFragment : BaseFragment() {
             .setFabImageTintColor(context.getColorCompat(R.color.button_label))
             .create()
         generateQrAction = SpeedDialActionItem.Builder(R.id.generate_qr, R.drawable.ic_qr_code)
-            .setLabel(context.getString(R.string.generate_qr_data))
+            .setLabel(context.getString(R.string.generate_qr_code))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
