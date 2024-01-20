@@ -62,10 +62,10 @@ abstract class FullMenuBaseFragment : BaseFragment() {
 
     private fun onSyncGameLibrary() {
         val activity = activity as Activity
-        Dialog.warning(
-            context = activity,
-            message = activity.getString(R.string.sync_game_library_warning),
-            callback = {
+//        Dialog.warning(
+//            context = activity,
+//            message = activity.getString(R.string.sync_game_library_warning),
+//            callback = {
                 Navigator.showLoadingScreen()
                 Coroutine.launch(
                     activity = activity,
@@ -95,7 +95,7 @@ abstract class FullMenuBaseFragment : BaseFragment() {
                         Navigator.hideLoadingScreen()
                     },
                 )
-            },
-        )
+//            },
+//        )
     }
 }
