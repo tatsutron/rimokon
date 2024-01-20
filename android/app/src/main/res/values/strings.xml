@@ -7,7 +7,7 @@
     <string name="confirm_play_game">Play %s?</string>
     <string name="connect">Connect</string>
     <string name="console">Console</string>
-    <string name="copy_qr_data">Copy QR data</string>
+    <string name="copy_qr_code">Copy QR code</string>
     <string name="credits">Credits</string>
     <string name="developer">Developer</string>
     <string name="enter_developer">Enter developer</string>

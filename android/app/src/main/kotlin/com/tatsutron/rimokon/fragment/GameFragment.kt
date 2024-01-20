@@ -127,7 +127,7 @@ class GameFragment : BaseFragment() {
             .setFabImageTintColor(context.getColorCompat(R.color.button_label))
             .create()
         copyQrAction = SpeedDialActionItem.Builder(R.id.copy_qr, R.drawable.ic_copy)
-            .setLabel(context.getString(R.string.copy_qr_data))
+            .setLabel(context.getString(R.string.copy_qr_code))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
