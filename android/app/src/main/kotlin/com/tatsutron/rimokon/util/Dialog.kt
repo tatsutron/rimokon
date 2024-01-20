@@ -107,22 +107,4 @@ object Dialog {
             )
         }
     }
-
-//    fun warning(
-//        context: Context,
-//        message: String,
-//        callback: () -> Unit,
-//    ) {
-//        MaterialDialog(context).show {
-//            title(res = R.string.warning)
-//            message(text = message)
-//            negativeButton(R.string.cancel)
-//            positiveButton(
-//                res = R.string.ok,
-//                click = {
-//                    callback.invoke()
-//                },
-//            )
-//        }
-//    }
 }

@@ -62,40 +62,34 @@ abstract class FullMenuBaseFragment : BaseFragment() {
 
     private fun onSyncGameLibrary() {
         val activity = activity as Activity
-//        Dialog.warning(
-//            context = activity,
-//            message = activity.getString(R.string.sync_game_library_warning),
-//            callback = {
-                Navigator.showLoadingScreen()
-                Coroutine.launch(
-                    activity = activity,
-                    run = {
-                        Util.syncPlatforms(requireActivity(), Platform.values().toList())
-                    },
-                    failure = { throwable ->
-                        when (throwable) {
-                            is JSchException ->
-                                if (Persistence.host.isEmpty()) {
-                                    Dialog.enterIpAddress(
-                                        context = activity,
-                                        callback = ::onSyncGameLibrary,
-                                    )
-                                } else {
-                                    Dialog.connectionFailed(
-                                        context = activity,
-                                        callback = ::onSyncGameLibrary,
-                                    )
-                                }
-
-                            else ->
-                                Dialog.error(activity, throwable)
+        Navigator.showLoadingScreen()
+        Coroutine.launch(
+            activity = activity,
+            run = {
+                Util.syncPlatforms(requireActivity(), Platform.values().toList())
+            },
+            failure = { throwable ->
+                when (throwable) {
+                    is JSchException ->
+                        if (Persistence.host.isEmpty()) {
+                            Dialog.enterIpAddress(
+                                context = activity,
+                                callback = ::onSyncGameLibrary,
+                            )
+                        } else {
+                            Dialog.connectionFailed(
+                                context = activity,
+                                callback = ::onSyncGameLibrary,
+                            )
                         }
-                    },
-                    finally = {
-                        Navigator.hideLoadingScreen()
-                    },
-                )
-//            },
-//        )
+
+                    else ->
+                        Dialog.error(activity, throwable)
+                }
+            },
+            finally = {
+                Navigator.hideLoadingScreen()
+            },
+        )
     }
 }
