@@ -12,9 +12,9 @@ class FragmentStateAdapter(
         // Needs to be kept in sync with the navigation menu
         val items = listOf(
             FragmentMaker.platformList(Platform.Category.CONSOLE),
-            FragmentMaker.arcade(),
-            // TODO
+            FragmentMaker.platform(Platform.ARCADE),
             FragmentMaker.platformList(Platform.Category.HANDHELD),
+            // TODO
             //FragmentMaker.platformList(Platform.Category.COMPUTER),
         )
     }
