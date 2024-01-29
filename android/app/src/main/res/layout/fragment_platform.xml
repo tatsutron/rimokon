@@ -15,6 +15,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar"
+            app:contentInsetStartWithNavigation="0dp"
             app:popupTheme="@style/ToolbarPopupTheme" />
 
         <View

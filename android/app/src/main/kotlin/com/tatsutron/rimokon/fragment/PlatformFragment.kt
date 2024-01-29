@@ -61,7 +61,14 @@ class PlatformFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                (requireActivity() as AppCompatActivity)
+                    .supportFragmentManager.popBackStack()
+                true
+            }
+
             R.id.close -> {
+                // TODO Is this needed?
                 FragmentStateAdapter.items.forEach {
                     it.onConfigChanged()
                 }
@@ -101,6 +108,7 @@ class PlatformFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             toolbar.title = platform.displayName
         }
         gameListAdapter = GameListAdapter(activity as Activity)
