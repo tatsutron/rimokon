@@ -184,7 +184,7 @@ class GameFragment : BaseFragment() {
                             Coroutine.launch(
                                 activity = requireActivity(),
                                 run = {
-                                    Thread.sleep(3000)
+                                    Thread.sleep(1500)
                                     requireActivity().runOnUiThread {
                                         Persistence.getMetadataBySha1(game.sha1!!)?.let {
                                             onImportMetadata(it)
