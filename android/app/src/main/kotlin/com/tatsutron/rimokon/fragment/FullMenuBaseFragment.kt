@@ -20,7 +20,7 @@ abstract class FullMenuBaseFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
 
-            R.id.sync_game_library -> {
+            R.id.sync_full_library -> {
                 onSyncGameLibrary()
                 true
             }

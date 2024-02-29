@@ -45,7 +45,7 @@
     <string name="search">Search</string>
     <string name="set_ip_address">Set IP address</string>
     <string name="sync">Sync</string>
-    <string name="sync_game_library">Sync game library</string>
+    <string name="sync_full_library">Sync full library</string>
     <string name="system">System</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="warning">Warning</string>

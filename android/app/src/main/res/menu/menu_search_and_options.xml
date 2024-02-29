@@ -10,8 +10,8 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/sync_game_library"
-        android:title="@string/sync_game_library"
+        android:id="@+id/sync_full_library"
+        android:title="@string/sync_full_library"
         app:showAsAction="never" />
 
     <item
