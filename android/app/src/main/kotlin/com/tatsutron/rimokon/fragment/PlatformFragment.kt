@@ -43,7 +43,7 @@ class PlatformFragment : BaseFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.menu_close, menu)
+        inflater.inflate(R.menu.menu_empty, menu)
     }
 
     override fun onCreateView(
