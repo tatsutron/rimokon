@@ -25,7 +25,7 @@ class FavoriteListFragment : BaseFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.menu_close, menu)
+        inflater.inflate(R.menu.menu_empty, menu)
     }
 
     override fun onCreateView(
@@ -43,14 +43,12 @@ class FavoriteListFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.close -> {
-                FragmentStateAdapter.items.forEach {
-                    it.onConfigChanged()
-                }
+            android.R.id.home -> {
                 (requireActivity() as AppCompatActivity)
                     .supportFragmentManager.popBackStack()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -65,6 +63,8 @@ class FavoriteListFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
             supportActionBar?.title = requireContext().getText(R.string.favorites)
         }
         adapter = GameListAdapter(activity as Activity)
