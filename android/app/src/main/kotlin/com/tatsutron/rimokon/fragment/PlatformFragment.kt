@@ -62,8 +62,13 @@ class PlatformFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                (requireActivity() as AppCompatActivity)
-                    .supportFragmentManager.popBackStack()
+                if (!inGallery && currentFolder.length > platform.gamesPath?.length!!) {
+                    currentFolder = File(currentFolder).parent!!
+                    setRecycler()
+                } else {
+                    (requireActivity() as AppCompatActivity)
+                        .supportFragmentManager.popBackStack()
+                }
                 true
             }
 
@@ -121,15 +126,6 @@ class PlatformFragment : BaseFragment() {
         setSpeedDialActionItems()
         setSpeedDial()
     }
-
-    override fun onBackPressed() =
-        if (!inGallery && currentFolder.length > platform.gamesPath?.length!!) {
-            currentFolder = File(currentFolder).parent!!
-            setRecycler()
-            true
-        } else {
-            super.onBackPressed()
-        }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setRecycler() {
