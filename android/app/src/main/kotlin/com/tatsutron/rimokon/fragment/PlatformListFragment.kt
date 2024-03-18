@@ -29,11 +29,6 @@ class PlatformListFragment : FullMenuBaseFragment() {
     private lateinit var gameListAdapter: GameListAdapter
     private var searchTerm = ""
 
-    override fun onConfigChanged() {
-        super.onConfigChanged()
-        setRecycler()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
