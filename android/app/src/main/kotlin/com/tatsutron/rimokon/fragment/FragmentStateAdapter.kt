@@ -14,7 +14,6 @@ class FragmentStateAdapter(
             FragmentMaker.platformList(Platform.Category.CONSOLE),
             FragmentMaker.arcade(),
             FragmentMaker.platformList(Platform.Category.HANDHELD),
-            // TODO
             //FragmentMaker.platformList(Platform.Category.COMPUTER),
         )
     }
