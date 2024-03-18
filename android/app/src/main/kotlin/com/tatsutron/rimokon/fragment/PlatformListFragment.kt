@@ -107,8 +107,7 @@ class PlatformListFragment : FullMenuBaseFragment() {
             recycler.adapter = platformListAdapter
             val items = Platform.values()
                 .filter {
-                    it.category == platformCategory &&
-                            !Persistence.isHiddenFromPlatformList(it)
+                    it.category == platformCategory
                 }
                 .map {
                     PlatformItem(it)
@@ -121,9 +120,6 @@ class PlatformListFragment : FullMenuBaseFragment() {
         } else {
             recycler.adapter = gameListAdapter
             val items = Persistence.getGamesBySearch(searchTerm)
-                .filter {
-                    !Persistence.isHiddenFromGlobalSearch(it.platform)
-                }
                 .map {
                     GameItem(
                         icon = it.platform.media.icon,

@@ -1,7 +1,13 @@
 package com.tatsutron.rimokon.util
 
 import android.os.Bundle
-import com.tatsutron.rimokon.fragment.*
+import com.tatsutron.rimokon.fragment.ArcadeFragment
+import com.tatsutron.rimokon.fragment.CreditsFragment
+import com.tatsutron.rimokon.fragment.FavoriteListFragment
+import com.tatsutron.rimokon.fragment.GameFragment
+import com.tatsutron.rimokon.fragment.PlatformFragment
+import com.tatsutron.rimokon.fragment.PlatformListFragment
+import com.tatsutron.rimokon.fragment.ScanFragment
 import com.tatsutron.rimokon.model.Platform
 
 object FragmentMaker {
@@ -9,7 +15,6 @@ object FragmentMaker {
     const val KEY_PATH = "KEY_PATH"
     const val KEY_PLATFORM = "KEY_PLATFORM"
     const val KEY_PLATFORM_CATEGORY = "KEY_PLATFORM_CATEGORY"
-    const val KEY_URL = "KEY_URL"
 
     fun arcade() = ArcadeFragment()
 
@@ -34,8 +39,6 @@ object FragmentMaker {
             putString(KEY_PLATFORM_CATEGORY, category.name)
         }
     }
-
-    fun preferences() = PreferencesFragment()
 
     fun scan() = ScanFragment()
 }

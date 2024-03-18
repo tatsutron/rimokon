@@ -25,11 +25,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/preferences"
-        android:title="@string/preferences"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/credits"
         android:title="@string/credits"
         app:showAsAction="never" />

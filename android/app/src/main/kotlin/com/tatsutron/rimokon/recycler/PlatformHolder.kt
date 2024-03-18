@@ -21,6 +21,7 @@ class PlatformHolder(
     private val label: TextView = itemView.findViewById(R.id.label)
 
     fun bind(item: PlatformItem) {
+        println(item.platform.name)
         image.setImageDrawable(
             AppCompatResources.getDrawable(
                 image.context,

@@ -41,14 +41,6 @@ abstract class FullMenuBaseFragment : BaseFragment() {
                 true
             }
 
-            R.id.preferences -> {
-                Navigator.showScreen(
-                    activity as AppCompatActivity,
-                    FragmentMaker.preferences(),
-                )
-                true
-            }
-
             R.id.credits -> {
                 Navigator.showScreen(
                     activity as AppCompatActivity,
