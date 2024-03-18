@@ -114,6 +114,7 @@ class PlatformFragment : BaseFragment() {
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
             toolbar.title = platform.displayName
         }
         gameListAdapter = GameListAdapter(activity as Activity)
