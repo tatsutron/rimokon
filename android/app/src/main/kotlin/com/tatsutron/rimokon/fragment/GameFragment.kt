@@ -72,6 +72,13 @@ class GameFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            // TODO Find out why this isn't getting called
+            android.R.id.home -> {
+                (requireActivity() as AppCompatActivity)
+                    .supportFragmentManager.popBackStack()
+                true
+            }
+
             R.id.play -> {
                 onPlay()
                 true
@@ -89,6 +96,8 @@ class GameFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
             supportActionBar?.title = game.name
         }
         speedDial = view.findViewById(R.id.speed_dial)
