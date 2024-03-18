@@ -72,16 +72,6 @@ class PlatformFragment : BaseFragment() {
                 true
             }
 
-            R.id.close -> {
-                // TODO Is this needed?
-                FragmentStateAdapter.items.forEach {
-                    it.onConfigChanged()
-                }
-                (requireActivity() as AppCompatActivity)
-                    .supportFragmentManager.popBackStack()
-                true
-            }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
