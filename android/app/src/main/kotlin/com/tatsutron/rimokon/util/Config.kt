@@ -3,7 +3,7 @@ package com.tatsutron.rimokon.util
 import com.tatsutron.rimokon.model.Platform
 
 class Config(
-    var host: String = "",
+    var host: String = "MiSTer",
     val hiddenInPlatformList: MutableList<Platform> = mutableListOf(
         Platform.ARCADIA_2001,
         Platform.ATARI_2600,
