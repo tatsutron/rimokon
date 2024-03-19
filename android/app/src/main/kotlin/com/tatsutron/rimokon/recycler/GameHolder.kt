@@ -40,9 +40,6 @@ class GameHolder(
             )
         }
         itemView.setOnClickListener {
-            FragmentStateAdapter.items.forEach {
-                it.onGameItemClicked()
-            }
             Navigator.showScreen(
                 activity as AppCompatActivity,
                 FragmentMaker.game(item.game.path),

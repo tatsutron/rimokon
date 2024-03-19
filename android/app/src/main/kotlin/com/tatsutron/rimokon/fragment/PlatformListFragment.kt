@@ -64,15 +64,6 @@ class PlatformListFragment : FullMenuBaseFragment() {
         )
     }
 
-    override fun onGameItemClicked() {
-        super.onGameItemClicked()
-        context?.let {
-            getSystemService(it, InputMethodManager::class.java)
-                ?.hideSoftInputFromWindow(toolbar.windowToken, 0)
-            toolbar.clearFocus()
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         platformCategory = Platform.Category.valueOf(
