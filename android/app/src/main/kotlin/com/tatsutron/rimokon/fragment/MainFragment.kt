@@ -30,6 +30,9 @@ class MainFragment : BaseFragment() {
                 for (i in 0 until menu.size()) {
                     if (menu.getItem(i) == item) {
                         viewPager.setCurrentItem(i, false)
+                        FragmentStateAdapter.items.forEach {
+                            it.clearSearch()
+                        }
                     }
                 }
                 true

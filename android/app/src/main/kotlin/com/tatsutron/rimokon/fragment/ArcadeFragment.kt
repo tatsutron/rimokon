@@ -29,7 +29,17 @@ class ArcadeFragment : FullMenuBaseFragment() {
     private lateinit var adapter: GameListAdapter
     private lateinit var syncAction: SpeedDialActionItem
     private lateinit var randomAction: SpeedDialActionItem
+    private var searchItem: MenuItem? = null
     private var searchTerm = ""
+
+    override fun clearSearch() {
+        super.clearSearch()
+        // TODO Figure out why this only works once
+        (searchItem?.actionView as? SearchView)?.apply {
+            setQuery("", false)
+            isIconified = true
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +50,8 @@ class ArcadeFragment : FullMenuBaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_search_and_options, menu)
-        (menu.findItem(R.id.search).actionView as? SearchView)?.apply {
+        searchItem = menu.findItem(R.id.search)
+        (searchItem?.actionView as? SearchView)?.apply {
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String) = true

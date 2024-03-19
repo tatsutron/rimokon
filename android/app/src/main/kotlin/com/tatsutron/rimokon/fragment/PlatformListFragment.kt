@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.l4digital.fastscroll.FastScrollRecyclerView
 import com.tatsutron.rimokon.R
@@ -27,7 +26,17 @@ class PlatformListFragment : FullMenuBaseFragment() {
     private lateinit var recycler: FastScrollRecyclerView
     private lateinit var platformListAdapter: PlatformListAdapter
     private lateinit var gameListAdapter: GameListAdapter
+    private var searchItem: MenuItem? = null
     private var searchTerm = ""
+
+    override fun clearSearch() {
+        super.clearSearch()
+        // TODO Figure out why this only works once
+        (searchItem?.actionView as? SearchView)?.apply {
+            setQuery("", false)
+            isIconified = true
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +47,8 @@ class PlatformListFragment : FullMenuBaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_search_and_options, menu)
-        (menu.findItem(R.id.search).actionView as? SearchView)?.apply {
+        searchItem = menu.findItem(R.id.search)
+        (searchItem?.actionView as? SearchView)?.apply {
             maxWidth = Integer.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String) = true
