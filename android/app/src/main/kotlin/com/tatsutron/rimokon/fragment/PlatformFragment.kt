@@ -211,9 +211,9 @@ class PlatformFragment : BaseFragment() {
             clearActionItems()
             addActionItem(syncAction)
             if (gameListAdapter.itemList.count() > 1) {
-                if (inGallery) {
+                if (inGallery && Persistence.getGamesByHasArtwork(platform).count() > 1) {
                     addActionItem(randomAction)
-                } else if (Persistence.getGamesByHasArtwork(platform).count() > 1) {
+                } else if (Persistence.getGamesByPlatform(platform).count() > 1) {
                     addActionItem(randomAction)
                 }
             }
