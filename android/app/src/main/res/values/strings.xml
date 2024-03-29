@@ -32,6 +32,7 @@
     <string name="no_camera_permission">Camera permission is required to use this feature.</string>
     <string name="no_favorites_found">No favorites found</string>
     <string name="no_games_found">No games found</string>
+    <string name="no_metadata_found">No metadata found</string>
     <string name="not_now">Not now</string>
     <string name="ok">OK</string>
     <string name="platforms">Platforms</string>

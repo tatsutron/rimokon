@@ -177,13 +177,22 @@ class GameFragment : BaseFragment() {
                         }
 
                         R.id.import_metadata -> {
-                            // TODO Handle metadata not found
                             Navigator.showLoadingScreen()
+                            val activity = requireActivity()
                             Coroutine.launch(
-                                activity = requireActivity(),
+                                activity = activity,
                                 run = {
                                     Thread.sleep(1500)
                                     requireActivity().runOnUiThread {
+                                        val metadata = Persistence.getMetadataBySha1(game.sha1!!)
+                                        if (metadata != null) {
+                                            onImportMetadata(metadata)
+                                        } else {
+                                            Dialog.message(
+                                                context = activity,
+                                                title = activity.getString(R.string.no_metadata_found),
+                                            )
+                                        }
                                         Persistence.getMetadataBySha1(game.sha1!!)?.let {
                                             onImportMetadata(it)
                                         }
