@@ -31,12 +31,9 @@ object Navigator {
     }
 
     fun showScreen(activity: AppCompatActivity, fragment: Fragment) {
-        activity.supportFragmentManager
-            .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_NONE)
-            .add(R.id.root, fragment)
-            .addToBackStack(null)
-            .commit()
+        activity.supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_NONE).add(R.id.root, fragment)
+            .addToBackStack(null).commit()
     }
 
     fun showLoadingScreen() {

@@ -43,9 +43,7 @@ class FavoriteListFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(
@@ -121,22 +119,19 @@ class FavoriteListFragment : BaseFragment() {
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         galleryViewAction = SpeedDialActionItem.Builder(R.id.gallery_view, R.drawable.ic_image)
             .setLabel(context.getString(R.string.gallery_view))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         listViewAction = SpeedDialActionItem.Builder(R.id.list_view, R.drawable.ic_folder)
             .setLabel(context.getString(R.string.list_view))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
     }
 
     private fun setSpeedDial() {
@@ -154,30 +149,28 @@ class FavoriteListFragment : BaseFragment() {
             } else {
                 addActionItem(galleryViewAction)
             }
-            setOnActionSelectedListener(
-                SpeedDialView.OnActionSelectedListener { actionItem ->
-                    when (actionItem.id) {
-                        R.id.gallery_view -> {
-                            onGalleryView()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.list_view -> {
-                            onListView()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.random -> {
-                            onRandom()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
+            setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+                when (actionItem.id) {
+                    R.id.gallery_view -> {
+                        onGalleryView()
+                        close()
+                        return@OnActionSelectedListener true
                     }
-                    false
+
+                    R.id.list_view -> {
+                        onListView()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
+
+                    R.id.random -> {
+                        onRandom()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
                 }
-            )
+                false
+            })
         }
     }
 
@@ -195,8 +188,7 @@ class FavoriteListFragment : BaseFragment() {
 
     private fun onRandom() {
         Navigator.showScreen(
-            activity as AppCompatActivity,
-            if (inGallery) {
+            activity as AppCompatActivity, if (inGallery) {
                 FragmentMaker.game(Persistence.getGamesByHasArtworkByFavorite().random().path)
             } else {
                 FragmentMaker.game(Persistence.getGamesByFavorite().random().path)

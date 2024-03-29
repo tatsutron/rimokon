@@ -17,40 +17,39 @@ import com.tatsutron.rimokon.util.Util
 abstract class FullMenuBaseFragment : BaseFragment() {
 
     @SuppressLint("CheckResult")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
 
-            R.id.sync_full_library -> {
-                onSyncGameLibrary()
-                true
-            }
-
-            R.id.favorites -> {
-                Navigator.showScreen(
-                    activity as AppCompatActivity,
-                    FragmentMaker.favoriteList(),
-                )
-                true
-            }
-
-            R.id.scan_qr_code -> {
-                Navigator.showScreen(
-                    activity as AppCompatActivity,
-                    FragmentMaker.scan(),
-                )
-                true
-            }
-
-            R.id.credits -> {
-                Navigator.showScreen(
-                    activity as AppCompatActivity,
-                    FragmentMaker.credits(),
-                )
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
+        R.id.sync_full_library -> {
+            onSyncGameLibrary()
+            true
         }
+
+        R.id.favorites -> {
+            Navigator.showScreen(
+                activity as AppCompatActivity,
+                FragmentMaker.favoriteList(),
+            )
+            true
+        }
+
+        R.id.scan_qr_code -> {
+            Navigator.showScreen(
+                activity as AppCompatActivity,
+                FragmentMaker.scan(),
+            )
+            true
+        }
+
+        R.id.credits -> {
+            Navigator.showScreen(
+                activity as AppCompatActivity,
+                FragmentMaker.credits(),
+            )
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
+    }
 
     private fun onSyncGameLibrary() {
         val activity = activity as Activity
@@ -62,21 +61,19 @@ abstract class FullMenuBaseFragment : BaseFragment() {
             },
             failure = { throwable ->
                 when (throwable) {
-                    is JSchException ->
-                        if (Persistence.host.isEmpty()) {
-                            Dialog.enterIpAddress(
-                                context = activity,
-                                callback = ::onSyncGameLibrary,
-                            )
-                        } else {
-                            Dialog.connectionFailed(
-                                context = activity,
-                                callback = ::onSyncGameLibrary,
-                            )
-                        }
+                    is JSchException -> if (Persistence.host.isEmpty()) {
+                        Dialog.enterIpAddress(
+                            context = activity,
+                            callback = ::onSyncGameLibrary,
+                        )
+                    } else {
+                        Dialog.connectionFailed(
+                            context = activity,
+                            callback = ::onSyncGameLibrary,
+                        )
+                    }
 
-                    else ->
-                        Dialog.error(activity, throwable)
+                    else -> Dialog.error(activity, throwable)
                 }
             },
             finally = {

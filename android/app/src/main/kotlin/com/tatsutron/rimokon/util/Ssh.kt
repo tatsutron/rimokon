@@ -1,7 +1,11 @@
 package com.tatsutron.rimokon.util
 
-import com.jcraft.jsch.*
-import java.util.*
+import com.jcraft.jsch.Channel
+import com.jcraft.jsch.ChannelExec
+import com.jcraft.jsch.ChannelSftp
+import com.jcraft.jsch.JSch
+import com.jcraft.jsch.Session
+import java.util.Properties
 
 object Ssh {
 
@@ -13,21 +17,17 @@ object Ssh {
 
     private val jsch = JSch()
 
-    fun session(): Session =
-        jsch.getSession(USER, Persistence.host, PORT).apply {
-            setConfig(
-                Properties().apply {
-                    setProperty("StrictHostKeyChecking", "no")
-                }
-            )
-            setPassword(PASSWORD)
-            connect()
-        }
+    fun session(): Session = jsch.getSession(USER, Persistence.host, PORT).apply {
+        setConfig(Properties().apply {
+            setProperty("StrictHostKeyChecking", "no")
+        })
+        setPassword(PASSWORD)
+        connect()
+    }
 
-    fun sftp(session: Session) =
-        (session.openChannel("sftp") as ChannelSftp).apply {
-            connect()
-        }
+    fun sftp(session: Session) = (session.openChannel("sftp") as ChannelSftp).apply {
+        connect()
+    }
 
     fun command(session: Session, command: String): String {
         val channel = exec(session, command)

@@ -52,9 +52,7 @@ class PlatformListFragment : FullMenuBaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(
@@ -76,8 +74,7 @@ class PlatformListFragment : FullMenuBaseFragment() {
         }
         platformListAdapter = PlatformListAdapter(activity as Activity)
         gameListAdapter = GameListAdapter(activity as Activity)
-        recycler = view.findViewById<FastScrollRecyclerView>(R.id.recycler)
-            .apply {
+        recycler = view.findViewById<FastScrollRecyclerView>(R.id.recycler).apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = this@PlatformListFragment.platformListAdapter
             }
@@ -91,11 +88,9 @@ class PlatformListFragment : FullMenuBaseFragment() {
         }
         if (searchTerm.isEmpty()) {
             recycler.adapter = platformListAdapter
-            val items = Platform.values()
-                .filter {
+            val items = Platform.values().filter {
                     it.category == platformCategory
-                }
-                .map {
+                }.map {
                     PlatformItem(it)
                 }
             platformListAdapter.apply {
@@ -105,8 +100,7 @@ class PlatformListFragment : FullMenuBaseFragment() {
             }
         } else {
             recycler.adapter = gameListAdapter
-            val items = Persistence.getGamesBySearch(searchTerm)
-                .map {
+            val items = Persistence.getGamesBySearch(searchTerm).map {
                     GameItem(
                         icon = it.platform.media.icon,
                         game = it,

@@ -20,105 +20,69 @@ object Persistence {
     private var database: Database? = null
 
     fun deleteGame(path: String) {
-        database?.gamesQueries
-            ?.deleteByPath(path)
+        database?.gamesQueries?.deleteByPath(path)
     }
 
-    private fun game(dao: Games) =
-        Game(
-            artwork = dao.artwork,
-            developer = dao.developer,
-            favorite = dao.favorite != 0L,
-            genre = dao.genre,
-            path = dao.path,
-            platform = Platform.valueOf(dao.platform),
-            publisher = dao.publisher,
-            region = dao.region,
-            releaseDate = dao.releaseDate,
-            sha1 = dao.sha1,
-        )
+    private fun game(dao: Games) = Game(
+        artwork = dao.artwork,
+        developer = dao.developer,
+        favorite = dao.favorite != 0L,
+        genre = dao.genre,
+        path = dao.path,
+        platform = Platform.valueOf(dao.platform),
+        publisher = dao.publisher,
+        region = dao.region,
+        releaseDate = dao.releaseDate,
+        sha1 = dao.sha1,
+    )
 
     fun getGamesByHasArtworkByPlatform(platform: Platform) =
-        database?.gamesQueries
-            ?.selectByHasArtworkByPlatform(platform.name)
-            ?.executeAsList()
-            ?.map {
+        database?.gamesQueries?.selectByHasArtworkByPlatform(platform.name)?.executeAsList()?.map {
                 game(it)
-            }
-            ?.sortedBy {
+            }?.sortedBy {
                 File(it.path).name.toLowerCase(Locale.getDefault())
-            }
-            ?: listOf()
+            } ?: listOf()
 
     fun getGamesByHasArtworkByFavorite() =
-        database?.gamesQueries
-            ?.selectByHasArtworkByFavorite()
-            ?.executeAsList()
-            ?.map {
+        database?.gamesQueries?.selectByHasArtworkByFavorite()?.executeAsList()?.map {
                 game(it)
-            }
-            ?.sortedBy {
+            }?.sortedBy {
                 File(it.path).name.toLowerCase(Locale.getDefault())
-            }
-            ?: listOf()
+            } ?: listOf()
 
     fun getGamesByPlatform(platform: Platform) =
-        database?.gamesQueries
-            ?.selectByPlatform(platform.name)
-            ?.executeAsList()
-            ?.map {
+        database?.gamesQueries?.selectByPlatform(platform.name)?.executeAsList()?.map {
                 game(it)
-            }
-            ?.sortedBy {
+            }?.sortedBy {
                 File(it.path).name.toLowerCase(Locale.getDefault())
-            }
-            ?: listOf()
+            } ?: listOf()
 
     fun getGameByPath(path: String) =
-        database?.gamesQueries
-            ?.selectByPath(path)
-            ?.executeAsOneOrNull()
-            ?.let {
+        database?.gamesQueries?.selectByPath(path)?.executeAsOneOrNull()?.let {
                 game(it)
             }
 
     fun getGameBySha1(sha1: String) =
-        database?.gamesQueries
-            ?.selectBySha1(sha1)
-            ?.executeAsOneOrNull()
-            ?.let {
+        database?.gamesQueries?.selectBySha1(sha1)?.executeAsOneOrNull()?.let {
                 game(it)
             }
 
-    fun getGamesByFavorite() =
-        database?.gamesQueries
-            ?.selectByFavorite()
-            ?.executeAsList()
-            ?.map {
-                game(it)
-            }
-            ?.sortedBy {
-                File(it.path).name.toLowerCase(Locale.getDefault())
-            }
-            ?: listOf()
+    fun getGamesByFavorite() = database?.gamesQueries?.selectByFavorite()?.executeAsList()?.map {
+            game(it)
+        }?.sortedBy {
+            File(it.path).name.toLowerCase(Locale.getDefault())
+        } ?: listOf()
 
     fun getGamesBySearch(searchTerm: String) =
-        database?.gamesQueries
-            ?.selectBySearch(searchTerm)
-            ?.executeAsList()
-            ?.map {
+        database?.gamesQueries?.selectBySearch(searchTerm)?.executeAsList()?.map {
                 game(it)
-            }
-            ?.sortedBy {
+            }?.sortedBy {
                 File(it.path).name.toLowerCase(Locale.getDefault())
-            }
-            ?: listOf()
+            } ?: listOf()
 
     fun getMetadataBySha1(sha1: String) =
-        database?.metadataQueries
-            ?.selectBySha1(sha1.toUpperCase(Locale.getDefault()))
-            ?.executeAsOneOrNull()
-            ?.let {
+        database?.metadataQueries?.selectBySha1(sha1.toUpperCase(Locale.getDefault()))
+            ?.executeAsOneOrNull()?.let {
                 metadata(it)
             }
 
@@ -145,57 +109,45 @@ object Persistence {
         if (!File(path).exists()) {
             File(dir).mkdir()
             File(path).createNewFile()
-            context.assets.open("openvgdb.sqlite")
-                .copyTo(FileOutputStream(path))
+            context.assets.open("openvgdb.sqlite").copyTo(FileOutputStream(path))
         }
         database = Database(
             AndroidSqliteDriver(Database.Schema, context, name)
         )
     }
 
-    private fun metadata(dao: SelectBySha1) =
-        Metadata(
-            artwork = dao.frontCover,
-            developer = dao.developer,
-            publisher = dao.publisher,
-            region = dao.region,
-            releaseDate = dao.releaseDate,
-            genre = dao.genre,
-        )
+    private fun metadata(dao: SelectBySha1) = Metadata(
+        artwork = dao.frontCover,
+        developer = dao.developer,
+        publisher = dao.publisher,
+        region = dao.region,
+        releaseDate = dao.releaseDate,
+        genre = dao.genre,
+    )
 
     fun saveGame(path: String, platform: Platform, sha1: String?) =
-        database?.gamesQueries
-            ?.save(File(path).nameWithoutExtension, path, platform.name, sha1)
+        database?.gamesQueries?.save(File(path).nameWithoutExtension, path, platform.name, sha1)
 
     fun updateArtwork(game: Game, artwork: String) =
-        database?.gamesQueries
-            ?.updateArtwork(artwork, game.path)
+        database?.gamesQueries?.updateArtwork(artwork, game.path)
 
     fun updateDeveloper(game: Game, developer: String) =
-        database?.gamesQueries
-            ?.updateDeveloper(developer, game.path)
+        database?.gamesQueries?.updateDeveloper(developer, game.path)
 
     fun updateFavorite(game: Game, favorite: Boolean) =
-        database?.gamesQueries
-            ?.updateFavorite(if (favorite) 1L else 0L, game.path)
+        database?.gamesQueries?.updateFavorite(if (favorite) 1L else 0L, game.path)
 
     fun updateGenre(game: Game, genre: String) =
-        database?.gamesQueries
-            ?.updateGenre(genre, game.path)
+        database?.gamesQueries?.updateGenre(genre, game.path)
 
     fun updatePublisher(game: Game, publisher: String) =
-        database?.gamesQueries
-            ?.updatePublisher(publisher, game.path)
+        database?.gamesQueries?.updatePublisher(publisher, game.path)
 
     fun updateRegion(game: Game, region: String) =
-        database?.gamesQueries
-            ?.updateRegion(region, game.path)
+        database?.gamesQueries?.updateRegion(region, game.path)
 
-    fun updateSha1(game: Game, sha1: String) =
-        database?.gamesQueries
-            ?.updateSha1(sha1, game.path)
+    fun updateSha1(game: Game, sha1: String) = database?.gamesQueries?.updateSha1(sha1, game.path)
 
     fun updateReleaseDate(game: Game, releaseDate: String) =
-        database?.gamesQueries
-            ?.updateReleaseDate(releaseDate, game.path)
+        database?.gamesQueries?.updateReleaseDate(releaseDate, game.path)
 }

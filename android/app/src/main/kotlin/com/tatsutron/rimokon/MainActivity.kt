@@ -31,10 +31,7 @@ class MainActivity : AppCompatActivity() {
         Persistence.init(baseContext)
         Navigator.init(findViewById(R.id.loading_screen))
         if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.root, MainFragment())
-                .commit()
+            supportFragmentManager.beginTransaction().replace(R.id.root, MainFragment()).commit()
         }
     }
 }

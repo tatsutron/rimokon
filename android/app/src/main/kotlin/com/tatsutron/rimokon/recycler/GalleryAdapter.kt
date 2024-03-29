@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.l4digital.fastscroll.FastScroller
 import com.tatsutron.rimokon.R
-import java.util.*
+import java.util.Locale
 
 class GalleryAdapter(
     private val activity: Activity,
     val itemList: MutableList<GalleryItem> = mutableListOf(),
-) : RecyclerView.Adapter<GalleryHolder>(),
-    FastScroller.SectionIndexer {
+) : RecyclerView.Adapter<GalleryHolder>(), FastScroller.SectionIndexer {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,8 +30,6 @@ class GalleryAdapter(
 
     override fun getSectionText(position: Int): String {
         val item = itemList.getOrNull(position)
-        return item?.text
-            ?.first()?.toString()?.toUpperCase(Locale.getDefault())
-            ?: ""
+        return item?.text?.first()?.toString()?.toUpperCase(Locale.getDefault()) ?: ""
     }
 }

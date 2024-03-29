@@ -23,14 +23,11 @@ import com.tatsutron.rimokon.component.ImageCard
 import com.tatsutron.rimokon.component.MetadataCard
 import com.tatsutron.rimokon.model.Game
 import com.tatsutron.rimokon.model.Metadata
-import com.tatsutron.rimokon.model.Platform
-import com.tatsutron.rimokon.util.Constants
 import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Persistence
-import com.tatsutron.rimokon.util.Ssh
 import com.tatsutron.rimokon.util.Util
 import com.tatsutron.rimokon.util.getColorCompat
 
@@ -111,36 +108,32 @@ class GameFragment : BaseFragment() {
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         unfavoriteAction = SpeedDialActionItem.Builder(R.id.unfavorite, R.drawable.ic_star_fill)
             .setLabel(context.getString(R.string.unfavorite))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         generateQrAction = SpeedDialActionItem.Builder(R.id.generate_qr, R.drawable.ic_qr_code)
             .setLabel(context.getString(R.string.generate_qr_code))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         copyQrAction = SpeedDialActionItem.Builder(R.id.copy_qr, R.drawable.ic_copy)
             .setLabel(context.getString(R.string.copy_qr_code))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
-        importAction = SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
-            .setLabel(context.getString(R.string.import_metadata))
-            .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setLabelColor(context.getColorCompat(R.color.button_label))
-            .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
+        importAction =
+            SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
+                .setLabel(context.getString(R.string.import_metadata))
+                .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
+                .setLabelColor(context.getColorCompat(R.color.button_label))
+                .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
+                .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
     }
 
     private fun setSpeedDial() {
@@ -157,74 +150,68 @@ class GameFragment : BaseFragment() {
                 addActionItem(copyQrAction)
             }
             addActionItem(importAction)
-            setOnActionSelectedListener(
-                SpeedDialView.OnActionSelectedListener { actionItem ->
-                    when (actionItem.id) {
-                        R.id.copy_qr -> {
-                            onCopyQr()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.favorite -> {
-                            onToggleFavorite()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.generate_qr -> {
-                            onGenerateQr()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.import_metadata -> {
-                            Navigator.showLoadingScreen()
-                            val activity = requireActivity()
-                            Coroutine.launch(
-                                activity = activity,
-                                run = {
-                                    if (game.sha1 == null) {
-                                        val sha1 = Util.hash(
-                                            path = game.path,
-                                            headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
-                                        )
-                                        Persistence.updateSha1(game, sha1)
-                                        game = Persistence.getGameBySha1(sha1)!!
-                                    }
-                                    Thread.sleep(1500)
-                                    requireActivity().runOnUiThread {
-                                        val metadata = Persistence.getMetadataBySha1(game.sha1!!)
-                                        if (metadata != null) {
-                                            onImportMetadata(metadata)
-                                        } else {
-                                            Dialog.message(
-                                                context = activity,
-                                                title = activity.getString(R.string.no_metadata_found),
-                                            )
-                                        }
-                                        Persistence.getMetadataBySha1(game.sha1!!)?.let {
-                                            onImportMetadata(it)
-                                        }
-                                    }
-                                },
-                                finally = {
-                                    Navigator.hideLoadingScreen()
-                                }
-                            )
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.unfavorite -> {
-                            onToggleFavorite()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
+            setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+                when (actionItem.id) {
+                    R.id.copy_qr -> {
+                        onCopyQr()
+                        close()
+                        return@OnActionSelectedListener true
                     }
-                    false
+
+                    R.id.favorite -> {
+                        onToggleFavorite()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
+
+                    R.id.generate_qr -> {
+                        onGenerateQr()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
+
+                    R.id.import_metadata -> {
+                        Navigator.showLoadingScreen()
+                        val activity = requireActivity()
+                        Coroutine.launch(activity = activity, run = {
+                            if (game.sha1 == null) {
+                                val sha1 = Util.hash(
+                                    path = game.path,
+                                    headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
+                                )
+                                Persistence.updateSha1(game, sha1)
+                                game = Persistence.getGameBySha1(sha1)!!
+                            }
+                            Thread.sleep(1500)
+                            requireActivity().runOnUiThread {
+                                val metadata = Persistence.getMetadataBySha1(game.sha1!!)
+                                if (metadata != null) {
+                                    onImportMetadata(metadata)
+                                } else {
+                                    Dialog.message(
+                                        context = activity,
+                                        title = activity.getString(R.string.no_metadata_found),
+                                    )
+                                }
+                                Persistence.getMetadataBySha1(game.sha1!!)?.let {
+                                    onImportMetadata(it)
+                                }
+                            }
+                        }, finally = {
+                            Navigator.hideLoadingScreen()
+                        })
+                        close()
+                        return@OnActionSelectedListener true
+                    }
+
+                    R.id.unfavorite -> {
+                        onToggleFavorite()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
                 }
-            )
+                false
+            })
         }
     }
 
@@ -252,9 +239,7 @@ class GameFragment : BaseFragment() {
             editButton.setOnClickListener {
                 val context = requireContext()
                 Dialog.metadata(
-                    context,
-                    context.getString(R.string.enter_developer),
-                    bodyText.text.toString()
+                    context, context.getString(R.string.enter_developer), bodyText.text.toString()
                 ) { result ->
                     Persistence.updateDeveloper(game, result)
                     bodyText.text = result
@@ -268,9 +253,7 @@ class GameFragment : BaseFragment() {
             editButton.setOnClickListener {
                 val context = requireContext()
                 Dialog.metadata(
-                    context,
-                    context.getString(R.string.enter_publisher),
-                    bodyText.text.toString()
+                    context, context.getString(R.string.enter_publisher), bodyText.text.toString()
                 ) { result ->
                     Persistence.updatePublisher(game, result)
                     bodyText.text = result
@@ -284,9 +267,7 @@ class GameFragment : BaseFragment() {
             editButton.setOnClickListener {
                 val context = requireContext()
                 Dialog.metadata(
-                    context,
-                    context.getString(R.string.enter_region),
-                    bodyText.text.toString()
+                    context, context.getString(R.string.enter_region), bodyText.text.toString()
                 ) { result ->
                     Persistence.updateRegion(game, result)
                     bodyText.text = result
@@ -316,9 +297,7 @@ class GameFragment : BaseFragment() {
             editButton.setOnClickListener {
                 val context = requireContext()
                 Dialog.metadata(
-                    context,
-                    context.getString(R.string.enter_genre),
-                    bodyText.text.toString()
+                    context, context.getString(R.string.enter_genre), bodyText.text.toString()
                 ) { result ->
                     Persistence.updateGenre(game, result)
                     bodyText.text = result
@@ -345,21 +324,19 @@ class GameFragment : BaseFragment() {
             },
             failure = { throwable ->
                 when (throwable) {
-                    is JSchException ->
-                        if (Persistence.host.isEmpty()) {
-                            Dialog.enterIpAddress(
-                                context = activity,
-                                callback = ::onPlay,
-                            )
-                        } else {
-                            Dialog.connectionFailed(
-                                context = activity,
-                                callback = ::onPlay,
-                            )
-                        }
+                    is JSchException -> if (Persistence.host.isEmpty()) {
+                        Dialog.enterIpAddress(
+                            context = activity,
+                            callback = ::onPlay,
+                        )
+                    } else {
+                        Dialog.connectionFailed(
+                            context = activity,
+                            callback = ::onPlay,
+                        )
+                    }
 
-                    else ->
-                        Dialog.error(activity, throwable)
+                    else -> Dialog.error(activity, throwable)
                 }
             },
             finally = {
@@ -377,48 +354,40 @@ class GameFragment : BaseFragment() {
     private fun onGenerateQr() {
         Navigator.showLoadingScreen()
         val activity = requireActivity()
-        Coroutine.launch(
-            activity = activity,
-            run = {
-                val sha1 = Util.hash(
-                    path = game.path,
-                    headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
+        Coroutine.launch(activity = activity, run = {
+            val sha1 = Util.hash(
+                path = game.path,
+                headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
+            )
+            Persistence.updateSha1(game, sha1)
+            activity.runOnUiThread {
+                val clipboard = ContextCompat.getSystemService(
+                    activity,
+                    ClipboardManager::class.java,
                 )
-                Persistence.updateSha1(game, sha1)
-                activity.runOnUiThread {
-                    val clipboard = ContextCompat.getSystemService(
-                        activity,
-                        ClipboardManager::class.java,
-                    )
-                    clipboard?.setPrimaryClip(ClipData.newPlainText("QR", sha1))
-                    Toast.makeText(
-                        requireActivity(),
-                        activity.getString(R.string.copied_qr_data_to_clipboard),
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
-            },
-            success = {
-                game = Persistence.getGameByPath(game.path)!!
-                setSpeedDial()
-                setMetadata()
-            },
-            failure = { throwable ->
-                when (throwable) {
-                    is JSchException ->
-                        Dialog.connectionFailed(
-                            context = activity,
-                            callback = ::onGenerateQr,
-                        )
-
-                    else ->
-                        Dialog.error(activity, throwable)
-                }
-            },
-            finally = {
-                Navigator.hideLoadingScreen()
+                clipboard?.setPrimaryClip(ClipData.newPlainText("QR", sha1))
+                Toast.makeText(
+                    requireActivity(),
+                    activity.getString(R.string.copied_qr_data_to_clipboard),
+                    Toast.LENGTH_SHORT,
+                ).show()
             }
-        )
+        }, success = {
+            game = Persistence.getGameByPath(game.path)!!
+            setSpeedDial()
+            setMetadata()
+        }, failure = { throwable ->
+            when (throwable) {
+                is JSchException -> Dialog.connectionFailed(
+                    context = activity,
+                    callback = ::onGenerateQr,
+                )
+
+                else -> Dialog.error(activity, throwable)
+            }
+        }, finally = {
+            Navigator.hideLoadingScreen()
+        })
     }
 
     private fun onCopyQr() {

@@ -48,9 +48,7 @@ class PlatformFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(
@@ -124,8 +122,7 @@ class PlatformFragment : BaseFragment() {
         } else {
             recycler.adapter = gameListAdapter
             val subfolder: Game.() -> String? = {
-                val relativePath = path
-                    .removePrefix("$currentFolder${File.separator}")
+                val relativePath = path.removePrefix("$currentFolder${File.separator}")
                 val tokens = relativePath.split(File.separator)
                 if (tokens.size <= 1) {
                     null
@@ -135,11 +132,9 @@ class PlatformFragment : BaseFragment() {
             }
             val games = mutableListOf<Game>()
             val folders = mutableSetOf<String>()
-            Persistence.getGamesByPlatform(platform)
-                .filter {
+            Persistence.getGamesByPlatform(platform).filter {
                     it.path.startsWith(currentFolder)
-                }
-                .forEach {
+                }.forEach {
                     val folder = it.subfolder()
                     if (folder != null) {
                         folders.add(folder)
@@ -147,9 +142,7 @@ class PlatformFragment : BaseFragment() {
                         games.add(it)
                     }
                 }
-            val folderItems = folders
-                .sortedBy { it.toLowerCase(Locale.getDefault()) }
-                .map {
+            val folderItems = folders.sortedBy { it.toLowerCase(Locale.getDefault()) }.map {
                     FolderItem(
                         name = it,
                         onClick = {
@@ -158,8 +151,7 @@ class PlatformFragment : BaseFragment() {
                         },
                     )
                 }
-            val gameItems = games
-                .map {
+            val gameItems = games.map {
                     GameItem(
                         icon = platform.media.icon,
                         game = it,
@@ -182,29 +174,25 @@ class PlatformFragment : BaseFragment() {
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         randomAction = SpeedDialActionItem.Builder(R.id.random, R.drawable.ic_random)
             .setLabel(context.getString(R.string.random))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         galleryViewAction = SpeedDialActionItem.Builder(R.id.gallery_view, R.drawable.ic_image)
             .setLabel(context.getString(R.string.gallery_view))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         listViewAction = SpeedDialActionItem.Builder(R.id.list_view, R.drawable.ic_folder)
             .setLabel(context.getString(R.string.list_view))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
     }
 
     private fun setSpeedDial() {
@@ -223,36 +211,34 @@ class PlatformFragment : BaseFragment() {
             } else {
                 addActionItem(galleryViewAction)
             }
-            setOnActionSelectedListener(
-                SpeedDialView.OnActionSelectedListener { actionItem ->
-                    when (actionItem.id) {
-                        R.id.gallery_view -> {
-                            onGalleryView()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.list_view -> {
-                            onListView()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.random -> {
-                            onRandom()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.sync -> {
-                            onSync()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
+            setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+                when (actionItem.id) {
+                    R.id.gallery_view -> {
+                        onGalleryView()
+                        close()
+                        return@OnActionSelectedListener true
                     }
-                    false
+
+                    R.id.list_view -> {
+                        onListView()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
+
+                    R.id.random -> {
+                        onRandom()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
+
+                    R.id.sync -> {
+                        onSync()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
                 }
-            )
+                false
+            })
         }
     }
 
@@ -270,9 +256,10 @@ class PlatformFragment : BaseFragment() {
 
     private fun onRandom() {
         Navigator.showScreen(
-            activity as AppCompatActivity,
-            if (inGallery) {
-                FragmentMaker.game(Persistence.getGamesByHasArtworkByPlatform(platform).random().path)
+            activity as AppCompatActivity, if (inGallery) {
+                FragmentMaker.game(
+                    Persistence.getGamesByHasArtworkByPlatform(platform).random().path
+                )
             } else {
                 FragmentMaker.game(Persistence.getGamesByPlatform(platform).random().path)
             }
@@ -293,21 +280,19 @@ class PlatformFragment : BaseFragment() {
             },
             failure = { throwable ->
                 when (throwable) {
-                    is JSchException ->
-                        if (Persistence.host.isEmpty()) {
-                            Dialog.enterIpAddress(
-                                context = activity,
-                                callback = ::onSync,
-                            )
-                        } else {
-                            Dialog.connectionFailed(
-                                context = activity,
-                                callback = ::onSync,
-                            )
-                        }
+                    is JSchException -> if (Persistence.host.isEmpty()) {
+                        Dialog.enterIpAddress(
+                            context = activity,
+                            callback = ::onSync,
+                        )
+                    } else {
+                        Dialog.connectionFailed(
+                            context = activity,
+                            callback = ::onSync,
+                        )
+                    }
 
-                    else ->
-                        Dialog.error(activity, throwable)
+                    else -> Dialog.error(activity, throwable)
                 }
             },
             finally = {

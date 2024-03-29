@@ -58,13 +58,10 @@ object Util {
                 append("${Constants.MREXT_OUTPUT_PATH}/${platform.mrextId}.txt")
             }.toString()
             val output = Ssh.command(session, catCommand)
-            val new = output
-                .split("\n")
-                .filter {
+            val new = output.split("\n").filter {
                     it.isNotEmpty()
                 }
-            val old = Persistence.getGamesByPlatform(platform)
-                .map {
+            val old = Persistence.getGamesByPlatform(platform).map {
                     it.path
                 }
             new.forEach {

@@ -39,9 +39,7 @@ class ScanFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_scan, container, false)
 
     override fun onResume() {
@@ -77,8 +75,7 @@ class ScanFragment : BaseFragment() {
             }
         }
         val requiredPermission = Manifest.permission.CAMERA
-        if (
-            ContextCompat.checkSelfPermission(
+        if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 requiredPermission,
             ) == PackageManager.PERMISSION_GRANTED
@@ -98,9 +95,7 @@ class ScanFragment : BaseFragment() {
                 val preview = Preview.Builder().build().also {
                     it.setSurfaceProvider(preview.surfaceProvider)
                 }
-                val imageAnalysis = ImageAnalysis.Builder()
-                    .build()
-                    .also {
+                val imageAnalysis = ImageAnalysis.Builder().build().also {
                         it.setAnalyzer(
                             cameraExecutor,
                             BarcodeAnalyzer(
@@ -131,8 +126,7 @@ class ScanFragment : BaseFragment() {
     }
 
     private fun handleResult(data: String) {
-        Persistence.getGameBySha1(data)
-            ?.let { game ->
+        Persistence.getGameBySha1(data)?.let { game ->
                 Navigator.showLoadingScreen()
                 Coroutine.launch(
                     activity = requireActivity(),
@@ -150,9 +144,8 @@ class ScanFragment : BaseFragment() {
                         }, 100)
                     },
                 )
-            }
-            ?: run {
-                processingBarcode = false
-            }
+            } ?: run {
+            processingBarcode = false
+        }
     }
 }

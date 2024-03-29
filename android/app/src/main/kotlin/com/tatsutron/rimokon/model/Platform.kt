@@ -328,12 +328,10 @@ enum class Platform(
         val path: String,
     ) {
         ARCADE(
-            displayName = "Arcade",
-            path = Constants.ARCADE_PATH
+            displayName = "Arcade", path = Constants.ARCADE_PATH
         ),
         CONSOLE(
-            displayName = "Console",
-            path = Constants.CONSOLE_PATH
+            displayName = "Console", path = Constants.CONSOLE_PATH
         ),
         COMPUTER(
             displayName = "Computer",
@@ -347,10 +345,10 @@ enum class Platform(
 
     val gamesPath: String?
         get() = when {
-            this == ARCADE ->
-                Constants.ARCADE_PATH
-            gamesFolder != null ->
-                File(Constants.GAMES_PATH, gamesFolder).path
+            this == ARCADE -> Constants.ARCADE_PATH
+
+            gamesFolder != null -> File(Constants.GAMES_PATH, gamesFolder).path
+
             else -> null
         }
 

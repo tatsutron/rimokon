@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
-import java.util.*
+import java.util.Locale
 
 class PlatformHolder(
     private val activity: Activity,
@@ -24,8 +24,7 @@ class PlatformHolder(
         println(item.platform.name)
         image.setImageDrawable(
             AppCompatResources.getDrawable(
-                image.context,
-                image.resources.getIdentifier(
+                image.context, image.resources.getIdentifier(
                     "platform_${item.platform.name.toLowerCase(Locale.getDefault())}",
                     "drawable",
                     image.context.packageName,

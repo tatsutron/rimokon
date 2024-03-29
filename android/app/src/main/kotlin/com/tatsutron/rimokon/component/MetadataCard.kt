@@ -17,11 +17,9 @@ class MetadataCard(
     val bodyText: TextView
     val editButton: ImageView
 
-    constructor(context: Context, attrs: AttributeSet)
-            : this(context, attrs, defStyleAttr = 0)
+    constructor(context: Context, attrs: AttributeSet) : this(context, attrs, defStyleAttr = 0)
 
-    constructor(context: Context)
-            : this(context, attrs = null, defStyleAttr = 0)
+    constructor(context: Context) : this(context, attrs = null, defStyleAttr = 0)
 
     init {
         val inflater = LayoutInflater.from(context)

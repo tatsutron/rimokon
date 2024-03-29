@@ -11,9 +11,7 @@ import com.tatsutron.rimokon.R
 class CreditsFragment : BaseFragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(
@@ -140,9 +138,8 @@ class CreditsFragment : BaseFragment() {
             }.joinToString("\n")
         }
         view.findViewById<TextView>(R.id.version_name).apply {
-            val versionName = context.packageManager
-                .getPackageInfo(context.packageName, 0)
-                .versionName
+            val versionName =
+                context.packageManager.getPackageInfo(context.packageName, 0).versionName
             val version = "v$versionName"
             text = version
         }

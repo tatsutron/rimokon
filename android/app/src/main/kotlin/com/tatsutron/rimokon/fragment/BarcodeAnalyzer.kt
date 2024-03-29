@@ -22,16 +22,13 @@ class BarcodeAnalyzer(
                 mediaImage,
                 imageProxy.imageInfo.rotationDegrees,
             )
-            scanner.process(image)
-                .addOnSuccessListener { barcodes ->
+            scanner.process(image).addOnSuccessListener { barcodes ->
                     for (barcode in barcodes) {
                         listener(barcode.rawValue ?: "")
                     }
-                }
-                .addOnFailureListener {
+                }.addOnFailureListener {
                     Dialog.error(context, it)
-                }
-                .addOnCompleteListener {
+                }.addOnCompleteListener {
                     imageProxy.close()
                 }
         }

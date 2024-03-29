@@ -18,17 +18,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:padding="@dimen/margin_medium"
         android:src="@drawable/ic_image"
-        app:tint="@color/analogous_200"
-        android:padding="@dimen/margin_medium"/>
+        app:tint="@color/analogous_200" />
 
     <ImageView
         android:id="@+id/edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:padding="@dimen/margin_medium"
         android:src="@drawable/ic_edit"
-        app:tint="@color/triadic_200"
-        android:padding="@dimen/margin_medium"/>
+        app:tint="@color/triadic_200" />
 
 </FrameLayout>

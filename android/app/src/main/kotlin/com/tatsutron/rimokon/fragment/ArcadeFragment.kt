@@ -56,9 +56,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(
@@ -71,9 +69,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
     override fun onResume() {
         super.onResume()
         if (Persistence.getGamesByPlatform(Platform.ARCADE).isEmpty()) {
-            val platform = Platform.ARCADE
-                .displayName
-                ?.toLowerCase(Locale.getDefault())
+            val platform = Platform.ARCADE.displayName?.toLowerCase(Locale.getDefault())
             val context = requireContext()
             Dialog.confirmation(
                 context = context,
@@ -107,22 +103,20 @@ class ArcadeFragment : FullMenuBaseFragment() {
         setSpeedDial()
     }
 
-    override fun onBackPressed() =
-        if (currentFolder.length > Platform.ARCADE.gamesPath?.length!!) {
-            currentFolder = File(currentFolder).parent!!
-            setRecycler()
-            true
-        } else {
-            super.onBackPressed()
-        }
+    override fun onBackPressed() = if (currentFolder.length > Platform.ARCADE.gamesPath?.length!!) {
+        currentFolder = File(currentFolder).parent!!
+        setRecycler()
+        true
+    } else {
+        super.onBackPressed()
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setRecycler() {
         adapter.itemList.clear()
         if (searchTerm.isBlank()) {
             val subfolder: Game.() -> String? = {
-                val relativePath = path
-                    .removePrefix("$currentFolder${File.separator}")
+                val relativePath = path.removePrefix("$currentFolder${File.separator}")
                 val tokens = relativePath.split(File.separator)
                 if (tokens.size <= 1) {
                     null
@@ -132,11 +126,9 @@ class ArcadeFragment : FullMenuBaseFragment() {
             }
             val games = mutableListOf<Game>()
             val folders = mutableSetOf<String>()
-            Persistence.getGamesByPlatform(Platform.ARCADE)
-                .filter {
+            Persistence.getGamesByPlatform(Platform.ARCADE).filter {
                     it.path.startsWith(currentFolder)
-                }
-                .forEach {
+                }.forEach {
                     val folder = it.subfolder()
                     if (folder != null) {
                         folders.add(folder)
@@ -144,9 +136,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
                         games.add(it)
                     }
                 }
-            val folderItems = folders
-                .sortedBy { it.toLowerCase(Locale.getDefault()) }
-                .map {
+            val folderItems = folders.sortedBy { it.toLowerCase(Locale.getDefault()) }.map {
                     FolderItem(
                         name = it,
                         onClick = {
@@ -155,8 +145,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
                         },
                     )
                 }
-            val gameItems = games
-                .map {
+            val gameItems = games.map {
                     GameItem(
                         icon = Platform.ARCADE.media.icon,
                         game = it,
@@ -166,8 +155,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
             val items = folderItems + gameItems
             adapter.itemList.addAll(items)
         } else {
-            val items = Persistence.getGamesBySearch(searchTerm)
-                .map {
+            val items = Persistence.getGamesBySearch(searchTerm).map {
                     GameItem(
                         icon = it.platform.media.icon,
                         game = it,
@@ -186,15 +174,13 @@ class ArcadeFragment : FullMenuBaseFragment() {
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         randomAction = SpeedDialActionItem.Builder(R.id.random, R.drawable.ic_random)
             .setLabel(context.getString(R.string.random))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-            .setFabImageTintColor(context.getColorCompat(R.color.button_label))
-            .create()
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
     }
 
     private fun setSpeedDial() {
@@ -204,24 +190,22 @@ class ArcadeFragment : FullMenuBaseFragment() {
             if (adapter.itemList.count() > 1) {
                 addActionItem(randomAction)
             }
-            setOnActionSelectedListener(
-                SpeedDialView.OnActionSelectedListener { actionItem ->
-                    when (actionItem.id) {
-                        R.id.random -> {
-                            onRandom()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
-
-                        R.id.sync -> {
-                            onSync()
-                            close()
-                            return@OnActionSelectedListener true
-                        }
+            setOnActionSelectedListener(SpeedDialView.OnActionSelectedListener { actionItem ->
+                when (actionItem.id) {
+                    R.id.random -> {
+                        onRandom()
+                        close()
+                        return@OnActionSelectedListener true
                     }
-                    false
+
+                    R.id.sync -> {
+                        onSync()
+                        close()
+                        return@OnActionSelectedListener true
+                    }
                 }
-            )
+                false
+            })
         }
     }
 
@@ -239,21 +223,19 @@ class ArcadeFragment : FullMenuBaseFragment() {
             },
             failure = { throwable ->
                 when (throwable) {
-                    is JSchException ->
-                        if (Persistence.host.isEmpty()) {
-                            Dialog.enterIpAddress(
-                                context = activity,
-                                callback = ::onSync,
-                            )
-                        } else {
-                            Dialog.connectionFailed(
-                                context = activity,
-                                callback = ::onSync,
-                            )
-                        }
+                    is JSchException -> if (Persistence.host.isEmpty()) {
+                        Dialog.enterIpAddress(
+                            context = activity,
+                            callback = ::onSync,
+                        )
+                    } else {
+                        Dialog.connectionFailed(
+                            context = activity,
+                            callback = ::onSync,
+                        )
+                    }
 
-                    else ->
-                        Dialog.error(activity, throwable)
+                    else -> Dialog.error(activity, throwable)
                 }
             },
             finally = {
