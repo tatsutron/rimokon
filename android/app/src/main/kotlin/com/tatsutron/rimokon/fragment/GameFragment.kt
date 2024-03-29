@@ -23,11 +23,13 @@ import com.tatsutron.rimokon.component.ImageCard
 import com.tatsutron.rimokon.component.MetadataCard
 import com.tatsutron.rimokon.model.Game
 import com.tatsutron.rimokon.model.Metadata
+import com.tatsutron.rimokon.util.Constants
 import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Persistence
+import com.tatsutron.rimokon.util.Ssh
 import com.tatsutron.rimokon.util.Util
 import com.tatsutron.rimokon.util.getColorCompat
 
@@ -327,10 +329,12 @@ class GameFragment : BaseFragment() {
 
     private fun onPlay() {
         Navigator.showLoadingScreen()
-        Util.loadGame(
+        Coroutine.launch(
             activity = requireActivity(),
-            game = game,
-            callback = {
+            run = {
+                Util.loadGame(game)
+            },
+            finally = {
                 Navigator.hideLoadingScreen()
             },
         )

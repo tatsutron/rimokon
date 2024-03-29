@@ -10,7 +10,6 @@ object Util {
 
     fun syncPlatforms(activity: Activity, platforms: List<Platform>) {
         val session = Ssh.session()
-        // Deploy assets
         Ssh.sftp(session).apply {
             try {
                 mkdir(Constants.TATSUTRON_ROOT)
@@ -103,25 +102,18 @@ object Util {
         return output
     }
 
-    // TODO Maybe this should be wrapped by `Coroutine`?
-    fun loadGame(activity: Activity, game: Game, callback: () -> Unit) {
-        Coroutine.launch(
-            activity = activity,
-            run = {
-                val session = Ssh.session()
-                val command = StringBuilder().apply {
-                    append(Constants.MREXT_CONTOOL_PATH)
-                    append(" ")
-                    append("-launch")
-                    append(" ")
-                    append("\"")
-                    append(game.path)
-                    append("\"")
-                }.toString()
-                Ssh.command(session, command)
-                session.disconnect()
-            },
-            finally = callback,
-        )
+    fun loadGame(game: Game) {
+        val session = Ssh.session()
+        val command = StringBuilder().apply {
+            append(Constants.MREXT_CONTOOL_PATH)
+            append(" ")
+            append("-launch")
+            append(" ")
+            append("\"")
+            append(game.path)
+            append("\"")
+        }.toString()
+        Ssh.command(session, command)
+        session.disconnect()
     }
 }

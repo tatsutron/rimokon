@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.tatsutron.rimokon.MainActivity
 import com.tatsutron.rimokon.R
+import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
@@ -133,10 +134,12 @@ class ScanFragment : BaseFragment() {
         Persistence.getGameBySha1(data)
             ?.let { game ->
                 Navigator.showLoadingScreen()
-                Util.loadGame(
+                Coroutine.launch(
                     activity = requireActivity(),
-                    game = game,
-                    callback = {
+                    run = {
+                        Util.loadGame(game)
+                    },
+                    finally = {
                         Navigator.hideLoadingScreen()
                         Handler(Looper.getMainLooper()).postDelayed({
                             (activity as? MainActivity)?.onBackPressed()
