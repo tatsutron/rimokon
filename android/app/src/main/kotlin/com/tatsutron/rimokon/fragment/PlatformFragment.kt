@@ -59,23 +59,6 @@ class PlatformFragment : BaseFragment() {
         )
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                if (!inGallery && currentFolder.length > platform.gamesPath?.length!!) {
-                    currentFolder = File(currentFolder).parent!!
-                    setRecycler()
-                } else {
-                    (requireActivity() as AppCompatActivity)
-                        .supportFragmentManager.popBackStack()
-                }
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         if (Persistence.getGamesByPlatform(platform).isEmpty()) {
@@ -103,8 +86,6 @@ class PlatformFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
             toolbar.title = platform.displayName
         }
         gameListAdapter = GameListAdapter(activity as Activity)
