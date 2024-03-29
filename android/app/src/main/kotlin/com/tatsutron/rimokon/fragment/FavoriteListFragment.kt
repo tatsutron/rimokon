@@ -9,12 +9,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tatsutron.rimokon.R
-import com.tatsutron.rimokon.model.Platform
 import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
 import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.Persistence
-import java.util.Locale
 
 class FavoriteListFragment : BaseFragment() {
 
