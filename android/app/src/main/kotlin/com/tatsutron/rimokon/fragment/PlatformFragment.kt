@@ -129,7 +129,17 @@ class PlatformFragment : BaseFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setRecycler() {
-        if (!inGallery) {
+        if (inGallery) {
+            recycler.adapter = galleryAdapter
+            val items = Persistence.getGamesByHasArtwork(platform).map {
+                GalleryItem(it)
+            }
+            galleryAdapter.apply {
+                itemList.clear()
+                itemList.addAll(items)
+                notifyDataSetChanged()
+            }
+        } else {
             recycler.adapter = gameListAdapter
             val subfolder: Game.() -> String? = {
                 val relativePath = path
@@ -180,16 +190,6 @@ class PlatformFragment : BaseFragment() {
                 itemList.addAll(items)
                 notifyDataSetChanged()
             }
-        } else {
-            recycler.adapter = galleryAdapter
-            val items = Persistence.getGamesByHasArtwork(platform).map {
-                GalleryItem(it)
-            }
-            galleryAdapter.apply {
-                itemList.clear()
-                itemList.addAll(items)
-                notifyDataSetChanged()
-            }
         }
     }
 
@@ -229,14 +229,17 @@ class PlatformFragment : BaseFragment() {
         view?.findViewById<SpeedDialView>(R.id.speed_dial)?.apply {
             clearActionItems()
             addActionItem(syncAction)
-            // TODO Allow random in gallery view?
-            if (!inGallery && gameListAdapter.itemList.count() > 1) {
-                addActionItem(randomAction)
+            if (gameListAdapter.itemList.count() > 1) {
+                if (inGallery) {
+                    addActionItem(randomAction)
+                } else if (Persistence.getGamesByHasArtwork(platform).count() > 1) {
+                    addActionItem(randomAction)
+                }
             }
-            if (!inGallery) {
-                addActionItem(galleryViewAction)
-            } else {
+            if (inGallery) {
                 addActionItem(listViewAction)
+            } else {
+                addActionItem(galleryViewAction)
             }
             setOnActionSelectedListener(
                 SpeedDialView.OnActionSelectedListener { actionItem ->
@@ -286,7 +289,11 @@ class PlatformFragment : BaseFragment() {
     private fun onRandom() {
         Navigator.showScreen(
             activity as AppCompatActivity,
-            FragmentMaker.game(Persistence.getGamesByPlatform(platform).random().path)
+            if (inGallery) {
+                FragmentMaker.game(Persistence.getGamesByHasArtwork(platform).random().path)
+            } else {
+                FragmentMaker.game(Persistence.getGamesByPlatform(platform).random().path)
+            }
         )
     }
 
