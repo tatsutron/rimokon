@@ -9,10 +9,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tatsutron.rimokon.R
-import com.tatsutron.rimokon.fragment.FragmentStateAdapter
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
-import com.tatsutron.rimokon.util.Util
 
 class GameHolder(
     private val activity: Activity,
