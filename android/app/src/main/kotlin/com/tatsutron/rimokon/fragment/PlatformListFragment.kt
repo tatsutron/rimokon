@@ -28,15 +28,6 @@ class PlatformListFragment : FullMenuBaseFragment() {
     private var searchItem: MenuItem? = null
     private var searchTerm = ""
 
-    override fun clearSearch() {
-        super.clearSearch()
-        // TODO Figure out why this only works once
-        (searchItem?.actionView as? SearchView)?.apply {
-            setQuery("", false)
-            isIconified = true
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
