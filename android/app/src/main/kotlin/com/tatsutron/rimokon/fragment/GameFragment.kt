@@ -23,6 +23,7 @@ import com.tatsutron.rimokon.component.ImageCard
 import com.tatsutron.rimokon.component.MetadataCard
 import com.tatsutron.rimokon.model.Game
 import com.tatsutron.rimokon.model.Metadata
+import com.tatsutron.rimokon.model.Platform
 import com.tatsutron.rimokon.util.Constants
 import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
@@ -329,10 +330,30 @@ class GameFragment : BaseFragment() {
 
     private fun onPlay() {
         Navigator.showLoadingScreen()
+        val activity = requireActivity()
         Coroutine.launch(
-            activity = requireActivity(),
+            activity = activity,
             run = {
                 Util.loadGame(game)
+            },
+            failure = { throwable ->
+                when (throwable) {
+                    is JSchException ->
+                        if (Persistence.host.isEmpty()) {
+                            Dialog.enterIpAddress(
+                                context = activity,
+                                callback = ::onPlay,
+                            )
+                        } else {
+                            Dialog.connectionFailed(
+                                context = activity,
+                                callback = ::onPlay,
+                            )
+                        }
+
+                    else ->
+                        Dialog.error(activity, throwable)
+                }
             },
             finally = {
                 Navigator.hideLoadingScreen()
