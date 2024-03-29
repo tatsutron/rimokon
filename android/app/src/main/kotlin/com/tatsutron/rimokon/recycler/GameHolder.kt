@@ -45,16 +45,5 @@ class GameHolder(
                 FragmentMaker.game(item.game.path),
             )
         }
-        itemView.setOnLongClickListener {
-            Navigator.showLoadingScreen()
-            Util.loadGame(
-                activity = activity,
-                game = item.game,
-                callback = {
-                    Navigator.hideLoadingScreen()
-                },
-            )
-            true
-        }
     }
 }
