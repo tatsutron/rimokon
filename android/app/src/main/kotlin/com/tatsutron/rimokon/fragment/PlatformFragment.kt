@@ -112,7 +112,7 @@ class PlatformFragment : BaseFragment() {
     private fun setRecycler() {
         if (inGallery) {
             recycler.adapter = galleryAdapter
-            val items = Persistence.getGamesByHasArtwork(platform).map {
+            val items = Persistence.getGamesByHasArtworkByPlatform(platform).map {
                 GalleryItem(it)
             }
             galleryAdapter.apply {
@@ -211,7 +211,7 @@ class PlatformFragment : BaseFragment() {
             clearActionItems()
             addActionItem(syncAction)
             if (gameListAdapter.itemList.count() > 1) {
-                if (inGallery && Persistence.getGamesByHasArtwork(platform).count() > 1) {
+                if (inGallery && Persistence.getGamesByHasArtworkByPlatform(platform).count() > 1) {
                     addActionItem(randomAction)
                 } else if (Persistence.getGamesByPlatform(platform).count() > 1) {
                     addActionItem(randomAction)
@@ -271,7 +271,7 @@ class PlatformFragment : BaseFragment() {
         Navigator.showScreen(
             activity as AppCompatActivity,
             if (inGallery) {
-                FragmentMaker.game(Persistence.getGamesByHasArtwork(platform).random().path)
+                FragmentMaker.game(Persistence.getGamesByHasArtworkByPlatform(platform).random().path)
             } else {
                 FragmentMaker.game(Persistence.getGamesByPlatform(platform).random().path)
             }
