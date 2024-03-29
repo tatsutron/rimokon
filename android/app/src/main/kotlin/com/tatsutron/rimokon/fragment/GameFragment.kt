@@ -378,6 +378,18 @@ class GameFragment : BaseFragment() {
                     headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
                 )
                 Persistence.updateSha1(game, sha1)
+                activity.runOnUiThread {
+                    val clipboard = ContextCompat.getSystemService(
+                        activity,
+                        ClipboardManager::class.java,
+                    )
+                    clipboard?.setPrimaryClip(ClipData.newPlainText("QR", sha1))
+                    Toast.makeText(
+                        requireActivity(),
+                        activity.getString(R.string.copied_qr_data_to_clipboard),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
             },
             success = {
                 game = Persistence.getGameByPath(game.path)!!
