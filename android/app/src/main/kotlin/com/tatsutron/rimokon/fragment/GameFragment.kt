@@ -1,10 +1,7 @@
 package com.tatsutron.rimokon.fragment
 
-import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -72,12 +69,6 @@ class GameFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            // TODO Find out why this isn't getting called
-            android.R.id.home -> {
-                (requireActivity() as AppCompatActivity)
-                    .supportFragmentManager.popBackStack()
-                true
-            }
 
             R.id.play -> {
                 onPlay()
@@ -96,8 +87,6 @@ class GameFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
             supportActionBar?.title = game.name
         }
         speedDial = view.findViewById(R.id.speed_dial)

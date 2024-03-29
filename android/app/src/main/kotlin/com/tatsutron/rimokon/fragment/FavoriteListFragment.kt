@@ -41,18 +41,6 @@ class FavoriteListFragment : BaseFragment() {
         )
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                (requireActivity() as AppCompatActivity)
-                    .supportFragmentManager.popBackStack()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         setRecycler()
@@ -63,8 +51,6 @@ class FavoriteListFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
             supportActionBar?.title = requireContext().getText(R.string.favorites)
         }
         adapter = GameListAdapter(activity as Activity)
