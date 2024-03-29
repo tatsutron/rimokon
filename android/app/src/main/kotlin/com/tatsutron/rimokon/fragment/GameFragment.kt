@@ -153,11 +153,10 @@ class GameFragment : BaseFragment() {
             }
             if (game.sha1 == null) {
                 addActionItem(generateQrAction)
-            }
-            if (game.sha1 != null) {
+            } else {
                 addActionItem(copyQrAction)
-                addActionItem(importAction)
             }
+            addActionItem(importAction)
             setOnActionSelectedListener(
                 SpeedDialView.OnActionSelectedListener { actionItem ->
                     when (actionItem.id) {
@@ -185,6 +184,14 @@ class GameFragment : BaseFragment() {
                             Coroutine.launch(
                                 activity = activity,
                                 run = {
+                                    if (game.sha1 == null) {
+                                        val sha1 = Util.hash(
+                                            path = game.path,
+                                            headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
+                                        )
+                                        Persistence.updateSha1(game, sha1)
+                                        game = Persistence.getGameBySha1(sha1)!!
+                                    }
                                     Thread.sleep(1500)
                                     requireActivity().runOnUiThread {
                                         val metadata = Persistence.getMetadataBySha1(game.sha1!!)
