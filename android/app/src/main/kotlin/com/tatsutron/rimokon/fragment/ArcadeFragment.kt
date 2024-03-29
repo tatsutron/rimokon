@@ -145,7 +145,7 @@ class ArcadeFragment : FullMenuBaseFragment() {
                     }
                 }
             val folderItems = folders
-                .sorted()
+                .sortedBy { it.toLowerCase(Locale.getDefault()) }
                 .map {
                     FolderItem(
                         name = it,

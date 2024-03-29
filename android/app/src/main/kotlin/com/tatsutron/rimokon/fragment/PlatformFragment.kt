@@ -21,6 +21,7 @@ import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
 import com.tatsutron.rimokon.util.*
 import java.io.File
+import java.util.Locale
 
 class PlatformFragment : BaseFragment() {
 
@@ -147,7 +148,7 @@ class PlatformFragment : BaseFragment() {
                     }
                 }
             val folderItems = folders
-                .sorted()
+                .sortedBy { it.toLowerCase(Locale.getDefault()) }
                 .map {
                     FolderItem(
                         name = it,
