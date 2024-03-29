@@ -219,7 +219,6 @@ class GameFragment : BaseFragment() {
     }
 
     private fun setMetadata() {
-        // TODO Don't these dialog results need to update `this.game` somehow?
         artworkCard.apply {
             game.artwork?.let {
                 setArtwork(it)
