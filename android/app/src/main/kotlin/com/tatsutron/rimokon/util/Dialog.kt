@@ -9,6 +9,29 @@ import com.tatsutron.rimokon.R
 
 object Dialog {
 
+    fun confirmation(
+        context: Context,
+        title: String,
+        message: String,
+        negativeButtonText: String,
+        positiveButtonText: String,
+        callback: () -> Unit,
+    ) {
+        MaterialDialog(context).show {
+            title(text = title)
+            message(text = message)
+            negativeButton(
+                text = negativeButtonText,
+            )
+            positiveButton(
+                text = positiveButtonText,
+                click = {
+                    callback.invoke()
+                },
+            )
+        }
+    }
+
     @SuppressLint("CheckResult")
     fun connectionFailed(
         context: Context,
@@ -64,26 +87,13 @@ object Dialog {
         }
     }
 
-    fun confirmation(
+    fun message(
         context: Context,
         title: String,
-        message: String,
-        negativeButtonText: String,
-        positiveButtonText: String,
-        callback: () -> Unit,
     ) {
         MaterialDialog(context).show {
             title(text = title)
-            message(text = message)
-            negativeButton(
-                text = negativeButtonText,
-            )
-            positiveButton(
-                text = positiveButtonText,
-                click = {
-                    callback.invoke()
-                },
-            )
+            positiveButton(R.string.ok)
         }
     }
 
