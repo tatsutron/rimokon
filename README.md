@@ -9,3 +9,5 @@ https://github.com/tatsutron/rimokon/assets/51144928/b5cb0480-b8c4-4054-bdff-05c
 # Credits - Thank you so much to our lovely Patrons!
 
 https://github.com/tatsutron/rimokon/assets/51144928/1ea85e66-f104-4849-b4fd-d3db2e5e8a6c
+
+If you'd like to join us, check us out at https://patreon.com/rimokon!
