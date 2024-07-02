@@ -1,23 +1,36 @@
-# RIMOKON - A MiSTer FPGA Android App
-
 ![preview](https://github.com/tatsutron/rimokon/assets/51144928/c01a827a-e2b1-46f7-8d1f-263d90eb21a4)
 
-# Import and customize metadata
+Rimokon is an Android app designed for use with [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer/wiki).
 
-https://github.com/tatsutron/rimokon/assets/51144928/238b64e8-1d5a-45d9-a4f3-ff882475db30
+# Features
 
-# Browse by title or by artwork
+## Browsing
 
-https://github.com/tatsutron/rimokon/assets/51144928/449fbe67-5a3b-47d3-9187-5a7c0fe17f4c
+https://github.com/tatsutron/rimokon/assets/51144928/d3102815-7a60-407f-ae4c-d8d9e1acfcce
 
-# Create a list of favorties
+The app supports search, browsing by title, and browsing by artwork. Once a game is selected it can be launched from your device. Games can also be marked as favorites.
 
-https://github.com/tatsutron/rimokon/assets/51144928/da9dbc18-df9f-431e-8ad4-afe31254512e
+## Metadata
 
-# Launch games via QR code
+https://github.com/tatsutron/rimokon/assets/51144928/7d232c99-1f83-45af-b0fd-014c1e850674
 
-https://github.com/tatsutron/rimokon/assets/51144928/b5cb0480-b8c4-4054-bdff-05caf585972e
+Metadata can be automatically imported for supported platforms. You can also edit the data by hand.
 
-# Credits - Thank you patrons!
+## QR codes
 
-https://github.com/tatsutron/rimokon/assets/51144928/1ea85e66-f104-4849-b4fd-d3db2e5e8a6c
+https://github.com/tatsutron/rimokon/assets/51144928/4731857d-ae60-4816-8b94-d0680f021598
+
+Rimokon can also use your camera to launch games via QR codes.
+
+# Installation
+
+Point your Android device [here](https://github.com/tatsutron/rimokon/releases/download/v1.0.0/rimokon_1.0.0.apk) to download and install the app. If the app is unable to find your MiSTer automatically, you will need to enter its IP address by hand.
+
+# Limitations
+
+* Cores and games are assumed to be in the places that they would be by default after formatting an SD card with [Mr. Fusion](https://github.com/MiSTer-devel/mr-fusion).
+* For importing metadata the app uses [OpenVGDB](https://github.com/OpenVGDB), which contains data for many (but not all) of the platforms supported by MiSTer. 
+
+# Credits
+
+https://github.com/tatsutron/rimokon/assets/51144928/439255d5-e63d-4215-bbfa-89b4c7b5f175
