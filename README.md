@@ -1,6 +1,6 @@
 ![preview](https://github.com/tatsutron/rimokon/assets/51144928/c01a827a-e2b1-46f7-8d1f-263d90eb21a4)
 
-Rimokon is an Android app designed for use with [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer/wiki). It was developed by Sio and Cassandra. We can be reached at tatsutron@gmail.com.
+Rimokon is an Android app designed for use with [MiSTer](https://github.com/MiSTer-devel/Main_MiSTer/wiki).
 
 # Features
 
