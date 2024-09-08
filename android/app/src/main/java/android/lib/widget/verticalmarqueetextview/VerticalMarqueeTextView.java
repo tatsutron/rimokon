@@ -279,14 +279,6 @@ public class VerticalMarqueeTextView extends ScrollView {
     }
 
     /**
-     * Returns the speed of the marquee effect animation.
-     * @return The speed of the marquee effect animation.
-     */
-    public int getMarqueeSpeed() {
-        return this.marqueeSpeed;
-    }
-
-    /**
      * Sets the speed of the marquee effect animation. Valid range is [1, 1000].
      * @param marqueeSpeed The speed of the marquee effect animation to set. Valid range is [1, 1000].
      */
@@ -304,20 +296,8 @@ public class VerticalMarqueeTextView extends ScrollView {
         if (!this.isAnimating) {
             this.isAnimating = true;
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    VerticalMarqueeTextView.this.animateTextView();
-                }
-            }).start();
+            new Thread(VerticalMarqueeTextView.this::animateTextView).start();
         }
-    }
-
-    /**
-     * Stops the marquee effect animation.
-     */
-    public void stopMarquee() {
-        this.marqueeStarted = false;
     }
 
     @Override
@@ -379,10 +359,12 @@ public class VerticalMarqueeTextView extends ScrollView {
                 this.textView.setText(array.getText(textRes));
             }
 
+            //noinspection deprecation
             this.textView.setTextColor(array.getColor(R.styleable.VerticalMarqueeTextView_textColor, context.getResources().getColor(android.R.color.primary_text_light)));
 
             final int textColorRes = array.getResourceId(R.styleable.VerticalMarqueeTextView_textColor, 0);
             if (textColorRes > 0) {
+                //noinspection deprecation
                 this.textView.setTextColor(context.getResources().getColor(textColorRes));
             }
 
@@ -401,6 +383,7 @@ public class VerticalMarqueeTextView extends ScrollView {
 
             final int textAppearance = array.getResourceId(R.styleable.VerticalMarqueeTextView_textAppearance, 0);
             if (textAppearance > 0) {
+                //noinspection deprecation
                 this.textView.setTextAppearance(context, textAppearance);
             }
 
@@ -436,6 +419,7 @@ public class VerticalMarqueeTextView extends ScrollView {
             }
 
             try {
+                //noinspection BusyWait
                 Thread.sleep((long)(VerticalMarqueeTextView.SECOND / VerticalMarqueeTextView.this.marqueeSpeed));
             } catch (final InterruptedException e) {
                 Log.v(VerticalMarqueeTextView.TAG, e.getMessage(), e);
@@ -463,7 +447,7 @@ public class VerticalMarqueeTextView extends ScrollView {
             final int height       = this.heightOf(this.textView);
             final int parentHeight = this.parent.getHeight();
 
-            if (height > 0 && parentHeight > 0 && height > parentHeight) {
+            if (parentHeight > 0 && height > parentHeight) {
                 if (this.textView.getScrollY() >= height) {
                     this.textView.scrollTo(0, -parentHeight);
                 } else {
