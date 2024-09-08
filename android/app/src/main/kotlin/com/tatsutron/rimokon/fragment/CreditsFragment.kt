@@ -121,8 +121,8 @@ class CreditsFragment : BaseFragment() {
                         "",
                         // With love,
                         "\uD835\uDC4A\uD835\uDC56\uD835\uDC61ℎ \uD835\uDC59\uD835\uDC5C\uD835\uDC63\uD835\uDC52,",
-                        // Sio and Casey
-                        "\uD835\uDC46\uD835\uDC56\uD835\uDC5C \uD835\uDC4E\uD835\uDC5B\uD835\uDC51 \uD835\uDC36\uD835\uDC4E\uD835\uDC60\uD835\uDC52\uD835\uDC66",
+                        // Sio and Cassie
+                        "\uD835\uDC46\uD835\uDC56\uD835\uDC5C \uD835\uDC4E\uD835\uDC5B\uD835\uDC51 \uD835\uDC36\uD835\uDC4E\uD835\uDC60\uD835\uDC60\uD835\uDC56\uD835\uDC52",
                         "",
                         "\uD83D\uDC9A\uD83D\uDC96",
                         "",
