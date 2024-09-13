@@ -129,8 +129,8 @@ class MainFragment : BaseFragment() {
     }
 
     private fun onSyncGameLibrary() {
-        val activity = activity as Activity
         Navigator.showLoadingScreen()
+        val activity = activity as Activity
         Coroutine.launch(
             activity = activity,
             run = {

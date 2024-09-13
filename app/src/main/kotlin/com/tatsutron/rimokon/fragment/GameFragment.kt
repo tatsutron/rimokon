@@ -127,13 +127,12 @@ class GameFragment : BaseFragment() {
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
-        importAction =
-            SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
-                .setLabel(context.getString(R.string.import_metadata))
-                .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
-                .setLabelColor(context.getColorCompat(R.color.button_label))
-                .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
-                .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
+        importAction = SpeedDialActionItem.Builder(R.id.import_metadata, R.drawable.ic_cloud_download)
+            .setLabel(context.getString(R.string.import_metadata))
+            .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
+            .setLabelColor(context.getColorCompat(R.color.button_label))
+            .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
+            .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
     }
 
     private fun setSpeedDial() {
@@ -171,35 +170,7 @@ class GameFragment : BaseFragment() {
                     }
 
                     R.id.import_metadata -> {
-                        Navigator.showLoadingScreen()
-                        val activity = requireActivity()
-                        Coroutine.launch(activity = activity, run = {
-                            if (game.sha1 == null) {
-                                val sha1 = Util.hash(
-                                    path = game.path,
-                                    headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
-                                )
-                                Persistence.updateSha1(game, sha1)
-                                game = Persistence.getGameBySha1(sha1)!!
-                            }
-                            Thread.sleep(1500)
-                            requireActivity().runOnUiThread {
-                                val metadata = Persistence.getMetadataBySha1(game.sha1!!)
-                                if (metadata != null) {
-                                    onImportMetadata(metadata)
-                                } else {
-                                    Dialog.message(
-                                        context = activity,
-                                        title = activity.getString(R.string.no_metadata_found),
-                                    )
-                                }
-                                Persistence.getMetadataBySha1(game.sha1!!)?.let {
-                                    onImportMetadata(it)
-                                }
-                            }
-                        }, finally = {
-                            Navigator.hideLoadingScreen()
-                        })
+                        onImportMetadata()
                         close()
                         return@OnActionSelectedListener true
                     }
@@ -354,40 +325,99 @@ class GameFragment : BaseFragment() {
     private fun onGenerateQr() {
         Navigator.showLoadingScreen()
         val activity = requireActivity()
-        Coroutine.launch(activity = activity, run = {
-            val sha1 = Util.hash(
-                path = game.path,
-                headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
-            )
-            Persistence.updateSha1(game, sha1)
-            activity.runOnUiThread {
-                val clipboard = ContextCompat.getSystemService(
-                    activity,
-                    ClipboardManager::class.java,
+        Coroutine.launch(
+            activity = activity,
+            run = {
+                val sha1 = Util.hash(
+                    path = game.path,
+                    headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
                 )
-                clipboard?.setPrimaryClip(ClipData.newPlainText("QR", sha1))
-                Toast.makeText(
-                    requireActivity(),
-                    activity.getString(R.string.copied_qr_data_to_clipboard),
-                    Toast.LENGTH_SHORT,
-                ).show()
-            }
-        }, success = {
-            game = Persistence.getGameByPath(game.path)!!
-            setSpeedDial()
-            setMetadata()
-        }, failure = { throwable ->
-            when (throwable) {
-                is JSchException -> Dialog.connectionFailed(
-                    context = activity,
-                    callback = ::onGenerateQr,
-                )
+                Persistence.updateSha1(game, sha1)
+                activity.runOnUiThread {
+                    val clipboard = ContextCompat.getSystemService(
+                        activity,
+                        ClipboardManager::class.java,
+                    )
+                    clipboard?.setPrimaryClip(ClipData.newPlainText("QR", sha1))
+                    Toast.makeText(
+                        requireActivity(),
+                        activity.getString(R.string.copied_qr_data_to_clipboard),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            },
+            success = {
+                game = Persistence.getGameByPath(game.path)!!
+                setSpeedDial()
+                setMetadata()
+            },
+            failure = { throwable ->
+                when (throwable) {
+                    is JSchException -> Dialog.connectionFailed(
+                        context = activity,
+                        callback = ::onGenerateQr,
+                    )
 
-                else -> Dialog.error(activity, throwable)
-            }
-        }, finally = {
-            Navigator.hideLoadingScreen()
-        })
+                    else -> Dialog.error(activity, throwable)
+                }
+            },
+            finally = {
+                Navigator.hideLoadingScreen()
+            },
+        )
+    }
+
+    private fun onImportMetadata() {
+        Navigator.showLoadingScreen()
+        val activity = requireActivity()
+        Coroutine.launch(
+            activity = activity,
+            run = {
+                if (game.sha1 == null) {
+                    val sha1 = Util.hash(
+                        path = game.path,
+                        headerSizeInBytes = game.platform.headerSizeInBytes ?: 0,
+                    )
+                    Persistence.updateSha1(game, sha1)
+                    game = Persistence.getGameBySha1(sha1)!!
+                }
+                Thread.sleep(1500)
+                requireActivity().runOnUiThread {
+                    val metadata = Persistence.getMetadataBySha1(game.sha1!!)
+                    if (metadata != null) {
+                        onMetadataImported(metadata)
+                    } else {
+                        Dialog.message(
+                            context = activity,
+                            title = activity.getString(R.string.no_metadata_found),
+                        )
+                    }
+                    Persistence.getMetadataBySha1(game.sha1!!)?.let {
+                        onMetadataImported(it)
+                    }
+                }
+            },
+            failure = { throwable ->
+                when (throwable) {
+                    is JSchException -> if (Persistence.host.isEmpty()) {
+                        Dialog.enterIpAddress(
+                            context = activity,
+                            callback = ::onImportMetadata,
+                        )
+                    } else {
+                        Dialog.connectionFailed(
+                            context = activity,
+                            callback = ::onImportMetadata,
+                        )
+                    }
+
+                    else -> Dialog.error(activity, throwable)
+                }
+            },
+            finally = {
+                Navigator.hideLoadingScreen()
+            },
+        )
     }
 
     private fun onCopyQr() {
@@ -404,7 +434,7 @@ class GameFragment : BaseFragment() {
         ).show()
     }
 
-    private fun onImportMetadata(metadata: Metadata) {
+    private fun onMetadataImported(metadata: Metadata) {
         metadata.artwork?.let {
             if (game.artwork.isNullOrBlank()) {
                 Persistence.updateArtwork(game, it)
