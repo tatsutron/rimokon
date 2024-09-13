@@ -219,6 +219,7 @@ enum class Platform(
     private val subscriptColors = listOf(
         R.color.analogous_200,
         R.color.complementary_200,
+        R.color.primary_200,
         R.color.triadic_200,
     )
 
