@@ -20,39 +20,6 @@ enum class Platform(
         mrextId = "arcade",
     ),
 
-    ARCADIA_2001(
-        category = Category.CONSOLE,
-        displayName = "Arcadia 2001",
-        gamesFolder = "Arcadia",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "arcadia",
-    ),
-
-    ATARI_2600(
-        category = Category.CONSOLE,
-        displayName = "Atari 2600",
-        gamesFolder = "Atari2600",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "atari2600",
-    ),
-
-    ATARI_5200(
-        category = Category.CONSOLE,
-        displayName = "Atari 5200",
-        gamesFolder = "ATARI5200",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "atari5200",
-    ),
-
-    ATARI_7800(
-        category = Category.CONSOLE,
-        displayName = "Atari 7800",
-        gamesFolder = "ATARI7800",
-        headerSizeInBytes = 128,
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "atari7800",
-    ),
-
     ATARI_LYNX(
         category = Category.HANDHELD,
         displayName = "Atari Lynx",
@@ -60,30 +27,6 @@ enum class Platform(
         headerSizeInBytes = 64,
         media = Media.ROM_CARTRIDGE,
         mrextId = "atarilynx",
-    ),
-
-    BALLY_ASTROCADE(
-        category = Category.CONSOLE,
-        displayName = "Bally Astrocade",
-        gamesFolder = "Astrocade",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "astrocade",
-    ),
-
-    COLECOVISION(
-        category = Category.CONSOLE,
-        displayName = "ColecoVision",
-        gamesFolder = "Coleco",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "colecovision",
-    ),
-
-    FAIRCHILD_CHANNEL_F(
-        category = Category.CONSOLE,
-        displayName = "Fairchild Channel F",
-        gamesFolder = "ChannelF",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "channelf",
     ),
 
     FAMICOM_DISK_SYSTEM(
@@ -127,22 +70,6 @@ enum class Platform(
         mrextId = "gamegear",
     ),
 
-    INTELLIVISION(
-        category = Category.CONSOLE,
-        displayName = "Intellivision",
-        gamesFolder = "Intellivision",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "intellivision",
-    ),
-
-    INTERTON_VC_4000(
-        category = Category.CONSOLE,
-        displayName = "Interton VC 4000",
-        gamesFolder = "VC4000",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "vc4000",
-    ),
-
     MASTER_SYSTEM(
         category = Category.CONSOLE,
         displayName = "Master System",
@@ -174,14 +101,6 @@ enum class Platform(
         headerSizeInBytes = 16,
         media = Media.ROM_CARTRIDGE,
         mrextId = "nes",
-    ),
-
-    ODYSSEY_2(
-        category = Category.CONSOLE,
-        displayName = "Odyssey 2",
-        gamesFolder = "ODYSSEY2",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "odyssey2",
     ),
 
     PLAYSTATION(
@@ -224,14 +143,6 @@ enum class Platform(
         mrextId = "saturn",
     ),
 
-    SG_1000(
-        category = Category.CONSOLE,
-        displayName = "SG-1000",
-        gamesFolder = "Coleco",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "sg1000",
-    ),
-
     SUPER_GRAFX(
         category = Category.CONSOLE,
         displayName = "SuperGrafx",
@@ -264,14 +175,6 @@ enum class Platform(
         mrextId = "turbografx16cd",
     ),
 
-    VECTREX(
-        category = Category.CONSOLE,
-        displayName = "Vectrex",
-        gamesFolder = "VECTREX",
-        media = Media.ROM_CARTRIDGE,
-        mrextId = "vectrex",
-    ),
-
     WONDERSWAN(
         category = Category.HANDHELD,
         displayName = "WonderSwan",
@@ -297,10 +200,6 @@ enum class Platform(
         ),
         CONSOLE(
             displayName = "Console", path = Constants.CONSOLE_PATH
-        ),
-        COMPUTER(
-            displayName = "Computer",
-            path = Constants.COMPUTER_PATH,
         ),
         HANDHELD(
             displayName = "Handheld",

@@ -12,9 +12,4 @@
         android:id="@+id/handhelds"
         android:icon="@drawable/ic_handhelds"
         android:title="@string/handheld" />
-    <item
-        android:id="@+id/computers"
-        android:icon="@drawable/ic_computers"
-        android:title="@string/computer"
-        android:visible="false" />
 </menu>

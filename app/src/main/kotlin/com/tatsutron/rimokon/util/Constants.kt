@@ -7,7 +7,6 @@ object Constants {
     const val MREXT_ROOT = "${RIMOKON_ROOT}/mrext"
 
     const val ARCADE_PATH = "${VOLUME}/_Arcade"
-    const val COMPUTER_PATH = "${VOLUME}/_Computer"
     const val CONSOLE_PATH = "${VOLUME}/_Console"
     const val GAMES_PATH = "${VOLUME}/games"
     const val MISTER_UTIL_PATH = "${RIMOKON_ROOT}/mister_util.py"
