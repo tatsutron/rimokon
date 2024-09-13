@@ -5,7 +5,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -15,7 +14,6 @@ import com.tatsutron.rimokon.recycler.GalleryAdapter
 import com.tatsutron.rimokon.recycler.GalleryItem
 import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
-import com.tatsutron.rimokon.util.Dialog
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Persistence
@@ -30,17 +28,6 @@ class FavoriteListFragment : BaseFragment() {
     private lateinit var galleryViewAction: SpeedDialActionItem
     private lateinit var listViewAction: SpeedDialActionItem
     private var inGallery = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.menu_empty, menu)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -76,29 +63,47 @@ class FavoriteListFragment : BaseFragment() {
         if (!this::recycler.isInitialized) {
             return
         }
-        if (inGallery) {
-            recycler.adapter = galleryAdapter
-            val items = Persistence.getGamesByHasArtworkByFavorite().map {
-                GalleryItem(it)
+        if(MainFragment.searchTerm.isEmpty()) {
+            if (inGallery) {
+                recycler.adapter = galleryAdapter
+                val items = Persistence.getGamesByHasArtworkByFavorite().map {
+                    GalleryItem(it)
+                }
+                galleryAdapter.apply {
+                    itemList.clear()
+                    itemList.addAll(items)
+                    notifyDataSetChanged()
+                }
+            } else {
+                recycler.adapter = gameListAdapter
+                gameListAdapter.apply {
+                    itemList.clear()
+                    itemList.addAll(
+                        Persistence.getGamesByFavorite().map {
+                            GameItem(
+                                icon = it.platform.media.icon,
+                                game = it,
+                                subscript = it.platform.displayName ?: "",
+                            )
+                        },
+                    )
+                    notifyDataSetChanged()
+                }
             }
-            galleryAdapter.apply {
+        } else {
+            recycler.adapter = gameListAdapter
+            val items = Persistence.getGamesBySearch(MainFragment.searchTerm).map {
+                GameItem(
+                    icon = it.platform.media.icon,
+                    game = it,
+                    subscript = it.platform.displayName ?: "",
+                )
+            }
+            gameListAdapter.apply {
                 itemList.clear()
                 itemList.addAll(items)
                 notifyDataSetChanged()
             }
-        } else {
-            recycler.adapter = gameListAdapter
-            gameListAdapter.itemList.clear()
-            gameListAdapter.itemList.addAll(
-                Persistence.getGamesByFavorite().map {
-                    GameItem(
-                        icon = it.platform.media.icon,
-                        game = it,
-                        subscript = it.platform.displayName ?: "",
-                    )
-                },
-            )
-            gameListAdapter.notifyDataSetChanged()
         }
     }
 
