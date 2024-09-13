@@ -1,11 +1,10 @@
 *.DS_Store
 *.iml
-android/.gradle
-android/.idea
-android/app/build/
-android/app/release/
-android/build/
-android/local.properties
-android/remote.jks
+.gradle
+.idea
+app/build/
+app/release/
+build/
+local.properties
 remote.jks
 token
