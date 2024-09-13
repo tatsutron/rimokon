@@ -10,7 +10,6 @@ enum class Platform(
     val gamesFolder: String? = null,
     val headerSizeInBytes: Int? = null,
     val media: Media,
-    val metadata: Boolean,
     val mrextId: String,
 ) {
 
@@ -18,7 +17,6 @@ enum class Platform(
         category = Category.ARCADE,
         displayName = "Arcade",
         media = Media.PRINTED_CIRCUIT_BOARD,
-        metadata = false,
         mrextId = "arcade",
     ),
 
@@ -27,7 +25,6 @@ enum class Platform(
         displayName = "Arcadia 2001",
         gamesFolder = "Arcadia",
         media = Media.ROM_CARTRIDGE,
-        metadata = false,
         mrextId = "arcadia",
     ),
 
@@ -36,7 +33,6 @@ enum class Platform(
         displayName = "Atari 2600",
         gamesFolder = "Atari2600",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "atari2600",
     ),
 
@@ -45,7 +41,6 @@ enum class Platform(
         displayName = "Atari 5200",
         gamesFolder = "ATARI5200",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "atari5200",
     ),
 
@@ -55,7 +50,6 @@ enum class Platform(
         gamesFolder = "ATARI7800",
         headerSizeInBytes = 128,
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "atari7800",
     ),
 
@@ -65,7 +59,6 @@ enum class Platform(
         gamesFolder = "AtariLynx",
         headerSizeInBytes = 64,
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "atarilynx",
     ),
 
@@ -74,7 +67,6 @@ enum class Platform(
         displayName = "Bally Astrocade",
         gamesFolder = "Astrocade",
         media = Media.ROM_CARTRIDGE,
-        metadata = false,
         mrextId = "astrocade",
     ),
 
@@ -83,7 +75,6 @@ enum class Platform(
         displayName = "ColecoVision",
         gamesFolder = "Coleco",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "colecovision",
     ),
 
@@ -92,7 +83,6 @@ enum class Platform(
         displayName = "Fairchild Channel F",
         gamesFolder = "ChannelF",
         media = Media.ROM_CARTRIDGE,
-        metadata = false,
         mrextId = "channelf",
     ),
 
@@ -102,7 +92,6 @@ enum class Platform(
         gamesFolder = "NES",
         headerSizeInBytes = 16,
         media = Media.FLOPPY_DISK,
-        metadata = true,
         mrextId = "fds",
     ),
 
@@ -111,7 +100,6 @@ enum class Platform(
         displayName = "Game Boy",
         gamesFolder = "GAMEBOY",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "gameboy",
     ),
 
@@ -120,7 +108,6 @@ enum class Platform(
         displayName = "Game Boy Advance",
         gamesFolder = "GBA",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "gba",
     ),
 
@@ -129,7 +116,6 @@ enum class Platform(
         displayName = "Game Boy Color",
         gamesFolder = "GBC",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "gameboycolor",
     ),
 
@@ -138,7 +124,6 @@ enum class Platform(
         displayName = "Game Gear",
         gamesFolder = "GameGear",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "gamegear",
     ),
 
@@ -147,7 +132,6 @@ enum class Platform(
         displayName = "Intellivision",
         gamesFolder = "Intellivision",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "intellivision",
     ),
 
@@ -156,7 +140,6 @@ enum class Platform(
         displayName = "Interton VC 4000",
         gamesFolder = "VC4000",
         media = Media.ROM_CARTRIDGE,
-        metadata = false,
         mrextId = "vc4000",
     ),
 
@@ -165,7 +148,6 @@ enum class Platform(
         displayName = "Master System",
         gamesFolder = "SMS",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "mastersystem",
     ),
 
@@ -174,7 +156,6 @@ enum class Platform(
         displayName = "Neo Geo",
         gamesFolder = "NEOGEO",
         media = Media.ROM_CARTRIDGE,
-        metadata = false,
         mrextId = "neogeo",
     ),
 
@@ -183,7 +164,6 @@ enum class Platform(
         displayName = "Nintendo 64",
         gamesFolder = "N64",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "nintendo64",
     ),
 
@@ -193,7 +173,6 @@ enum class Platform(
         gamesFolder = "NES",
         headerSizeInBytes = 16,
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "nes",
     ),
 
@@ -202,7 +181,6 @@ enum class Platform(
         displayName = "Odyssey 2",
         gamesFolder = "ODYSSEY2",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "odyssey2",
     ),
 
@@ -211,7 +189,6 @@ enum class Platform(
         displayName = "PlayStation",
         gamesFolder = "PSX",
         media = Media.OPTICAL_DISC,
-        metadata = false,
         mrextId = "psx",
     ),
 
@@ -220,7 +197,6 @@ enum class Platform(
         displayName = "Sega 32X",
         gamesFolder = "S32X",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "sega32x",
     ),
 
@@ -229,7 +205,6 @@ enum class Platform(
         displayName = "Sega CD",
         gamesFolder = "MegaCD",
         media = Media.OPTICAL_DISC,
-        metadata = false,
         mrextId = "megacd",
     ),
 
@@ -238,7 +213,6 @@ enum class Platform(
         displayName = "Sega Genesis",
         gamesFolder = "Genesis",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "genesis",
     ),
 
@@ -247,7 +221,6 @@ enum class Platform(
         displayName = "Sega Saturn",
         gamesFolder = "Saturn",
         media = Media.ROM_CARTRIDGE,
-        metadata = false,
         mrextId = "saturn",
     ),
 
@@ -256,7 +229,6 @@ enum class Platform(
         displayName = "SG-1000",
         gamesFolder = "Coleco",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "sg1000",
     ),
 
@@ -265,7 +237,6 @@ enum class Platform(
         displayName = "SuperGrafx",
         gamesFolder = "TGFX16",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "supergrafx",
     ),
 
@@ -274,7 +245,6 @@ enum class Platform(
         displayName = "Super Nintendo",
         gamesFolder = "SNES",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "snes",
     ),
 
@@ -283,7 +253,6 @@ enum class Platform(
         displayName = "TurboGrafx-16",
         gamesFolder = "TGFX16",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "turbografx16",
     ),
 
@@ -292,7 +261,6 @@ enum class Platform(
         displayName = "TurboGrafx-CD",
         gamesFolder = "TGFX16-CD",
         media = Media.OPTICAL_DISC,
-        metadata = false,
         mrextId = "turbografx16cd",
     ),
 
@@ -301,7 +269,6 @@ enum class Platform(
         displayName = "Vectrex",
         gamesFolder = "VECTREX",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "vectrex",
     ),
 
@@ -310,7 +277,6 @@ enum class Platform(
         displayName = "WonderSwan",
         gamesFolder = "WonderSwan",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "wonderswan",
     ),
 
@@ -319,7 +285,6 @@ enum class Platform(
         displayName = "WonderSwan Color",
         gamesFolder = "WonderSwanColor",
         media = Media.ROM_CARTRIDGE,
-        metadata = true,
         mrextId = "wonderswancolor",
     );
 
