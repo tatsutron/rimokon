@@ -191,20 +191,10 @@ enum class Platform(
         mrextId = "wonderswancolor",
     );
 
-    enum class Category(
-        val displayName: String,
-        val path: String,
-    ) {
-        ARCADE(
-            displayName = "Arcade", path = Constants.ARCADE_PATH
-        ),
-        CONSOLE(
-            displayName = "Console", path = Constants.CONSOLE_PATH
-        ),
-        HANDHELD(
-            displayName = "Handheld",
-            path = Constants.CONSOLE_PATH,
-        ),
+    enum class Category(val path: String) {
+        ARCADE(Constants.ARCADE_PATH),
+        CONSOLE(Constants.CONSOLE_PATH),
+        HANDHELD(Constants.CONSOLE_PATH),
     }
 
     val gamesPath: String?
