@@ -5,11 +5,11 @@
         android:icon="@drawable/ic_consoles"
         android:title="@string/console" />
     <item
-        android:id="@+id/arcades"
-        android:icon="@drawable/ic_arcades"
-        android:title="@string/arcade" />
-    <item
         android:id="@+id/handhelds"
         android:icon="@drawable/ic_handhelds"
         android:title="@string/handheld" />
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_star_fill"
+        android:title="@string/favorites" />
 </menu>

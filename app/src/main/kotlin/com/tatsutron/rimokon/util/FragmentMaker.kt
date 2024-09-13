@@ -1,7 +1,6 @@
 package com.tatsutron.rimokon.util
 
 import android.os.Bundle
-import com.tatsutron.rimokon.fragment.ArcadeFragment
 import com.tatsutron.rimokon.fragment.CreditsFragment
 import com.tatsutron.rimokon.fragment.FavoriteListFragment
 import com.tatsutron.rimokon.fragment.GameFragment
@@ -15,8 +14,6 @@ object FragmentMaker {
     const val KEY_PATH = "KEY_PATH"
     const val KEY_PLATFORM = "KEY_PLATFORM"
     const val KEY_PLATFORM_CATEGORY = "KEY_PLATFORM_CATEGORY"
-
-    fun arcade() = ArcadeFragment()
 
     fun credits() = CreditsFragment()
 

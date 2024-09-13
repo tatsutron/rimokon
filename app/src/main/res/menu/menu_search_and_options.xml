@@ -16,11 +16,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/favorites"
-        android:title="@string/favorites"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/scan_qr_code"
         android:title="@string/scan_qr_code"
         app:showAsAction="never" />

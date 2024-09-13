@@ -73,14 +73,6 @@ class MainFragment : BaseFragment() {
             true
         }
 
-        R.id.favorites -> {
-            Navigator.showScreen(
-                activity as AppCompatActivity,
-                FragmentMaker.favoriteList(),
-            )
-            true
-        }
-
         R.id.scan_qr_code -> {
             Navigator.showScreen(
                 activity as AppCompatActivity,

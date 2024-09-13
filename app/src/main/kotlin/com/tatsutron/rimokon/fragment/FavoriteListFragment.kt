@@ -55,24 +55,11 @@ class FavoriteListFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        if (Persistence.getGamesByFavorite().isNotEmpty()) {
-            setRecycler()
-        } else {
-            val context = requireContext()
-            Dialog.message(
-                context = context,
-                title = context.getString(R.string.no_favorites_found),
-            )
-        }
+        setRecycler()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as? AppCompatActivity)?.apply {
-            setSupportActionBar(toolbar)
-            supportActionBar?.title = requireContext().getText(R.string.favorites)
-        }
         gameListAdapter = GameListAdapter(activity as Activity)
         galleryAdapter = GalleryAdapter(activity as Activity)
         recycler = view.findViewById<RecyclerView>(R.id.recycler).apply {
@@ -86,6 +73,9 @@ class FavoriteListFragment : BaseFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun setRecycler() {
+        if (!this::recycler.isInitialized) {
+            return
+        }
         if (inGallery) {
             recycler.adapter = galleryAdapter
             val items = Persistence.getGamesByHasArtworkByFavorite().map {
