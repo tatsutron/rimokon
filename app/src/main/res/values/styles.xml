@@ -60,7 +60,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">@color/black</item>
-        <item name="titleTextColor">@color/white</item>
+        <item name="titleTextColor">@color/triadic_200</item>
     </style>
 
     <style name="ToolbarPopupTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">

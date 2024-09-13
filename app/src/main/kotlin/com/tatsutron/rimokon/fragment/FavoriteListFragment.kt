@@ -85,7 +85,7 @@ class FavoriteListFragment : BaseFragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun setRecycler() {
+    override fun setRecycler() {
         if (inGallery) {
             recycler.adapter = galleryAdapter
             val items = Persistence.getGamesByHasArtworkByFavorite().map {

@@ -108,7 +108,7 @@ class PlatformFragment : BaseFragment() {
         }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun setRecycler() {
+    override fun setRecycler() {
         if (inGallery) {
             recycler.adapter = galleryAdapter
             val items = Persistence.getGamesByHasArtworkByPlatform(platform).map {

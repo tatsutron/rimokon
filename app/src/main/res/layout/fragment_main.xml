@@ -8,6 +8,17 @@
     android:focusable="true"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        app:popupTheme="@style/ToolbarPopupTheme"
+        app:title="@string/rimokon" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/separator" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

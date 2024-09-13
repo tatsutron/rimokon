@@ -5,7 +5,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jcraft.jsch.JSchException
@@ -22,38 +21,13 @@ import com.tatsutron.rimokon.util.*
 import java.io.File
 import java.util.Locale
 
-class ArcadeFragment : FullMenuBaseFragment() {
+class ArcadeFragment : BaseFragment() {
 
     private lateinit var currentFolder: String
     private lateinit var recycler: FastScrollRecyclerView
     private lateinit var adapter: GameListAdapter
     private lateinit var syncAction: SpeedDialActionItem
     private lateinit var randomAction: SpeedDialActionItem
-    private var searchItem: MenuItem? = null
-    private var searchTerm = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.menu_search_and_options, menu)
-        searchItem = menu.findItem(R.id.search)
-        (searchItem?.actionView as? SearchView)?.apply {
-            maxWidth = Integer.MAX_VALUE
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String) = true
-                override fun onQueryTextChange(newText: String): Boolean {
-                    searchTerm = newText
-                    setRecycler()
-                    return true
-                }
-            })
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -89,9 +63,9 @@ class ArcadeFragment : FullMenuBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         currentFolder = Platform.ARCADE.gamesPath!!
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as? AppCompatActivity)?.apply {
-            setSupportActionBar(toolbar)
-            toolbar.title = Platform.ARCADE.displayName
+        toolbar.visibility = View.GONE
+        view.findViewById<View>(R.id.toolbar_divider).apply {
+            visibility = View.GONE
         }
         adapter = GameListAdapter(activity as Activity)
         recycler = view.findViewById<FastScrollRecyclerView>(R.id.recycler).apply {
@@ -112,9 +86,9 @@ class ArcadeFragment : FullMenuBaseFragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun setRecycler() {
+    override fun setRecycler() {
         adapter.itemList.clear()
-        if (searchTerm.isBlank()) {
+        if (MainFragment.searchTerm.isBlank()) {
             val subfolder: Game.() -> String? = {
                 val relativePath = path.removePrefix("$currentFolder${File.separator}")
                 val tokens = relativePath.split(File.separator)
@@ -127,41 +101,41 @@ class ArcadeFragment : FullMenuBaseFragment() {
             val games = mutableListOf<Game>()
             val folders = mutableSetOf<String>()
             Persistence.getGamesByPlatform(Platform.ARCADE).filter {
-                    it.path.startsWith(currentFolder)
-                }.forEach {
-                    val folder = it.subfolder()
-                    if (folder != null) {
-                        folders.add(folder)
-                    } else {
-                        games.add(it)
-                    }
+                it.path.startsWith(currentFolder)
+            }.forEach {
+                val folder = it.subfolder()
+                if (folder != null) {
+                    folders.add(folder)
+                } else {
+                    games.add(it)
                 }
+            }
             val folderItems = folders.sortedBy { it.toLowerCase(Locale.getDefault()) }.map {
-                    FolderItem(
-                        name = it,
-                        onClick = {
-                            currentFolder = File(currentFolder, it).path
-                            setRecycler()
-                        },
-                    )
-                }
+                FolderItem(
+                    name = it,
+                    onClick = {
+                        currentFolder = File(currentFolder, it).path
+                        setRecycler()
+                    },
+                )
+            }
             val gameItems = games.map {
-                    GameItem(
-                        icon = Platform.ARCADE.media.icon,
-                        game = it,
-                        subscript = Platform.ARCADE.displayName ?: "",
-                    )
-                }
+                GameItem(
+                    icon = Platform.ARCADE.media.icon,
+                    game = it,
+                    subscript = Platform.ARCADE.displayName ?: "",
+                )
+            }
             val items = folderItems + gameItems
             adapter.itemList.addAll(items)
         } else {
-            val items = Persistence.getGamesBySearch(searchTerm).map {
-                    GameItem(
-                        icon = it.platform.media.icon,
-                        game = it,
-                        subscript = it.platform.displayName ?: "",
-                    )
-                }
+            val items = Persistence.getGamesBySearch(MainFragment.searchTerm).map {
+                GameItem(
+                    icon = it.platform.media.icon,
+                    game = it,
+                    subscript = it.platform.displayName ?: "",
+                )
+            }
             adapter.itemList.addAll(items)
         }
         adapter.notifyDataSetChanged()
