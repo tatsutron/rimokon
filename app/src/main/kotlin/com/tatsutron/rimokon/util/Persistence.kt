@@ -100,6 +100,13 @@ object Persistence {
         }
         get() = config.startAtTab
 
+    var inGallery: Boolean
+        set(inGallery) {
+            config.inGallery = inGallery
+            configFile.writeText(gson.toJson(config))
+        }
+        get() = config.inGallery
+
     @SuppressLint("SdCardPath")
     fun init(context: Context) {
         configFile = File(context.filesDir, "config.json")

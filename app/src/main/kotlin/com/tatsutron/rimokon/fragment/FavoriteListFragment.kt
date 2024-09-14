@@ -27,7 +27,6 @@ class FavoriteListFragment : BaseFragment() {
     private lateinit var randomAction: SpeedDialActionItem
     private lateinit var galleryViewAction: SpeedDialActionItem
     private lateinit var listViewAction: SpeedDialActionItem
-    private var inGallery = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,8 +62,8 @@ class FavoriteListFragment : BaseFragment() {
         if (!this::recycler.isInitialized) {
             return
         }
-        if(MainFragment.searchTerm.isEmpty()) {
-            if (inGallery) {
+        if (MainFragment.searchTerm.isEmpty()) {
+            if (Persistence.inGallery) {
                 recycler.adapter = galleryAdapter
                 val items = Persistence.getGamesByHasArtworkByFavorite().map {
                     GalleryItem(it)
@@ -133,13 +132,15 @@ class FavoriteListFragment : BaseFragment() {
         view?.findViewById<SpeedDialView>(R.id.speed_dial)?.apply {
             clearActionItems()
             if (gameListAdapter.itemList.count() > 1) {
-                if (inGallery && Persistence.getGamesByHasArtworkByFavorite().count() > 1) {
+                if (Persistence.inGallery && Persistence.getGamesByHasArtworkByFavorite()
+                        .count() > 1
+                ) {
                     addActionItem(randomAction)
                 } else if (Persistence.getGamesByFavorite().count() > 1) {
                     addActionItem(randomAction)
                 }
             }
-            if (inGallery) {
+            if (Persistence.inGallery) {
                 addActionItem(listViewAction)
             } else {
                 addActionItem(galleryViewAction)
@@ -170,24 +171,25 @@ class FavoriteListFragment : BaseFragment() {
     }
 
     private fun onGalleryView() {
-        inGallery = true
+        Persistence.inGallery = true
         setRecycler()
         setSpeedDial()
     }
 
     private fun onListView() {
-        inGallery = false
+        Persistence.inGallery = false
         setRecycler()
         setSpeedDial()
     }
 
     private fun onRandom() {
         Navigator.showScreen(
-            activity as AppCompatActivity, if (inGallery) {
+            activity as AppCompatActivity,
+            if (Persistence.inGallery) {
                 FragmentMaker.game(Persistence.getGamesByHasArtworkByFavorite().random().path)
             } else {
                 FragmentMaker.game(Persistence.getGamesByFavorite().random().path)
-            }
+            },
         )
     }
 }
