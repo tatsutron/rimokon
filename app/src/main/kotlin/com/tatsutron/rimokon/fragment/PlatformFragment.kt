@@ -187,7 +187,7 @@ class PlatformFragment : BaseFragment() {
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
-        listViewAction = SpeedDialActionItem.Builder(R.id.list_view, R.drawable.ic_folder)
+        listViewAction = SpeedDialActionItem.Builder(R.id.list_view, R.drawable.ic_list)
             .setLabel(context.getString(R.string.list_view))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
