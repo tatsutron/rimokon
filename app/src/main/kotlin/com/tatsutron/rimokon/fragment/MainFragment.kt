@@ -101,6 +101,7 @@ class MainFragment : BaseFragment() {
         viewPager = view.findViewById<ViewPager2>(R.id.view_pager).apply {
             adapter = FragmentStateAdapter(requireActivity())
             isUserInputEnabled = false
+            setCurrentItem(Persistence.startAtTab, false)
         }
         view.findViewById<BottomNavigationView>(R.id.bottom_navigation).apply {
             setOnItemSelectedListener { item ->
@@ -113,10 +114,12 @@ class MainFragment : BaseFragment() {
                         }
                         viewPager.setCurrentItem(i, false)
                         FragmentStateAdapter.items[i].setRecycler()
+                        Persistence.startAtTab = i
                     }
                 }
                 true
             }
+            menu.getItem(Persistence.startAtTab).isChecked = true
         }
     }
 

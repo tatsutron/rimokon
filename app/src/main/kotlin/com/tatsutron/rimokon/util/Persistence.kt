@@ -93,6 +93,13 @@ object Persistence {
         }
         get() = config.host
 
+    var startAtTab: Int
+        set(startAtTab) {
+            config.startAtTab = startAtTab
+            configFile.writeText(gson.toJson(config))
+        }
+        get() = config.startAtTab
+
     @SuppressLint("SdCardPath")
     fun init(context: Context) {
         configFile = File(context.filesDir, "config.json")
