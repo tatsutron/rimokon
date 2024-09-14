@@ -106,7 +106,6 @@ class CreditsFragment : BaseFragment() {
                         // Special Thanks
                         "\uD835\uDDE6\uD835\uDDFD\uD835\uDDF2\uD835\uDDF0\uD835\uDDF6\uD835\uDDEE\uD835\uDDF9 \uD835\uDDE7\uD835\uDDF5\uD835\uDDEE\uD835\uDDFB\uD835\uDDF8\uD835\uDE00",
                         "~",
-                        "\uD83E\uDDE1 Jeremy Workman \uD83E\uDDE1",
                         "\uD83E\uDDE1 mrsonicblue \uD83E\uDDE1",
                         "\uD83E\uDDE1 OpenVGDB \uD83E\uDDE1",
                         "\uD83E\uDDE1 pocomane \uD83E\uDDE1",
@@ -122,9 +121,9 @@ class CreditsFragment : BaseFragment() {
                         // With love,
                         "\uD835\uDC4A\uD835\uDC56\uD835\uDC61ℎ \uD835\uDC59\uD835\uDC5C\uD835\uDC63\uD835\uDC52,",
                         // Sio and Cassie
-                        "\uD835\uDC46\uD835\uDC56\uD835\uDC5C \uD835\uDC4E\uD835\uDC5B\uD835\uDC51 \uD835\uDC36\uD835\uDC4E\uD835\uDC60\uD835\uDC60\uD835\uDC56\uD835\uDC52",
+                        "\uD83D\uDC9A \uD835\uDC46\uD835\uDC56\uD835\uDC5C \uD835\uDC4E\uD835\uDC5B\uD835\uDC51 \uD835\uDC36\uD835\uDC4E\uD835\uDC60\uD835\uDC60\uD835\uDC56\uD835\uDC52 \uD83D\uDC96",
                         "",
-                        "\uD83D\uDC9A\uD83D\uDC96",
+                        "",
                         "",
                         "",
                         "",
