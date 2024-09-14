@@ -5,7 +5,6 @@
     <string name="close">Close</string>
     <string name="confirm_play_game">Play %s?</string>
     <string name="connect">Connect</string>
-    <string name="console">Console</string>
     <string name="copied_qr_data_to_clipboard">"Copied QR data to clipboard"</string>
     <string name="copy_qr_code">Copy QR code</string>
     <string name="credits">Credits</string>
@@ -26,7 +25,6 @@
     <string name="games">Games</string>
     <string name="generate_qr_code">Generate QR code</string>
     <string name="genre">Genre</string>
-    <string name="handheld">Handheld</string>
     <string name="import_metadata">Import metadata</string>
     <string name="list_view">List View</string>
     <string name="no_camera_permission">Camera permission is required to use this feature.</string>

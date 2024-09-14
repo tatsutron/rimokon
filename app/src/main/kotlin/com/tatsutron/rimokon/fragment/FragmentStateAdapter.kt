@@ -11,8 +11,7 @@ class FragmentStateAdapter(
     companion object {
         // Needs to be kept in sync with the navigation menu
         val items = listOf(
-            FragmentMaker.platformList(Platform.Category.CONSOLE),
-            FragmentMaker.platformList(Platform.Category.HANDHELD),
+            FragmentMaker.platformList(),
             FragmentMaker.favoriteList(),
         )
     }

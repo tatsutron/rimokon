@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/consoles"
-        android:icon="@drawable/ic_consoles"
-        android:title="@string/console" />
-    <item
-        android:id="@+id/handhelds"
-        android:icon="@drawable/ic_handhelds"
-        android:title="@string/handheld" />
+        android:id="@+id/platforms"
+        android:icon="@drawable/ic_platforms"
+        android:title="@string/platforms" />
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/ic_star_fill"

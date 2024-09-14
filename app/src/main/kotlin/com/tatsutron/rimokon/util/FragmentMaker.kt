@@ -31,11 +31,7 @@ object FragmentMaker {
         }
     }
 
-    fun platformList(category: Platform.Category) = PlatformListFragment().apply {
-        arguments = Bundle().apply {
-            putString(KEY_PLATFORM_CATEGORY, category.name)
-        }
-    }
+    fun platformList() = PlatformListFragment()
 
     fun scan() = ScanFragment()
 }

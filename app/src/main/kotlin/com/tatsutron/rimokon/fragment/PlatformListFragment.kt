@@ -12,12 +12,10 @@ import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
 import com.tatsutron.rimokon.recycler.PlatformItem
 import com.tatsutron.rimokon.recycler.PlatformListAdapter
-import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Persistence
 
 class PlatformListFragment : BaseFragment() {
 
-    private lateinit var platformCategory: Platform.Category
     private lateinit var recycler: FastScrollRecyclerView
     private lateinit var platformListAdapter: PlatformListAdapter
     private lateinit var gameListAdapter: GameListAdapter
@@ -35,9 +33,6 @@ class PlatformListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        platformCategory = Platform.Category.valueOf(
-            arguments?.getString(FragmentMaker.KEY_PLATFORM_CATEGORY)!!,
-        )
         platformListAdapter = PlatformListAdapter(activity as Activity)
         gameListAdapter = GameListAdapter(activity as Activity)
         recycler = view.findViewById<FastScrollRecyclerView>(R.id.recycler).apply {
@@ -54,9 +49,7 @@ class PlatformListFragment : BaseFragment() {
         }
         if (MainFragment.searchTerm.isEmpty()) {
             recycler.adapter = platformListAdapter
-            val items = Platform.values().filter {
-                it.category == platformCategory
-            }.map {
+            val items = Platform.values().map {
                 PlatformItem(it)
             }
             platformListAdapter.apply {
