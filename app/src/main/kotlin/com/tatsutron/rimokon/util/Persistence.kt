@@ -83,7 +83,11 @@ object Persistence {
     fun getMetadataBySha1(sha1: String, releaseOffset: Int) =
         database?.metadataQueries?.selectBySha1(sha1.toUpperCase(Locale.getDefault()))
             ?.executeAsList()?.let {
-                metadata(it[releaseOffset % it.count()])
+                if (it.isNotEmpty()) {
+                    metadata(it[releaseOffset % it.count()])
+                } else {
+                    null
+                }
             }
 
     var host: String
