@@ -80,10 +80,10 @@ object Persistence {
                 File(it.path).name.toLowerCase(Locale.getDefault())
             } ?: listOf()
 
-    fun getMetadataBySha1(sha1: String) =
+    fun getMetadataBySha1(sha1: String, releaseOffset: Int) =
         database?.metadataQueries?.selectBySha1(sha1.toUpperCase(Locale.getDefault()))
-            ?.executeAsOneOrNull()?.let {
-                metadata(it)
+            ?.executeAsList()?.let {
+                metadata(it[releaseOffset % it.count()])
             }
 
     var host: String

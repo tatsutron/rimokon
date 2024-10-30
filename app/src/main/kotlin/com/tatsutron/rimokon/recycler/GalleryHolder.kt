@@ -18,7 +18,10 @@ class GalleryHolder(
     private val image: ImageView = itemView.findViewById(R.id.image)
 
     fun bind(item: GalleryItem) {
-        Picasso.get().load(item.game.artwork).into(image)
+        // TODO Filter blanks out from SQL?
+        if (item.game.artwork?.isNotBlank() == true) {
+            Picasso.get().load(item.game.artwork).into(image)
+        }
         itemView.setOnClickListener {
             Navigator.showScreen(
                 activity as AppCompatActivity,

@@ -46,6 +46,7 @@ class GameFragment : BaseFragment() {
     private lateinit var regionCard: MetadataCard
     private lateinit var releaseDateCard: MetadataCard
     private lateinit var genreCard: MetadataCard
+    private var releaseOffset = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -383,7 +384,8 @@ class GameFragment : BaseFragment() {
                 }
                 Thread.sleep(1500)
                 requireActivity().runOnUiThread {
-                    val metadata = Persistence.getMetadataBySha1(game.sha1!!)
+                    releaseOffset += 1
+                    val metadata = Persistence.getMetadataBySha1(game.sha1!!, releaseOffset)
                     if (metadata != null) {
                         onMetadataImported(metadata)
                     } else {
@@ -391,9 +393,6 @@ class GameFragment : BaseFragment() {
                             context = activity,
                             title = activity.getString(R.string.no_metadata_found),
                         )
-                    }
-                    Persistence.getMetadataBySha1(game.sha1!!)?.let {
-                        onMetadataImported(it)
                     }
                 }
             },
@@ -436,40 +435,28 @@ class GameFragment : BaseFragment() {
 
     private fun onMetadataImported(metadata: Metadata) {
         metadata.artwork?.let {
-            if (game.artwork.isNullOrBlank()) {
-                Persistence.updateArtwork(game, it)
-                setArtwork(it)
-            }
+            Persistence.updateArtwork(game, it)
+            setArtwork(it)
         }
         metadata.developer?.let {
-            if (game.developer.isNullOrBlank()) {
-                Persistence.updateDeveloper(game, it)
-                developerCard.bodyText.text = it
-            }
+            Persistence.updateDeveloper(game, it)
+            developerCard.bodyText.text = it
         }
         metadata.publisher?.let {
-            if (game.publisher.isNullOrBlank()) {
-                Persistence.updatePublisher(game, it)
-                publisherCard.bodyText.text = it
-            }
+            Persistence.updatePublisher(game, it)
+            publisherCard.bodyText.text = it
         }
         metadata.region?.let {
-            if (game.region.isNullOrBlank()) {
-                Persistence.updateRegion(game, it)
-                regionCard.bodyText.text = it
-            }
+            Persistence.updateRegion(game, it)
+            regionCard.bodyText.text = it
         }
         metadata.releaseDate?.let {
-            if (game.releaseDate.isNullOrBlank()) {
-                Persistence.updateReleaseDate(game, it)
-                releaseDateCard.bodyText.text = it
-            }
+            Persistence.updateReleaseDate(game, it)
+            releaseDateCard.bodyText.text = it
         }
         metadata.genre?.let {
-            if (game.genre.isNullOrBlank()) {
-                Persistence.updateGenre(game, it)
-                genreCard.bodyText.text = it
-            }
+            Persistence.updateGenre(game, it)
+            genreCard.bodyText.text = it
         }
     }
 }
