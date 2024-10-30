@@ -12,7 +12,7 @@ The app supports search, browsing by title, and browsing by artwork. Once a game
 
 https://github.com/tatsutron/rimokon/assets/51144928/7d232c99-1f83-45af-b0fd-014c1e850674
 
-Metadata can be automatically imported for supported platforms. You can also edit the data by hand.
+Metadata can be automatically imported for supported platforms. You can also edit the data manually.
 
 ## QR codes
 
