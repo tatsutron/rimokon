@@ -57,28 +57,16 @@
                         app:hint="@string/developer" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
-                        android:id="@+id/publisher"
+                        android:id="@+id/year"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:hint="@string/publisher" />
+                        app:hint="@string/year" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
                         android:id="@+id/region"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:hint="@string/region" />
-
-                    <com.tatsutron.rimokon.component.MetadataCard
-                        android:id="@+id/release_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hint="@string/release_date" />
-
-                    <com.tatsutron.rimokon.component.MetadataCard
-                        android:id="@+id/genre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hint="@string/genre" />
 
                     <View
                         android:layout_width="wrap_content"

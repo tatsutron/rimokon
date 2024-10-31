@@ -2,14 +2,12 @@ CREATE TABLE Games (
     artwork TEXT,
     developer TEXT,
     favorite INTEGER NOT NULL DEFAULT 0,
-    genre TEXT,
     name TEXT NOT NULL,
     path TEXT NOT NULL UNIQUE PRIMARY KEY,
     platform TEXT NOT NULL,
-    publisher TEXT,
     region TEXT,
-    releaseDate TEXT,
-    sha1 TEXT
+    sha1 TEXT,
+    year TEXT
 );
 
 deleteByPath:
@@ -49,17 +47,11 @@ UPDATE Games SET developer = ? WHERE path = ?;
 updateFavorite:
 UPDATE Games SET favorite = ? WHERE path = ?;
 
-updateGenre:
-UPDATE Games SET genre = ? WHERE path = ?;
-
-updatePublisher:
-UPDATE Games SET publisher = ? WHERE path = ?;
-
 updateRegion:
 UPDATE Games SET region = ? WHERE path = ?;
 
-updateReleaseDate:
-UPDATE Games SET releaseDate = ? WHERE path = ?;
-
 updateSha1:
 UPDATE Games SET sha1 = ? WHERE path = ?;
+
+updateYear:
+UPDATE Games SET year = ? WHERE path = ?;

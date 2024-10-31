@@ -42,10 +42,8 @@ class GameFragment : BaseFragment() {
     private lateinit var importAction: SpeedDialActionItem
     private lateinit var artworkCard: ImageCard
     private lateinit var developerCard: MetadataCard
-    private lateinit var publisherCard: MetadataCard
+    private lateinit var yearCard: MetadataCard
     private lateinit var regionCard: MetadataCard
-    private lateinit var releaseDateCard: MetadataCard
-    private lateinit var genreCard: MetadataCard
     private var releaseOffset = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,10 +91,8 @@ class GameFragment : BaseFragment() {
         speedDial = view.findViewById(R.id.speed_dial)
         artworkCard = view.findViewById(R.id.artwork)
         developerCard = view.findViewById(R.id.developer)
-        publisherCard = view.findViewById(R.id.publisher)
+        yearCard = view.findViewById(R.id.year)
         regionCard = view.findViewById(R.id.region)
-        releaseDateCard = view.findViewById(R.id.release_date)
-        genreCard = view.findViewById(R.id.genre)
         setSpeedDialActionItems()
         setSpeedDial()
         setMetadata()
@@ -218,16 +214,18 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
-        publisherCard.apply {
-            game.publisher?.let {
+        yearCard.apply {
+            game.year?.let {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
                 val context = requireContext()
                 Dialog.metadata(
-                    context, context.getString(R.string.enter_publisher), bodyText.text.toString()
+                    context,
+                    context.getString(R.string.enter_release_date),
+                    bodyText.text.toString()
                 ) { result ->
-                    Persistence.updatePublisher(game, result)
+                    Persistence.updateYear(game, result)
                     bodyText.text = result
                 }
             }
@@ -242,36 +240,6 @@ class GameFragment : BaseFragment() {
                     context, context.getString(R.string.enter_region), bodyText.text.toString()
                 ) { result ->
                     Persistence.updateRegion(game, result)
-                    bodyText.text = result
-                }
-            }
-        }
-        releaseDateCard.apply {
-            game.releaseDate?.let {
-                bodyText.text = it
-            }
-            editButton.setOnClickListener {
-                val context = requireContext()
-                Dialog.metadata(
-                    context,
-                    context.getString(R.string.enter_release_date),
-                    bodyText.text.toString()
-                ) { result ->
-                    Persistence.updateReleaseDate(game, result)
-                    bodyText.text = result
-                }
-            }
-        }
-        genreCard.apply {
-            game.genre?.let {
-                bodyText.text = it
-            }
-            editButton.setOnClickListener {
-                val context = requireContext()
-                Dialog.metadata(
-                    context, context.getString(R.string.enter_genre), bodyText.text.toString()
-                ) { result ->
-                    Persistence.updateGenre(game, result)
                     bodyText.text = result
                 }
             }
@@ -442,21 +410,13 @@ class GameFragment : BaseFragment() {
             Persistence.updateDeveloper(game, it)
             developerCard.bodyText.text = it
         }
-        metadata.publisher?.let {
-            Persistence.updatePublisher(game, it)
-            publisherCard.bodyText.text = it
+        metadata.year?.let {
+            Persistence.updateYear(game, it)
+            yearCard.bodyText.text = it
         }
         metadata.region?.let {
             Persistence.updateRegion(game, it)
             regionCard.bodyText.text = it
-        }
-        metadata.releaseDate?.let {
-            Persistence.updateReleaseDate(game, it)
-            releaseDateCard.bodyText.text = it
-        }
-        metadata.genre?.let {
-            Persistence.updateGenre(game, it)
-            genreCard.bodyText.text = it
         }
     }
 }
