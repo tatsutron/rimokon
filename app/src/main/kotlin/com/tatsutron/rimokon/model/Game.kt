@@ -13,6 +13,6 @@ class Game(
     val year: String? = null,
 ) {
 
-    val name: String
-        get() = File(path).nameWithoutExtension
+    val fileName: String
+        get() = File(path).name
 }

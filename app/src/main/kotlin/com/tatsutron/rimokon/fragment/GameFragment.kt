@@ -86,7 +86,7 @@ class GameFragment : BaseFragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as? AppCompatActivity)?.apply {
             setSupportActionBar(toolbar)
-            supportActionBar?.title = game.name
+            supportActionBar?.title = game.fileName
         }
         speedDial = view.findViewById(R.id.speed_dial)
         artworkCard = view.findViewById(R.id.artwork)

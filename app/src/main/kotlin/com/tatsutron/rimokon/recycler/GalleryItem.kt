@@ -7,5 +7,5 @@ class GalleryItem(
 ) : GameListItem {
 
     override val text: String
-        get() = game.name
+        get() = game.fileName
 }

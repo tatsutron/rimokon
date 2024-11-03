@@ -27,7 +27,7 @@ class GameHolder(
                 AppCompatResources.getDrawable(icon.context, it),
             )
         }
-        label.text = item.game.name
+        label.text = item.game.fileName
         subscript.apply {
             text = item.game.platform.displayName
             setTextColor(
