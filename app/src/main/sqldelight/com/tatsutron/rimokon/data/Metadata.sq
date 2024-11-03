@@ -3,7 +3,8 @@ SELECT
     r1.regionName AS region,
     r2.releaseCoverFront AS artwork,
     r2.releaseDate AS year,
-    r2.releaseDeveloper AS developer
+    r2.releaseDeveloper AS developer,
+    r2.releaseTitleName AS title
 FROM Regions r1 JOIN Releases r2
 ON r1.regionID = (
     SELECT regionID

@@ -10,6 +10,7 @@ class Game(
     val platform: Platform,
     val region: String? = null,
     val sha1: String?,
+    val title: String? = null,
     val year: String? = null,
 ) {
 

@@ -41,6 +41,7 @@ class GameFragment : BaseFragment() {
     private lateinit var copyQrAction: SpeedDialActionItem
     private lateinit var importAction: SpeedDialActionItem
     private lateinit var artworkCard: ImageCard
+    private lateinit var titleCard: MetadataCard
     private lateinit var developerCard: MetadataCard
     private lateinit var yearCard: MetadataCard
     private lateinit var regionCard: MetadataCard
@@ -90,6 +91,7 @@ class GameFragment : BaseFragment() {
         }
         speedDial = view.findViewById(R.id.speed_dial)
         artworkCard = view.findViewById(R.id.artwork)
+        titleCard = view.findViewById(R.id.title)
         developerCard = view.findViewById(R.id.developer)
         yearCard = view.findViewById(R.id.year)
         regionCard = view.findViewById(R.id.region)
@@ -184,12 +186,12 @@ class GameFragment : BaseFragment() {
     }
 
     private fun setMetadata() {
+        val context = requireContext()
         artworkCard.apply {
             game.artwork?.let {
                 setArtwork(it)
             }
             editButton.setOnClickListener {
-                val context = requireContext()
                 Dialog.metadata(
                     context,
                     context.getString(R.string.enter_url),
@@ -200,12 +202,24 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
+        titleCard.apply {
+            game.title?.let {
+                bodyText.text = it
+            }
+            editButton.setOnClickListener {
+                Dialog.metadata(
+                    context, context.getString(R.string.enter_title), bodyText.text.toString()
+                ) { result ->
+                    Persistence.updateTitle(game, result)
+                    bodyText.text = result
+                }
+            }
+        }
         developerCard.apply {
             game.developer?.let {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
-                val context = requireContext()
                 Dialog.metadata(
                     context, context.getString(R.string.enter_developer), bodyText.text.toString()
                 ) { result ->
@@ -219,10 +233,9 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
-                val context = requireContext()
                 Dialog.metadata(
                     context,
-                    context.getString(R.string.enter_release_date),
+                    context.getString(R.string.enter_year),
                     bodyText.text.toString()
                 ) { result ->
                     Persistence.updateYear(game, result)
@@ -235,7 +248,6 @@ class GameFragment : BaseFragment() {
                 bodyText.text = it
             }
             editButton.setOnClickListener {
-                val context = requireContext()
                 Dialog.metadata(
                     context, context.getString(R.string.enter_region), bodyText.text.toString()
                 ) { result ->
@@ -405,6 +417,10 @@ class GameFragment : BaseFragment() {
         metadata.artwork?.let {
             Persistence.updateArtwork(game, it)
             setArtwork(it)
+        }
+        metadata.title?.let {
+            Persistence.updateTitle(game, it)
+            titleCard.bodyText.text = it
         }
         metadata.developer?.let {
             Persistence.updateDeveloper(game, it)

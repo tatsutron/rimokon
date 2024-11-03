@@ -7,6 +7,7 @@ CREATE TABLE Games (
     platform TEXT NOT NULL,
     region TEXT,
     sha1 TEXT,
+    title TEXT,
     year TEXT
 );
 
@@ -52,6 +53,9 @@ UPDATE Games SET region = ? WHERE path = ?;
 
 updateSha1:
 UPDATE Games SET sha1 = ? WHERE path = ?;
+
+updateTitle:
+UPDATE Games SET title = ? WHERE path = ?;
 
 updateYear:
 UPDATE Games SET year = ? WHERE path = ?;

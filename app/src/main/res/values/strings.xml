@@ -14,8 +14,9 @@
     <string name="enter_mister_ip_address">Enter MiSTer IP address</string>
     <string name="enter_publisher">Enter publisher</string>
     <string name="enter_region">Enter region</string>
-    <string name="enter_release_date">Enter release date</string>
+    <string name="enter_title">Enter title</string>
     <string name="enter_url">Enter URL</string>
+    <string name="enter_year">Enter year</string>
     <string name="error">Error</string>
     <string name="failed_to_connect">Failed to connect</string>
     <string name="failed_to_connect_message">Ensure that both devices are on the same network and that the IP address of the MiSTer has been set correctly.</string>
@@ -43,6 +44,7 @@
     <string name="sync">Sync</string>
     <string name="sync_full_library">Sync full library</string>
     <string name="system">System</string>
+    <string name="title">Title</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="warning">Warning</string>
     <string name="would_you_like_to_sync_your_library">Would you like to sync your %s library?</string>

@@ -31,6 +31,7 @@ object Persistence {
         platform = Platform.valueOf(dao.platform),
         region = dao.region,
         sha1 = dao.sha1,
+        title = dao.title,
         year = dao.year,
     )
 
@@ -136,6 +137,7 @@ object Persistence {
         artwork = dao.artwork,
         developer = dao.developer,
         region = dao.region,
+        title = dao.title,
         year = dao.year,
     )
 
@@ -155,6 +157,9 @@ object Persistence {
         database?.gamesQueries?.updateRegion(region, game.path)
 
     fun updateSha1(game: Game, sha1: String) = database?.gamesQueries?.updateSha1(sha1, game.path)
+
+    fun updateTitle(game: Game, title: String) =
+        database?.gamesQueries?.updateTitle(title, game.path)
 
     fun updateYear(game: Game, year: String) =
         database?.gamesQueries?.updateYear(year, game.path)

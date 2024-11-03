@@ -51,6 +51,12 @@
                         android:paddingTop="@dimen/margin_large" />
 
                     <com.tatsutron.rimokon.component.MetadataCard
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hint="@string/title" />
+
+                    <com.tatsutron.rimokon.component.MetadataCard
                         android:id="@+id/developer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
