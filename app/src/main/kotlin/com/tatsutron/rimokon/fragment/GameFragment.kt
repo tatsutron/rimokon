@@ -368,6 +368,7 @@ class GameFragment : BaseFragment() {
                     val metadata = Persistence.getMetadataBySha1(game.sha1!!, releaseOffset)
                     if (metadata != null) {
                         onMetadataImported(metadata)
+                        game = Persistence.getGameByPath(game.path)!!
                     } else {
                         Dialog.message(
                             context = activity,
