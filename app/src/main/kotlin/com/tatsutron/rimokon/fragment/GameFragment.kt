@@ -428,8 +428,11 @@ class GameFragment : BaseFragment() {
             developerCard.bodyText.text = it
         }
         metadata.year?.let {
-            Persistence.updateYear(game, it)
-            yearCard.bodyText.text = it
+            Regex("[0-9]{4}").find(it)?.let { result ->
+                val year = result.value
+                Persistence.updateYear(game, year)
+                yearCard.bodyText.text = year
+            }
         }
         metadata.region?.let {
             Persistence.updateRegion(game, it)
