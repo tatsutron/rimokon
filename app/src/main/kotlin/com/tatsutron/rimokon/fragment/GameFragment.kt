@@ -121,7 +121,7 @@ class GameFragment : BaseFragment() {
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
             .setFabImageTintColor(context.getColorCompat(R.color.button_label)).create()
         copyQrAction = SpeedDialActionItem.Builder(R.id.copy_qr, R.drawable.ic_copy)
-            .setLabel(context.getString(R.string.copy_qr_code))
+            .setLabel(context.getString(R.string.copy_qr_data))
             .setLabelBackgroundColor(context.getColorCompat(R.color.button_background))
             .setLabelColor(context.getColorCompat(R.color.button_label))
             .setFabBackgroundColor(context.getColorCompat(R.color.button_background))
@@ -406,10 +406,10 @@ class GameFragment : BaseFragment() {
             context,
             ClipboardManager::class.java,
         )
-        clipboard?.setPrimaryClip(ClipData.newPlainText("QR", game.sha1))
+        clipboard?.setPrimaryClip(ClipData.newPlainText("QR", "sha1://${game.sha1}"))
         Toast.makeText(
             requireActivity(),
-            "Copied QR Data to Clipboard",
+            context.getString(R.string.copied_qr_data_to_clipboard),
             Toast.LENGTH_SHORT,
         ).show()
     }

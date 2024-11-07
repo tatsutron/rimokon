@@ -96,19 +96,19 @@ class ScanFragment : BaseFragment() {
                     it.setSurfaceProvider(preview.surfaceProvider)
                 }
                 val imageAnalysis = ImageAnalysis.Builder().build().also {
-                        it.setAnalyzer(
-                            cameraExecutor,
-                            BarcodeAnalyzer(
-                                context = context,
-                                listener = { data ->
-                                    if (!processingBarcode) {
-                                        processingBarcode = true
-                                        handleResult(data)
-                                    }
-                                },
-                            ),
-                        )
-                    }
+                    it.setAnalyzer(
+                        cameraExecutor,
+                        BarcodeAnalyzer(
+                            context = context,
+                            listener = { data ->
+                                if (!processingBarcode) {
+                                    processingBarcode = true
+                                    handleResult(data)
+                                }
+                            },
+                        ),
+                    )
+                }
                 try {
                     provider.unbindAll()
                     provider.bindToLifecycle(
@@ -126,7 +126,9 @@ class ScanFragment : BaseFragment() {
     }
 
     private fun handleResult(data: String) {
-        Persistence.getGameBySha1(data)?.let { game ->
+        if (data.startsWith("sha1://")) {
+            val sha1 = data.replace("sha1://", "")
+            Persistence.getGameBySha1(sha1)?.let { game ->
                 Navigator.showLoadingScreen()
                 Coroutine.launch(
                     activity = requireActivity(),
@@ -145,7 +147,10 @@ class ScanFragment : BaseFragment() {
                     },
                 )
             } ?: run {
-            processingBarcode = false
+                processingBarcode = false
+            }
+        } else {
+            // TODO
         }
     }
 }
