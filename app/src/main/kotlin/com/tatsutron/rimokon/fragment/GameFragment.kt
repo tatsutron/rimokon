@@ -319,7 +319,7 @@ class GameFragment : BaseFragment() {
                         activity,
                         ClipboardManager::class.java,
                     )
-                    clipboard?.setPrimaryClip(ClipData.newPlainText("QR", sha1))
+                    clipboard?.setPrimaryClip(ClipData.newPlainText("QR", "sha1://${sha1}"))
                     Toast.makeText(
                         requireActivity(),
                         activity.getString(R.string.copied_qr_data_to_clipboard),

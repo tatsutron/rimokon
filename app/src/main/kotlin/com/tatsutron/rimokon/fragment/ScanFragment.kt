@@ -3,13 +3,10 @@ package com.tatsutron.rimokon.fragment
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
@@ -20,7 +17,6 @@ import com.tatsutron.rimokon.MainActivity
 import com.tatsutron.rimokon.R
 import com.tatsutron.rimokon.util.Coroutine
 import com.tatsutron.rimokon.util.Dialog
-import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Persistence
 import com.tatsutron.rimokon.util.Util
@@ -31,7 +27,7 @@ import java.util.concurrent.Executors
 class ScanFragment : BaseFragment() {
 
     private lateinit var cameraExecutor: ExecutorService
-    private var processingBarcode = false
+    private var lastQrCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +37,6 @@ class ScanFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_scan, container, false)
-
-    override fun onResume() {
-        super.onResume()
-        processingBarcode = false
-    }
 
     override fun onDestroy() {
         cameraExecutor.shutdown()
@@ -101,10 +92,7 @@ class ScanFragment : BaseFragment() {
                         BarcodeAnalyzer(
                             context = context,
                             listener = { data ->
-                                if (!processingBarcode) {
-                                    processingBarcode = true
-                                    handleResult(data)
-                                }
+                                handleResult(data)
                             },
                         ),
                     )
@@ -126,31 +114,58 @@ class ScanFragment : BaseFragment() {
     }
 
     private fun handleResult(data: String) {
+        if (data == lastQrCode) {
+            return
+        } else {
+            lastQrCode = data
+        }
+        val context = requireContext()
         if (data.startsWith("sha1://")) {
             val sha1 = data.replace("sha1://", "")
             Persistence.getGameBySha1(sha1)?.let { game ->
-                Navigator.showLoadingScreen()
-                Coroutine.launch(
-                    activity = requireActivity(),
-                    run = {
-                        Util.loadGame(game)
-                    },
-                    finally = {
-                        Navigator.hideLoadingScreen()
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            (activity as? MainActivity)?.onBackPressed()
-                            Navigator.showScreen(
-                                activity as AppCompatActivity,
-                                FragmentMaker.game(game.path),
-                            )
-                        }, 100)
-                    },
+                Dialog.confirmation(
+                    context = context,
+                    messageText = context.getString(
+                        R.string.would_you_like_to_play,
+                        game.title,
+                    ),
+                    negativeButtonText = context.getString(R.string.no),
+                    positiveButtonText = context.getString(R.string.yes),
+                    callback = {
+                        Navigator.showLoadingScreen()
+                        Coroutine.launch(
+                            activity = requireActivity(),
+                            run = {
+                                // TODO Fail gracefully on no connection
+                                Util.loadGame(game)
+                            },
+                            finally = {
+                                Navigator.hideLoadingScreen()
+                            },
+                        )
+                    }
                 )
-            } ?: run {
-                processingBarcode = false
             }
         } else {
-            // TODO
+            Dialog.confirmation(
+                context = context,
+                messageText = context.getString(R.string.would_you_like_to_use_tapto),
+                negativeButtonText = context.getString(R.string.no),
+                positiveButtonText = context.getString(R.string.yes),
+                callback = {
+                    Navigator.showLoadingScreen()
+                    Coroutine.launch(
+                        activity = requireActivity(),
+                        run = {
+                            // TODO Fail gracefully on no connection
+                            Util.tapTo(data)
+                        },
+                        finally = {
+                            Navigator.hideLoadingScreen()
+                        },
+                    )
+                }
+            )
         }
     }
 }

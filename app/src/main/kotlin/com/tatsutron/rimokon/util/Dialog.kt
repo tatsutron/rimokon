@@ -11,15 +11,17 @@ object Dialog {
 
     fun confirmation(
         context: Context,
-        title: String,
-        message: String,
+        titleText: String? = null,
+        messageText: String,
         negativeButtonText: String,
         positiveButtonText: String,
         callback: () -> Unit,
     ) {
         MaterialDialog(context).show {
-            title(text = title)
-            message(text = message)
+            titleText?.let {
+                title(text = it)
+            }
+            message(text = messageText)
             negativeButton(
                 text = negativeButtonText,
             )

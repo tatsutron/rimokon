@@ -64,8 +64,8 @@ class PlatformFragment : BaseFragment() {
             val context = requireContext()
             Dialog.confirmation(
                 context = context,
-                title = context.getString(R.string.no_games_found),
-                message = context.getString(
+                titleText = context.getString(R.string.no_games_found),
+                messageText = context.getString(
                     R.string.would_you_like_to_sync_your_library,
                     platform.displayName,
                 ),

@@ -27,6 +27,7 @@
     <string name="generate_qr_code">Generate QR code</string>
     <string name="import_metadata">Import metadata</string>
     <string name="list_view">List View</string>
+    <string name="no">No</string>
     <string name="no_camera_permission">Camera permission is required to use this feature.</string>
     <string name="no_games_found">No games found</string>
     <string name="no_metadata_found">No metadata found</string>
@@ -47,6 +48,9 @@
     <string name="title">Title</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="warning">Warning</string>
+    <string name="would_you_like_to_play">Would you like to play %s?</string>
     <string name="would_you_like_to_sync_your_library">Would you like to sync your %s library?</string>
+    <string name="would_you_like_to_use_tapto">Would you like to use TapTo?</string>
     <string name="year">Year</string>
+    <string name="yes">Yes</string>
 </resources>

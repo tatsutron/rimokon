@@ -113,4 +113,19 @@ object Util {
         Ssh.command(session, command)
         session.disconnect()
     }
+
+    fun tapTo(argument: String) {
+        val session = Ssh.session()
+        val command = StringBuilder().apply {
+            append(Constants.TAPTO_PATH)
+            append(" ")
+            append("-launch")
+            append(" ")
+            append("\"")
+            append(argument)
+            append("\"")
+        }.toString()
+        Ssh.command(session, command)
+        session.disconnect()
+    }
 }
