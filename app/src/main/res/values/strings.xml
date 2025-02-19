@@ -50,7 +50,7 @@
     <string name="warning">Warning</string>
     <string name="would_you_like_to_play">Would you like to play %s?</string>
     <string name="would_you_like_to_sync_your_library">Would you like to sync your %s library?</string>
-    <string name="would_you_like_to_use_tapto">Would you like to use TapTo?</string>
+    <string name="would_you_like_to_use_zaparoo">Would you like to use Zaparoo?</string>
     <string name="year">Year</string>
     <string name="yes">Yes</string>
 </resources>

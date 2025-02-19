@@ -15,5 +15,5 @@ object Constants {
     const val MREXT_CONTOOL_PATH = "${MREXT_ROOT}/contool"
     const val MREXT_OUTPUT_PATH = "${MREXT_ROOT}/out"
 
-    const val TAPTO_PATH = "${SCRIPTS_PATH}/tapto.sh"
+    const val ZAPAROO_PATH = "${SCRIPTS_PATH}/zaparoo.sh"
 }

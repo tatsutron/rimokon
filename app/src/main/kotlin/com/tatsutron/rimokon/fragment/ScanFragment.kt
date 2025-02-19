@@ -149,7 +149,7 @@ class ScanFragment : BaseFragment() {
         } else {
             Dialog.confirmation(
                 context = context,
-                messageText = context.getString(R.string.would_you_like_to_use_tapto),
+                messageText = context.getString(R.string.would_you_like_to_use_zaparoo),
                 negativeButtonText = context.getString(R.string.no),
                 positiveButtonText = context.getString(R.string.yes),
                 callback = {
@@ -158,7 +158,7 @@ class ScanFragment : BaseFragment() {
                         activity = requireActivity(),
                         run = {
                             // TODO Fail gracefully on no connection
-                            Util.tapTo(data)
+                            Util.zaparoo(data)
                         },
                         finally = {
                             Navigator.hideLoadingScreen()

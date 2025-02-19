@@ -114,10 +114,10 @@ object Util {
         session.disconnect()
     }
 
-    fun tapTo(argument: String) {
+    fun zaparoo(argument: String) {
         val session = Ssh.session()
         val command = StringBuilder().apply {
-            append(Constants.TAPTO_PATH)
+            append(Constants.ZAPAROO_PATH)
             append(" ")
             append("-launch")
             append(" ")
