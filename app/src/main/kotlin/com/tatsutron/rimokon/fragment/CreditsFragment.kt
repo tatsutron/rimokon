@@ -135,6 +135,7 @@ class CreditsFragment : BaseFragment() {
                     )
                 )
             }.joinToString("\n")
+            setMarqueeSpeed(128)
         }
         view.findViewById<TextView>(R.id.version_name).apply {
             val versionName =
