@@ -19,6 +19,7 @@ import com.tatsutron.rimokon.recycler.GalleryAdapter
 import com.tatsutron.rimokon.recycler.GalleryItem
 import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
+import com.tatsutron.rimokon.recycler.SpacerItem
 import com.tatsutron.rimokon.util.*
 import java.io.File
 import java.util.Locale
@@ -133,35 +134,37 @@ class PlatformFragment : BaseFragment() {
             val games = mutableListOf<Game>()
             val folders = mutableSetOf<String>()
             Persistence.getGamesByPlatform(platform).filter {
-                    it.path.startsWith(currentFolder)
-                }.forEach {
-                    val folder = it.subfolder()
-                    if (folder != null) {
-                        folders.add(folder)
-                    } else {
-                        games.add(it)
-                    }
+                it.path.startsWith(currentFolder)
+            }.forEach {
+                val folder = it.subfolder()
+                if (folder != null) {
+                    folders.add(folder)
+                } else {
+                    games.add(it)
                 }
+            }
             val folderItems = folders.sortedBy { it.toLowerCase(Locale.getDefault()) }.map {
-                    FolderItem(
-                        name = it,
-                        onClick = {
-                            currentFolder = File(currentFolder, it).path
-                            setRecycler()
-                        },
-                    )
-                }
+                FolderItem(
+                    name = it,
+                    onClick = {
+                        currentFolder = File(currentFolder, it).path
+                        setRecycler()
+                    },
+                )
+            }
             val gameItems = games.map {
-                    GameItem(
-                        icon = platform.media.icon,
-                        game = it,
-                        subscript = platform.displayName ?: "",
-                    )
-                }
-            val items = folderItems + gameItems
+                GameItem(
+                    icon = platform.media.icon,
+                    game = it,
+                    subscript = platform.displayName ?: "",
+                )
+            }
             gameListAdapter.apply {
                 itemList.clear()
-                itemList.addAll(items)
+                itemList.add(SpacerItem())
+                itemList.addAll(folderItems)
+                itemList.addAll(gameItems)
+                itemList.add(SpacerItem())
                 notifyDataSetChanged()
             }
         }

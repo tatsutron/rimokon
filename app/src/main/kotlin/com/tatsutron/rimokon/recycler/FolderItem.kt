@@ -5,6 +5,6 @@ class FolderItem(
     val onClick: () -> Unit,
 ) : GameListItem {
 
-    override val text: String
+    override val text: String?
         get() = name
 }

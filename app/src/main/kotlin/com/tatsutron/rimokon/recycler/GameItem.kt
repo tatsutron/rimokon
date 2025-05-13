@@ -9,6 +9,6 @@ class GameItem(
     val subscript: String,
 ) : GameListItem {
 
-    override val text: String
+    override val text: String?
         get() = game.fileName
 }

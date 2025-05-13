@@ -59,7 +59,7 @@ class PlatformListFragment : BaseFragment() {
             }
         } else {
             recycler.adapter = gameListAdapter
-            val items = Persistence.getGamesBySearch(MainFragment.searchTerm).map {
+            val gameItems = Persistence.getGamesBySearch(MainFragment.searchTerm).map {
                 GameItem(
                     icon = it.platform.media.icon,
                     game = it,
@@ -68,7 +68,7 @@ class PlatformListFragment : BaseFragment() {
             }
             gameListAdapter.apply {
                 itemList.clear()
-                itemList.addAll(items)
+                itemList.addAll(gameItems)
                 notifyDataSetChanged()
             }
         }

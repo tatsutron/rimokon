@@ -16,6 +16,7 @@ class GameListAdapter(
     companion object {
         const val TYPE_FOLDER = 0
         const val TYPE_GAME = 1
+        const val TYPE_SPACER = 2
     }
 
     override fun onCreateViewHolder(
@@ -24,18 +25,18 @@ class GameListAdapter(
     ): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(activity)
         val itemView = layoutInflater.inflate(
-            if (viewType == TYPE_FOLDER) {
-                R.layout.list_item_folder
-            } else {
-                R.layout.list_item_game
+            when (viewType) {
+                TYPE_FOLDER -> R.layout.list_item_folder
+                TYPE_SPACER -> R.layout.list_item_spacer
+                else -> R.layout.list_item_game
             },
             parent,
             false,
         )
-        return if (viewType == TYPE_FOLDER) {
-            FolderHolder(itemView)
-        } else {
-            GameHolder(activity, itemView)
+        return when (viewType) {
+            TYPE_FOLDER -> FolderHolder(itemView)
+            TYPE_SPACER -> SpacerHolder(itemView)
+            else -> GameHolder(activity, itemView)
         }
     }
 
@@ -45,7 +46,7 @@ class GameListAdapter(
     ) {
         when (getItemViewType(position)) {
             TYPE_FOLDER -> (holder as? FolderHolder)?.bind(itemList[position] as FolderItem)
-
+            TYPE_SPACER -> (holder as? SpacerHolder)?.bind(itemList[position] as SpacerItem)
             else -> (holder as? GameHolder)?.bind(itemList[position] as GameItem)
         }
     }
@@ -54,6 +55,7 @@ class GameListAdapter(
 
     override fun getItemViewType(position: Int) = when (itemList[position]) {
         is FolderItem -> TYPE_FOLDER
+        is SpacerItem -> TYPE_SPACER
         else -> TYPE_GAME
     }
 

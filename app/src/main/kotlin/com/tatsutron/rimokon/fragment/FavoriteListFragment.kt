@@ -14,6 +14,7 @@ import com.tatsutron.rimokon.recycler.GalleryAdapter
 import com.tatsutron.rimokon.recycler.GalleryItem
 import com.tatsutron.rimokon.recycler.GameItem
 import com.tatsutron.rimokon.recycler.GameListAdapter
+import com.tatsutron.rimokon.recycler.SpacerItem
 import com.tatsutron.rimokon.util.FragmentMaker
 import com.tatsutron.rimokon.util.Navigator
 import com.tatsutron.rimokon.util.Persistence
@@ -65,18 +66,19 @@ class FavoriteListFragment : BaseFragment() {
         if (MainFragment.searchTerm.isEmpty()) {
             if (Persistence.inGallery) {
                 recycler.adapter = galleryAdapter
-                val items = Persistence.getGamesByHasArtworkByFavorite().map {
+                val galleryItems = Persistence.getGamesByHasArtworkByFavorite().map {
                     GalleryItem(it)
                 }
                 galleryAdapter.apply {
                     itemList.clear()
-                    itemList.addAll(items)
+                    itemList.addAll(galleryItems)
                     notifyDataSetChanged()
                 }
             } else {
                 recycler.adapter = gameListAdapter
                 gameListAdapter.apply {
                     itemList.clear()
+                    itemList.add(SpacerItem())
                     itemList.addAll(
                         Persistence.getGamesByFavorite().map {
                             GameItem(
@@ -86,12 +88,13 @@ class FavoriteListFragment : BaseFragment() {
                             )
                         },
                     )
+                    itemList.add(SpacerItem())
                     notifyDataSetChanged()
                 }
             }
         } else {
             recycler.adapter = gameListAdapter
-            val items = Persistence.getGamesBySearch(MainFragment.searchTerm).map {
+            val gameItems = Persistence.getGamesBySearch(MainFragment.searchTerm).map {
                 GameItem(
                     icon = it.platform.media.icon,
                     game = it,
@@ -100,7 +103,9 @@ class FavoriteListFragment : BaseFragment() {
             }
             gameListAdapter.apply {
                 itemList.clear()
-                itemList.addAll(items)
+                itemList.add(SpacerItem())
+                itemList.addAll(gameItems)
+                itemList.add(SpacerItem())
                 notifyDataSetChanged()
             }
         }
