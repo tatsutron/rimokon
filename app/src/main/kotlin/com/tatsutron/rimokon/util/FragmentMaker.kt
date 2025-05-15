@@ -6,6 +6,7 @@ import com.tatsutron.rimokon.fragment.FavoriteListFragment
 import com.tatsutron.rimokon.fragment.GameFragment
 import com.tatsutron.rimokon.fragment.PlatformFragment
 import com.tatsutron.rimokon.fragment.PlatformListFragment
+import com.tatsutron.rimokon.fragment.RemoteFragment
 import com.tatsutron.rimokon.fragment.ScanFragment
 import com.tatsutron.rimokon.model.Platform
 
@@ -13,7 +14,6 @@ object FragmentMaker {
 
     const val KEY_PATH = "KEY_PATH"
     const val KEY_PLATFORM = "KEY_PLATFORM"
-    const val KEY_PLATFORM_CATEGORY = "KEY_PLATFORM_CATEGORY"
 
     fun credits() = CreditsFragment()
 
@@ -32,6 +32,8 @@ object FragmentMaker {
     }
 
     fun platformList() = PlatformListFragment()
+
+    fun remote() = RemoteFragment()
 
     fun scan() = ScanFragment()
 }

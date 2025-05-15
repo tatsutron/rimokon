@@ -21,6 +21,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/remote"
+        android:title="@string/remote"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/credits"
         android:title="@string/credits"
         app:showAsAction="never" />

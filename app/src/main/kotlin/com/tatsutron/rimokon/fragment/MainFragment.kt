@@ -81,6 +81,14 @@ class MainFragment : BaseFragment() {
             true
         }
 
+        R.id.remote -> {
+            Navigator.showScreen(
+                activity as AppCompatActivity,
+                FragmentMaker.remote(),
+            )
+            true
+        }
+
         R.id.credits -> {
             Navigator.showScreen(
                 activity as AppCompatActivity,
